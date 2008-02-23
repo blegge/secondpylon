@@ -81,7 +81,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.vsnet2003.lib; test.lib"
+				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib"
 				OutputFile="$(OutDir)/plat_test.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
