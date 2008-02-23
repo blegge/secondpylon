@@ -4,8 +4,7 @@
 // the library to minimize test app setup. If needed, this could be moved to a 
 // 'you must manually include the file in your project' pattern instead.
 
-// TODO: What macro should be used instead of cdecl?
-int __cdecl main(int, char*)
+int main(int, char*)
 {
     int failures = UnitTest::RunAllTests();
 
