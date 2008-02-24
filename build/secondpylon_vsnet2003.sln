@@ -17,6 +17,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\libs\test\build\
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "error", "..\libs\error\build\error.vcproj", "{8E4D985F-E108-4098-8653-8B5A43B8708E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "viewscene", "..\samples\viewscene\build\viewscene.vcproj", "{8C1F98CE-6362-4F06-ADB0-2F8A46F8D49C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "error_test", "..\libs\error\build\error_test.vcproj", "{5647D0EF-4BD2-457E-806D-B19AA222AE25}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E5DD804-EC63-4FA5-BB6D-53DA86806EF5} = {7E5DD804-EC63-4FA5-BB6D-53DA86806EF5}
+		{8E4D985F-E108-4098-8653-8B5A43B8708E} = {8E4D985F-E108-4098-8653-8B5A43B8708E}
+		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994} = {92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -39,6 +54,18 @@ Global
 		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}.Debug.Build.0 = Debug|Win32
 		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}.Release.ActiveCfg = Release|Win32
 		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}.Release.Build.0 = Release|Win32
+		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Debug.ActiveCfg = Debug|Win32
+		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Debug.Build.0 = Debug|Win32
+		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Release.ActiveCfg = Release|Win32
+		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Release.Build.0 = Release|Win32
+		{8C1F98CE-6362-4F06-ADB0-2F8A46F8D49C}.Debug.ActiveCfg = Debug|Win32
+		{8C1F98CE-6362-4F06-ADB0-2F8A46F8D49C}.Debug.Build.0 = Debug|Win32
+		{8C1F98CE-6362-4F06-ADB0-2F8A46F8D49C}.Release.ActiveCfg = Release|Win32
+		{8C1F98CE-6362-4F06-ADB0-2F8A46F8D49C}.Release.Build.0 = Release|Win32
+		{5647D0EF-4BD2-457E-806D-B19AA222AE25}.Debug.ActiveCfg = Debug|Win32
+		{5647D0EF-4BD2-457E-806D-B19AA222AE25}.Debug.Build.0 = Debug|Win32
+		{5647D0EF-4BD2-457E-806D-B19AA222AE25}.Release.ActiveCfg = Release|Win32
+		{5647D0EF-4BD2-457E-806D-B19AA222AE25}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
