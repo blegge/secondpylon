@@ -1,4 +1,5 @@
 #include <unittest++/src/UnitTest++.h>
+#include <cstdlib> // for EXIT_SUCCESS, EXIT_FAILURE
 
 // All test applications use the same entry point. For now, this is wrapped in 
 // the library to minimize test app setup. If needed, this could be moved to a 
