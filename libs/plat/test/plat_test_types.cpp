@@ -1,22 +1,22 @@
-#include <secondpylon/plat/plat_types.h>
 #include <unittest++/src/UnitTest++.h>
+#include <secondpylon/plat/plat_types.h>
 
 TEST(VerifySize)
 {
-    CHECK_EQUAL(1, sizeof(secondpylon::plat::uint8));
-    CHECK_EQUAL(2, sizeof(secondpylon::plat::uint16));
-    CHECK_EQUAL(4, sizeof(secondpylon::plat::uint32));
-    CHECK_EQUAL(1, sizeof(secondpylon::plat::sint8));
-    CHECK_EQUAL(2, sizeof(secondpylon::plat::sint16));
-    CHECK_EQUAL(4, sizeof(secondpylon::plat::sint32));
+    CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::uint8));
+    CHECK_EQUAL(size_t(2), sizeof(secondpylon::plat::uint16));
+    CHECK_EQUAL(size_t(4), sizeof(secondpylon::plat::uint32));
+    CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::sint8));
+    CHECK_EQUAL(size_t(2), sizeof(secondpylon::plat::sint16));
+    CHECK_EQUAL(size_t(4), sizeof(secondpylon::plat::sint32));
 
-    CHECK_EQUAL(4, sizeof(secondpylon::plat::float32));
+    CHECK_EQUAL(size_t(4), sizeof(secondpylon::plat::float32));
 
-    CHECK_EQUAL(1, sizeof(secondpylon::plat::byte));
+    CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::byte));
 
-    CHECK_EQUAL(1, sizeof(secondpylon::plat::bool8));
+    CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::bool8));
 
-    CHECK_EQUAL(1, sizeof(secondpylon::plat::uchar));
+    CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::uchar));
 }
 
 TEST(VerifyBool)
