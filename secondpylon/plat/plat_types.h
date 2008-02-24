@@ -1,5 +1,5 @@
-#ifndef SPPLAT_H
-#define SPPLAT_H
+#ifndef SPPLAT_TYPES_H
+#define SPPLAT_TYPES_H
 
 namespace secondpylon {
 namespace plat {
@@ -21,4 +21,4 @@ namespace plat {
 }
 }
 
-#endif // SPPLAT_H
+#endif // SPPLAT_TYPES_H
