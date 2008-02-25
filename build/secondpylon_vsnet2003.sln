@@ -32,6 +32,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "error_test", "..\libs\error
 		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994} = {92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\libs\math\build\math.vcproj", "{7991F415-4872-4A40-ADCF-DAED26C75FF0}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math_test", "..\libs\math\build\math_test.vcproj", "{1E34EB1A-791D-4474-AE0B-9F79A732590F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -66,6 +74,14 @@ Global
 		{5647D0EF-4BD2-457E-806D-B19AA222AE25}.Debug.Build.0 = Debug|Win32
 		{5647D0EF-4BD2-457E-806D-B19AA222AE25}.Release.ActiveCfg = Release|Win32
 		{5647D0EF-4BD2-457E-806D-B19AA222AE25}.Release.Build.0 = Release|Win32
+		{7991F415-4872-4A40-ADCF-DAED26C75FF0}.Debug.ActiveCfg = Debug|Win32
+		{7991F415-4872-4A40-ADCF-DAED26C75FF0}.Debug.Build.0 = Debug|Win32
+		{7991F415-4872-4A40-ADCF-DAED26C75FF0}.Release.ActiveCfg = Release|Win32
+		{7991F415-4872-4A40-ADCF-DAED26C75FF0}.Release.Build.0 = Release|Win32
+		{1E34EB1A-791D-4474-AE0B-9F79A732590F}.Debug.ActiveCfg = Debug|Win32
+		{1E34EB1A-791D-4474-AE0B-9F79A732590F}.Debug.Build.0 = Debug|Win32
+		{1E34EB1A-791D-4474-AE0B-9F79A732590F}.Release.ActiveCfg = Release|Win32
+		{1E34EB1A-791D-4474-AE0B-9F79A732590F}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
