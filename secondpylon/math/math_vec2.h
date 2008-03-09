@@ -31,7 +31,6 @@ public:
     // Property functions
     plat::float32 Length() const;
 	vec2 Normal() const;
-    vec2 Unit() const;
 
 	// Assignment operators
 	SPPLAT_INLINE vec2<TStorage>& operator-=(const vec2<TStorage >&);
@@ -142,23 +141,12 @@ plat::float32 vec2<TStorage>::Length() const
 template <typename TStorage>
 vec2<TStorage> vec2<TStorage>::Normal() const
 {
-	float32 flLength = Length();
-	float32 flInvLength = 0;
-	if (flLength != 0.0F)
-		flInvLength = 1.0F / flLength;
-
-	return vec2(x * flInvLength, y * flInvLength);
-}
-
-template <typename TStorage>
-vec2<TStorage> vec2<TStorage>::Unit() const
-{
     plat::float32 flLength = Length();
 	plat::float32 flInvLength = 0;
 	if (flLength != 0.0F)
 		flInvLength = 1.0F / flLength;
 
-    return vec2(x *flInvLength, y * flInvLength);
+	return vec2(x * flInvLength, y * flInvLength);
 }
 
 template <typename TStorage>
