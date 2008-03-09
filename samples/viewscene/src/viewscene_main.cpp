@@ -4,7 +4,7 @@
 
 #include <windows.h>
 #include <secondpylon/plat/plat_types.h>
-#include <secondpylon/error/error_assert.h>
+#include <secondpylon/diag/error_assert.h>
 #include <secondpylon/math/math_vec2.h>
 #include <viewscene_windowutils.h>
 #include <viewscene_applicationutils.h>

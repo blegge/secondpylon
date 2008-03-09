@@ -1,5 +1,5 @@
 #include "viewscene_windowutils.h"
-#include <secondpylon\error\error_assert.h>
+#include <secondpylon/diag/error_assert.h>
 
 using namespace secondpylon;
 using namespace secondpylon::plat;

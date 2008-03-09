@@ -2,8 +2,8 @@
 #define SPVIEWSCENE_WINDOWUTILS_H
 
 #include <windows.h>
-#include <secondpylon\plat\plat_types.h>
-#include <secondpylon\math\math_vec2.h>
+#include <secondpylon/plat/plat_types.h>
+#include <secondpylon/math/math_vec2.h>
 
 struct WindowUtils
 {
