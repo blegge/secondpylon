@@ -115,10 +115,31 @@ TEST(DivEqual)
 
 TEST(DotProduct)
 {
-    SPTEST_UNIMPLEMENTED();
+    // Test using the dot product to project a point onto a line.
+
+    math::vec2f p(10.0F, 5.0F);
+    CHECK_EQUAL(5.0F, math::vec2f::DotProduct(p, math::vec2f(0.0F, 1.0F)));
+    CHECK_EQUAL(10.0F, math::vec2f::DotProduct(p, math::vec2f(1.0F, 0.0F)));
 }
 
 TEST(Interpolate)
 {
-    SPTEST_UNIMPLEMENTED();
+    CHECK_EQUAL(math::vec2f(0,0), math::vec2f::Interpolate(math::vec2f(0,0), math::vec2f(1,1), 0));
+    CHECK_EQUAL(math::vec2f(0.5F,0.5F), math::vec2f::Interpolate(math::vec2f(0,0), math::vec2f(1,1), 0.5f));
+    CHECK_EQUAL(math::vec2f(1,1), math::vec2f::Interpolate(math::vec2f(0,0), math::vec2f(1,1), 1));
+}
+
+TEST(InterpolateOutOfRange)
+{
+    SPTEST_CHECKASSERTS_BEGIN()
+    {
+        math::vec2f::Interpolate(math::vec2f(0,0), math::vec2f(1,1), -0.0F);
+    }
+    SPTEST_CHECKASSERTS_END()
+
+    SPTEST_CHECKASSERTS_BEGIN()
+    {
+        math::vec2f::Interpolate(math::vec2f(0,0), math::vec2f(1,1), 1.0F+1E-6f);
+    }
+    SPTEST_CHECKASSERTS_END()
 }
