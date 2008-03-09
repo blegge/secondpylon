@@ -1,6 +1,6 @@
-#include <secondpylon\math\math_vec2.h>
+#include <secondpylon/math/math_vec2.h>
 #include <unittest++/src/UnitTest++.h>
-#include <secondpylon\test\test_utils.h>
+#include <secondpylon/test/test_utils.h>
 
 using namespace secondpylon;
 

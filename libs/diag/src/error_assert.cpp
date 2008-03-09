@@ -1,1 +1,1 @@
-#include <secondpylon\error\error_assert.h>
+#include <secondpylon/diag/error_assert.h>
