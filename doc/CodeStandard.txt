@@ -1,0 +1,7 @@
+/*---------------------------------------------------------------------------------------------------------------------
+
+Portability
+
+Always use forward slashes ('/') for includes. Backslashes ('\') work on some platforms as they happen to map the
+underlying filesystem. Only forward slashes are correct according to the standard
+
