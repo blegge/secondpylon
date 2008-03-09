@@ -1,6 +1,7 @@
 #include "viewscene_windowutils.h"
 #include <secondpylon\error\error_assert.h>
 
+using namespace secondpylon;
 using namespace secondpylon::plat;
 
 LRESULT CALLBACK WndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam )
@@ -36,8 +37,7 @@ void WindowUtils::create_window(
                                 WindowUtils::window& window_result
                                 , HINSTANCE instance
                                 , const wchar_t* window_name
-                                , uint16 width
-                                , uint16 height)
+                                , math::vec2i dims)
 {
     SPERROR_ASSERT(window_result.m_window == 0);
 
@@ -56,8 +56,8 @@ void WindowUtils::create_window(
 		window_style,		// Window Style
 		0,                         // Horiz. Position of Window
 		0,					        // Vert. Position of Window
-		width,				    // Window Width
-		height,				    // Window Height
+		dims.x,				    // Window Width
+		dims.y,				    // Window Height
 		NULL,                  // Parent Window
 		NULL,                  // Menu
 		instance,			    // App Instance

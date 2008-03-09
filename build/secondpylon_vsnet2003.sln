@@ -40,6 +40,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math_test", "..\libs\math\b
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "~doc", "..\libs\~doc\build\~doc.vcproj", "{DBB32A18-D772-4D97-9905-FF8C5D6D6217}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -82,6 +86,10 @@ Global
 		{1E34EB1A-791D-4474-AE0B-9F79A732590F}.Debug.Build.0 = Debug|Win32
 		{1E34EB1A-791D-4474-AE0B-9F79A732590F}.Release.ActiveCfg = Release|Win32
 		{1E34EB1A-791D-4474-AE0B-9F79A732590F}.Release.Build.0 = Release|Win32
+		{DBB32A18-D772-4D97-9905-FF8C5D6D6217}.Debug.ActiveCfg = Debug|Win32
+		{DBB32A18-D772-4D97-9905-FF8C5D6D6217}.Debug.Build.0 = Debug|Win32
+		{DBB32A18-D772-4D97-9905-FF8C5D6D6217}.Release.ActiveCfg = Release|Win32
+		{DBB32A18-D772-4D97-9905-FF8C5D6D6217}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

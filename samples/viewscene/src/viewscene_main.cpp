@@ -3,11 +3,13 @@
 // support is more complex.
 
 #include <windows.h>
-#include <secondpylon\plat\plat_types.h>
-#include <secondpylon\error\error_assert.h>
+#include <secondpylon/plat/plat_types.h>
+#include <secondpylon/error/error_assert.h>
+#include <secondpylon/math/math_vec2.h>
 #include <viewscene_windowutils.h>
 #include <viewscene_applicationutils.h>
 
+using namespace secondpylon;
 using namespace secondpylon::plat;
 
 
@@ -42,9 +44,8 @@ struct RenderUtils
 
     struct DeviceParameters
     {
-        HWND parent_window;;
-        uint16 width;
-        uint16 height;
+        HWND parent_window;
+        math::vec2i dims;
         bool vsync;
         UINT adapter;
     };
@@ -63,8 +64,8 @@ struct RenderUtils
    		    internal_params.EnableAutoDepthStencil	= TRUE;
             internal_params.AutoDepthStencilFormat = D3DFMT_D16;
             internal_params.hDeviceWindow = parameters.parent_window;
-            internal_params.BackBufferWidth = parameters.width;
-            internal_params.BackBufferHeight = parameters.height;
+            internal_params.BackBufferWidth = parameters.dims.x;
+            internal_params.BackBufferHeight = parameters.dims.y;
 		    internal_params.BackBufferFormat = D3DFMT_R5G6B5; // Assume 16 bit color. Use D3DFMT_X8R8G8B8 if 32 isn't supported
 		    internal_params.MultiSampleType = D3DMULTISAMPLE_NONE;
 		    internal_params.MultiSampleQuality = 0;
@@ -155,15 +156,14 @@ int main(int /*args*/, char* /*argv*/)
     // Create Window and run the application
     WindowUtils::register_classes(instance);
     WindowUtils::window app_window;
-    WindowUtils::create_window(app_window, instance, L"viewscene", 128, 128);
+    WindowUtils::create_window(app_window, instance, L"viewscene", math::vec2i(128, 128));
 
     RenderUtils::RenderDevice device;
     g_device = &device;
 
     RenderUtils::DeviceParameters params;
     params.adapter = 0;
-    params.height = 128;
-    params.width = 128;
+    params.dims = math::vec2i(128, 128);
     params.parent_window = app_window.m_window;
     params.vsync = false;
 

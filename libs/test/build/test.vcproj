@@ -105,6 +105,16 @@
 			<File
 				RelativePath="..\src\test_main.cpp">
 			</File>
+			<File
+				RelativePath="..\src\test_utils.cpp">
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="">
+			<File
+				RelativePath="..\..\..\secondpylon\test\test_utils.h">
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

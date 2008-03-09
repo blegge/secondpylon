@@ -1,123 +1,184 @@
 #ifndef SPMATH_VEC2_H
 #define SPMATH_VEC2_H
 
-#include <secondpylon\plat\plat_types.h>
-#include <secondpylon\plat\plat_compiler.h>
+#include <secondpylon/plat/plat_types.h>
+#include <secondpylon/plat/plat_compiler.h>
+#include <secondpylon/math/math_functions.h>
 
 namespace secondpylon {
 namespace math {
-    
+ 
+template <typename TStorage>
 class vec2
 {
 public:
-	plat::float32 x;
-    plat::float32 y;
+	TStorage x;
+    TStorage y;
 
-	// Constructors
-	vec2() { }
-	vec2(const vec2& p) { x = p.x; y = p.y; }
-	vec2(plat::float32 X, plat::float32 Y)   { x = X; y = Y;  }
-	explicit vec2(const plat::float32 vf[2])  { x = vf[0]; y = vf[1]; }
+	// Default construct doesn't do any initialization for performance reasons.
+    vec2() { }
+	vec2(const vec2<TStorage >& p) { x = p.x; y = p.y; }
+	vec2(TStorage X, TStorage Y)   { x = X; y = Y;  }
 
 	// Access operators
     float& operator[](plat::uint32 i) { return (&x)[i]; }     
 	const float& operator[](plat::uint32 i) const { return (&x)[i]; }  
 	
 	// Unary operators
-	vec2 operator-() const { return vec2(-x,-y); } 
-	vec2 operator+() const { return *this; }
+	vec2<TStorage> operator-() const { return vec2<TStorage >(-x,-y); } 
+	vec2<TStorage> operator+() const { return *this; }
     
     // Property functions
-	plat::float32 Length() const;
-	plat::uint32 MaxComponent() const;
-	plat::uint32 MinComponent() const;
+    plat::float32 Length() const;
 	vec2 Normal() const;
+    vec2 Unit() const;
 
 	// Assignment operators
-	SPPLAT_INLINE vec2& operator-=(const vec2&);
-	SPPLAT_INLINE vec2& operator+=(const vec2&);
-    SPPLAT_INLINE vec2& operator*=(plat::float32);
-	SPPLAT_INLINE vec2& operator/=(plat::float32);
+	SPPLAT_INLINE vec2<TStorage>& operator-=(const vec2<TStorage >&);
+	SPPLAT_INLINE vec2<TStorage>& operator+=(const vec2<TStorage >&);
+    SPPLAT_INLINE vec2<TStorage>& operator*=(TStorage);
+	SPPLAT_INLINE vec2<TStorage>& operator/=(TStorage);
 
 	// Relational operators
-    plat::bool8 operator==(const vec2& p) const { return ((x == p.x) && (y == p.y)); }
-	plat::bool8 operator!=(const vec2& p) const { return ((x != p.x) || (y != p.y)); }
-	plat::bool8 Equals(const vec2& p, plat::float32 epsilon = 1E-6f);
-
-	// In-place normalize
-	vec2& Unify();
+    plat::bool8 operator==(const vec2<TStorage>& p) const { return ((x == p.x) && (y == p.y)); }
+	plat::bool8 operator!=(const vec2<TStorage>& p) const { return ((x != p.x) || (y != p.y)); }
+	
+    // Returns true if the vector components are within the specified epsilon. Note that this epsilon is applied
+    // per-part, the vectors vec2(0,0) and vec2(1,1) are equal under an epsilon of 1.
+    plat::bool8 Equals(const vec2<TStorage>& p, TStorage epsilon = 1E-6f);
 
 	// Binary operators
 	SPPLAT_INLINE vec2 operator-(const vec2&) const;
 	SPPLAT_INLINE vec2 operator+(const vec2&) const;
+
+    // Static functions
+    static SPPLAT_INLINE TStorage DotProduct(const vec2<TStorage>& a, const vec2<TStorage>& b);
+    static SPPLAT_INLINE vec2<TStorage> Interpolate(const vec2<TStorage>& p1, const vec2<TStorage>& p2, TStorage t);
 };
 
-SPPLAT_INLINE vec2& vec2::operator-=(const vec2& a)
+//
+// vec2 template function implementations
+// 
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage>& vec2<TStorage>::operator-=(const vec2<TStorage>& a)
 {
 	x -= a.x;
 	y -= a.y;
 	return *this;
 }
 
-SPPLAT_INLINE vec2& vec2::operator+=(const vec2& a)
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage >& vec2<TStorage>::operator+=(const vec2<TStorage >& a)
 {
 	x += a.x;
 	y += a.y;
 	return *this;
 }
 
-SPPLAT_INLINE vec2& vec2::operator*=(plat::float32 f)
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage >& vec2<TStorage>::operator*=(TStorage f)
 {
 	x *= f;
 	y *= f;
 	return *this;
 }
 
-SPPLAT_INLINE vec2& vec2::operator/=(plat::float32 f)
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage >& vec2<TStorage>::operator/=(TStorage f)
 {
 	x /= f;
 	y /= f;
 	return *this; 
 }
 
-SPPLAT_INLINE vec2 vec2::operator-(const vec2& b) const
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage > vec2<TStorage>::operator-(const vec2& b) const
 {
 	return vec2(x-b.x, y-b.y);
 }
 
-SPPLAT_INLINE vec2 vec2::operator+(const vec2& b) const
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage > vec2<TStorage>::operator+(const vec2& b) const
 {
 	return vec2(x+b.x, y+b.y);
 }
 
-//
-// Operators
-// 
-
-SPPLAT_INLINE vec2 operator*(plat::float32 f, const vec2& a)
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage> operator*(TStorage f, const vec2<TStorage>& a)
 {
-	return vec2(a.x*f, a.y*f);
+	return vec2<TStorage>(a.x*f, a.y*f);
 }
 
-SPPLAT_INLINE vec2 operator*(const vec2& a, plat::float32 f)
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage> operator*(const vec2<TStorage>& a, TStorage f)
 {
-	return vec2(a.x*f, a.y*f);
+	return vec2<TStorage>(a.x*f, a.y*f);
 }
 
-SPPLAT_INLINE vec2 operator/(const vec2& a, plat::float32 f)
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage> operator/(const vec2<TStorage>& a, TStorage f)
 {
-	return vec2(a.x/f, a.y/f);
+	return vec2<TStorage>(a.x/f, a.y/f);
 }
 
-SPPLAT_INLINE plat::float32 DotProduct(const vec2& a, const vec2& b)
+template <typename TStorage>
+SPPLAT_INLINE TStorage vec2<TStorage>::DotProduct(const vec2& a, const vec2& b)
 {
 	return (a.x*b.x + a.y*b.y);
 }
 
-SPPLAT_INLINE vec2 Interpolate(const vec2& p1, const vec2& p2, plat::float32 t)
+template <typename TStorage>
+SPPLAT_INLINE vec2<TStorage> vec2<TStorage>::Interpolate(const vec2<TStorage>& p1, const vec2<TStorage>& p2, TStorage t)
 {
 	return p1 + t*(p2-p1);
 }
+
+template <typename TStorage>
+plat::float32 vec2<TStorage>::Length() const
+{
+    return Functions::Sqrt(x*x+y*y);
+}
+
+template <typename TStorage>
+vec2<TStorage> vec2<TStorage>::Normal() const
+{
+	float32 flLength = Length();
+	float32 flInvLength = 0;
+	if (flLength != 0.0f)
+		flInvLength = 1.0f / flLength;
+
+	return vec2(x * flInvLength, y * flInvLength);
+}
+
+template <typename TStorage>
+vec2<TStorage> vec2<TStorage>::Unit() const
+{
+    plat::float32 flLength = Length();
+	plat::float32 flInvLength = 0;
+	if (flLength != 0.0f)
+		flInvLength = 1.0f / flLength;
+
+    return vec2(x *flInvLength, y * flInvLength);
+}
+
+template <typename TStorage>
+plat::bool8 vec2<TStorage>::Equals(const vec2<TStorage>& p, TStorage epsilon)
+{
+	if (p.x > x-epsilon && p.x < x+epsilon &&
+		p.y > y-epsilon && p.y < y+epsilon)
+		return 1;
+	else
+		return 0;
+}
+
+//
+// Common vec2 types.
+//
+
+// @todo should these be moved to another location? They seem out of place in this header but we don't have a more
+//       suitable header yet.
+typedef vec2<plat::float32> vec2f;
+typedef vec2<plat::uint32> vec2i;
 
 }
 }
