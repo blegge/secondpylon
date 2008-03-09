@@ -1,5 +1,5 @@
 #include "viewscene_windowutils.h"
-#include <secondpylon/diag/error_assert.h>
+#include <secondpylon/diag/diag_assert.h>
 
 using namespace secondpylon;
 using namespace secondpylon::plat;
@@ -22,15 +22,15 @@ void WindowUtils::register_classes(HINSTANCE instance)
 {
     WNDCLASSW wc = { 0, WndProc, 0, 0, instance, LoadIcon(0, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW), (HBRUSH)GetStockObject(BLACK_BRUSH), 0, g_window_class_name };
     ATOM result = RegisterClassW(&wc);
-    SPERROR_ASSERT(result != 0);
-    SPERROR_UNREFERENCED(result);
+    SPDIAG_ASSERT(result != 0);
+    SPDIAG_UNREFERENCED(result);
 }
 
 void WindowUtils::unregister_classes(HINSTANCE instance)
 {
     BOOL result = UnregisterClassW(g_window_class_name, instance);
-    SPERROR_ASSERT(result != 0);
-    SPERROR_UNREFERENCED(result);
+    SPDIAG_ASSERT(result != 0);
+    SPDIAG_UNREFERENCED(result);
 }
 
 void WindowUtils::create_window(
@@ -39,7 +39,7 @@ void WindowUtils::create_window(
                                 , const wchar_t* window_name
                                 , math::vec2i dims)
 {
-    SPERROR_ASSERT(window_result.m_window == 0);
+    SPDIAG_ASSERT(window_result.m_window == 0);
 
     DWORD window_style = 
         (WS_POPUP 
@@ -62,7 +62,7 @@ void WindowUtils::create_window(
 		NULL,                  // Menu
 		instance,			    // App Instance
 		NULL);                 // Window Creation Data
-    SPERROR_ASSERT(new_window != 0);
+    SPDIAG_ASSERT(new_window != 0);
 
 	ShowWindow(new_window, SW_SHOWNORMAL);
 

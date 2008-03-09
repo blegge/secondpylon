@@ -4,7 +4,7 @@
 
 #include <windows.h>
 #include <secondpylon/plat/plat_types.h>
-#include <secondpylon/diag/error_assert.h>
+#include <secondpylon/diag/diag_assert.h>
 #include <secondpylon/math/math_vec2.h>
 #include <viewscene_windowutils.h>
 #include <viewscene_applicationutils.h>
@@ -34,8 +34,8 @@ struct RenderUtils
 
         ~RenderDevice()
         {
-            SPERROR_ASSERT(NULL == m_pD3D);
-            SPERROR_ASSERT(NULL == m_pDevice);
+            SPDIAG_ASSERT(NULL == m_pD3D);
+            SPDIAG_ASSERT(NULL == m_pDevice);
         }
 
         IDirect3D9* m_pD3D;
@@ -52,7 +52,7 @@ struct RenderUtils
 
     static void CreateDevice(RenderDevice& device, const DeviceParameters& parameters)
     {
-        SPERROR_ASSERT(NULL == device.m_pDevice);
+        SPDIAG_ASSERT(NULL == device.m_pDevice);
 
         // Create D3D and the rendering device.
         IDirect3D9* pD3D = Direct3DCreate9( D3D_SDK_VERSION );
@@ -93,8 +93,8 @@ struct RenderUtils
                 , D3DUSAGE_DEPTHSTENCIL
                 , D3DRTYPE_SURFACE
                 , internal_params.AutoDepthStencilFormat );
-            SPERROR_ASSERT(hr == S_OK);
-            SPERROR_UNREFERENCED(hr);
+            SPDIAG_ASSERT(hr == S_OK);
+            SPDIAG_UNREFERENCED(hr);
     //        pD3D->CheckDepthStencilMatch(parameters.adapter, D3DDEVTYPE_HAL, , internal_params. );
     //        pD3D->CheckDeviceFormat();
     //        pD3D->CheckDeviceFormatConversion();

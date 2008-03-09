@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="error_test"
+	Name="diag_test"
 	ProjectGUID="{5647D0EF-4BD2-457E-806D-B19AA222AE25}"
 	Keyword="Win32Proj">
 	<Platforms>
@@ -33,12 +33,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib"
-				OutputFile="$(OutDir)/error_test.exe"
+				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib diag.lib"
+				OutputFile="$(OutDir)/diag_test.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/error_test.pdb"
+				ProgramDatabaseFile="$(OutDir)/diag_test.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -82,8 +82,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib"
-				OutputFile="$(OutDir)/error_test.exe"
+				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib diag.lib"
+				OutputFile="$(OutDir)/diag_test.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
@@ -121,7 +121,10 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\test\error_test_assert.cpp">
+				RelativePath="..\test\diag_test_assert.cpp">
+			</File>
+			<File
+				RelativePath="..\test\diag_test_log.cpp">
 			</File>
 		</Filter>
 	</Files>

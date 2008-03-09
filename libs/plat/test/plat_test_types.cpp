@@ -15,8 +15,6 @@ TEST(VerifySize)
     CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::byte));
 
     CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::bool8));
-
-    CHECK_EQUAL(size_t(1), sizeof(secondpylon::plat::uchar));
 }
 
 TEST(VerifyBool)
@@ -41,7 +39,4 @@ TEST(VerifySign)
     
     // Byte is always unsigned
     CHECK(secondpylon::plat::byte(0xff) > 0);
-
-    // char is always unsigned
-    CHECK(secondpylon::plat::uchar(0xff) > 0);
 }
