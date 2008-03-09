@@ -5,3 +5,5 @@ Portability
 Always use forward slashes ('/') for includes. Backslashes ('\') work on some platforms as they happen to map the
 underlying filesystem. Only forward slashes are correct according to the standard
 
+Literal suffixes (ie 1.5F) will use an upper case letter, as lower case letters can read too close to numbers (ie 15l
+looks too much like 151. Use 15L instead).

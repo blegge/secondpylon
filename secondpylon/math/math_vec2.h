@@ -144,8 +144,8 @@ vec2<TStorage> vec2<TStorage>::Normal() const
 {
 	float32 flLength = Length();
 	float32 flInvLength = 0;
-	if (flLength != 0.0f)
-		flInvLength = 1.0f / flLength;
+	if (flLength != 0.0F)
+		flInvLength = 1.0F / flLength;
 
 	return vec2(x * flInvLength, y * flInvLength);
 }
@@ -155,8 +155,8 @@ vec2<TStorage> vec2<TStorage>::Unit() const
 {
     plat::float32 flLength = Length();
 	plat::float32 flInvLength = 0;
-	if (flLength != 0.0f)
-		flInvLength = 1.0f / flLength;
+	if (flLength != 0.0F)
+		flInvLength = 1.0F / flLength;
 
     return vec2(x *flInvLength, y * flInvLength);
 }
