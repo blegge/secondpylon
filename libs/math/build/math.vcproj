@@ -22,6 +22,7 @@
 				AdditionalIncludeDirectories="..\..\..\."
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
+				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
 				UsePrecompiledHeader="0"
@@ -63,6 +64,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\..\."
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				ExceptionHandling="FALSE"
 				RuntimeLibrary="4"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -118,11 +120,6 @@
 			<File
 				RelativePath="..\..\..\secondpylon\math\math_vec2.h">
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 	</Files>
 	<Globals>

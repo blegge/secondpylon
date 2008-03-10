@@ -7,3 +7,10 @@ underlying filesystem. Only forward slashes are correct according to the standar
 
 Literal suffixes (ie 1.5F) will use an upper case letter, as lower case letters can read too close to numbers (ie 15l
 looks too much like 151. Use 15L instead).
+
+Prefixes:
+Class/struct data members use m_.
+Globals use g_.
+
+Exceptions are only permitted when required by external libraries or in test projects.
+
