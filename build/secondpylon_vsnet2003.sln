@@ -9,6 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest++.vsnet2003", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plat_test", "..\libs\plat\build\plat_test.vcproj", "{CB1332EA-7694-46CA-AFDF-15DAF485EE59}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7E5DD804-EC63-4FA5-BB6D-53DA86806EF5} = {7E5DD804-EC63-4FA5-BB6D-53DA86806EF5}
 		{B324BA20-B79C-4AF8-BFE3-FB2F8F129669} = {B324BA20-B79C-4AF8-BFE3-FB2F8F129669}
 		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994} = {92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}
 	EndProjectSection
@@ -31,6 +32,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\libs\math\build\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "diag_test", "..\libs\diag\build\diag_test.vcproj", "{5647D0EF-4BD2-457E-806D-B19AA222AE25}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7E5DD804-EC63-4FA5-BB6D-53DA86806EF5} = {7E5DD804-EC63-4FA5-BB6D-53DA86806EF5}
+		{8E4D985F-E108-4098-8653-8B5A43B8708E} = {8E4D985F-E108-4098-8653-8B5A43B8708E}
+		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994} = {92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math_test", "..\libs\math\build\math_test.vcproj", "{1E34EB1A-791D-4474-AE0B-9F79A732590F}"
@@ -42,10 +46,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math_test", "..\libs\math\b
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "~doc", "..\libs\~doc\build\~doc.vcproj", "{DBB32A18-D772-4D97-9905-FF8C5D6D6217}"
-	ProjectSection(ProjectDependencies) = postProject
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "error", "..\libs\diag\build\error.vcproj", "{8E4D985F-E108-4098-8653-8B5A43B8708E}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -95,10 +95,6 @@ Global
 		{DBB32A18-D772-4D97-9905-FF8C5D6D6217}.Debug.Build.0 = Debug|Win32
 		{DBB32A18-D772-4D97-9905-FF8C5D6D6217}.Release.ActiveCfg = Release|Win32
 		{DBB32A18-D772-4D97-9905-FF8C5D6D6217}.Release.Build.0 = Release|Win32
-		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Debug.ActiveCfg = Debug|Win32
-		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Debug.Build.0 = Debug|Win32
-		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Release.ActiveCfg = Release|Win32
-		{8E4D985F-E108-4098-8653-8B5A43B8708E}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection
