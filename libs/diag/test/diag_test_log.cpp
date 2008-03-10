@@ -1,6 +1,8 @@
 #include <secondpylon/diag/diag_log.h>
 #include <unittest++/src/UnitTest++.h>
 
+// @todo Can we find a way to test disabling the logs RSDIAG_ENABLE_LOG?
+
 using namespace secondpylon;
 
 namespace 
@@ -26,17 +28,6 @@ namespace
     };
 }
 
-TEST(UncopyableSize)
-{
-    CHECK_EQUAL(sizeof(plat::uint32), sizeof(secondpylon::diag::ILogListener));
-}
-
-//TEST(LogInit)
-//{
-//    diag::Log testLog;
-//    testLog.Print("test");
-//}
-
 TEST(LogAddListener)
 {
     const char* msg = "test";
@@ -45,6 +36,19 @@ TEST(LogAddListener)
     StoringLogListener listener;
     testLog.AddListener(listener);
     testLog.Message(msg);
+    testLog.RemoveListener(listener);
+
+    CHECK_EQUAL(msg, listener.GetMessage());
+}
+
+TEST(LogLogMessage)
+{
+    const char* msg = "test";
+
+    diag::Log testLog;
+    StoringLogListener listener;
+    testLog.AddListener(listener);
+    RSDIAG_LOG(testLog, msg);
     testLog.RemoveListener(listener);
 
     CHECK_EQUAL(msg, listener.GetMessage());

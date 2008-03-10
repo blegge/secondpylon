@@ -3,6 +3,7 @@
 
 #include <secondpylon/plat/plat_types.h>
 
+#pragma warning(disable:4530) // Disable exception warnings
 #pragma warning(disable:4702)
 #include <list>
 
@@ -12,8 +13,9 @@
 namespace secondpylon {
 namespace diag {
 
-    // 
-    // This is not an ideal solution by any stretch. 
+    // Trait class to flag a class as uncopyable. Ideally classes could aggregate this instead of deriving from it.
+    // Unfortunately, aggregation has a cost as it has to be possible to take the address of this object even though it
+    // doesn't have any data.
     class Uncopyable
     {
     public:
@@ -23,31 +25,6 @@ namespace diag {
         Uncopyable(Uncopyable&);
         Uncopyable& operator=(Uncopyable&);
     };
-
-    /*
-    class RefCount : public Uncopyable
-    {
-    public:
-        RefCount()
-        {
-        }
-
-        ~RefCount()
-        {
-        }
-
-        void AddRef()
-        {
-        }
-
-        void ReleaseRef()
-        {
-        }
-
-    private:
-        plat::uint32 m_RefCount;
-    };
-*/
 
     class ILogListener : public Uncopyable
     {
@@ -74,9 +51,9 @@ namespace diag {
     #endif
 
     #if RSDIAG_ENABLE_LOG
-        #define RSDIAG_LOG(message) Log::Print(message)
+        #define RSDIAG_LOG(log, message) log.Message(message);
     #else
-        #define RSDIAG_LOG(message)
+        #define RSDIAG_LOG(log, message)
     #endif
 
 }

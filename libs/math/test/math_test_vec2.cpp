@@ -93,6 +93,16 @@ TEST(Plus)
     CHECK_EQUAL(math::vec2f(0.0F, 5.5F), math::vec2f(1.0F, 2.5F) + math::vec2f(-1.0F, 3.0F));
 }
 
+TEST(Times)
+{
+    CHECK_EQUAL(math::vec2f(2.0F, 5.0F), math::vec2f(1.0F, 2.5F) * 2.0f);
+}
+
+TEST(Divide)
+{
+    CHECK_EQUAL(math::vec2f(1.0F, 2.5F), math::vec2f(2.0F, 5.0F) / 2.0f);
+}
+
 TEST(MinusEqual)
 {
     SPTEST_UNIMPLEMENTED();
@@ -111,6 +121,16 @@ TEST(TimesEqual)
 TEST(DivEqual)
 {
     SPTEST_UNIMPLEMENTED();
+}
+
+TEST(DivEqualOutOfRange)
+{
+    SPTEST_CHECKASSERTS_BEGIN()
+    {
+        math::vec2f base(2.0F, 2.0F);
+        base /= 0.0F;
+    }
+    SPTEST_CHECKASSERTS_END()
 }
 
 TEST(DotProduct)
