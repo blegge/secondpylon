@@ -109,6 +109,9 @@
 			<File
 				RelativePath="..\src\math_vec2.cpp">
 			</File>
+			<File
+				RelativePath="..\src\math_vec3.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -119,6 +122,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\math\math_vec2.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\math\math_vec3.h">
 			</File>
 		</Filter>
 	</Files>

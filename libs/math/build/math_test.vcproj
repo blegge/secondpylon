@@ -128,6 +128,9 @@
 			<File
 				RelativePath="..\test\math_test_vec2.cpp">
 			</File>
+			<File
+				RelativePath="..\test\math_test_vec3.cpp">
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
