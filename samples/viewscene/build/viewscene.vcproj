@@ -34,11 +34,13 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="math.lib renderer.lib"
 				OutputFile="$(OutDir)/viewscene.exe"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
 				ProgramDatabaseFile="$(OutDir)/viewscene.pdb"
-				SubSystem="1"
+				SubSystem="2"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
@@ -82,10 +84,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="math.lib renderer.lib"
 				OutputFile="$(OutDir)/viewscene.exe"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"/>
@@ -126,6 +130,12 @@
 			</File>
 			<File
 				RelativePath="..\src\viewscene_main.cpp">
+			</File>
+			<File
+				RelativePath=".\viewscene_renderutils.cpp">
+			</File>
+			<File
+				RelativePath="..\src\viewscene_renderutils.h">
 			</File>
 			<File
 				RelativePath="..\src\viewscene_windowutils.cpp">

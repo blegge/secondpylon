@@ -7,6 +7,10 @@
 namespace secondpylon {
 namespace plat {
 
+    // Define basic types. These defines may need to vary by platform, as C/C++ type definitions are more general than
+    // we need here. Using these types simplify serialization and general file io. For simplicity, these types shoulse
+    // be used at all times.
+
     typedef unsigned char uint8;
     typedef unsigned short uint16;
     typedef unsigned int uint32;

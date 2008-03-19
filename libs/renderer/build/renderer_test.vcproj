@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="math_test"
-	ProjectGUID="{1E34EB1A-791D-4474-AE0B-9F79A732590F}"
+	Name="renderer_test"
+	ProjectGUID="{2673C42B-FD4E-432D-80D8-6C9B2D98838C}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -22,7 +22,6 @@
 				AdditionalIncludeDirectories="..\..\..\.;  ..\..\..\external"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
-				ExceptionHandling="TRUE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
 				UsePrecompiledHeader="0"
@@ -34,12 +33,12 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib math.lib"
-				OutputFile="$(OutDir)/math_test.exe"
+				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib renderer.lib"
+				OutputFile="$(OutDir)/renderer_test.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/math_test.pdb"
+				ProgramDatabaseFile="$(OutDir)/renderer_test.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -73,7 +72,6 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\..\.;  ..\..\..\external"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				ExceptionHandling="TRUE"
 				RuntimeLibrary="4"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -84,8 +82,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib math.lib"
-				OutputFile="$(OutDir)/math_test.exe"
+				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib renderer.lib"
+				OutputFile="$(OutDir)/renderer_test.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
@@ -123,13 +121,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\test\math_test_functions.cpp">
-			</File>
-			<File
-				RelativePath="..\test\math_test_vec2.cpp">
-			</File>
-			<File
-				RelativePath="..\test\math_test_vec3.cpp">
+				RelativePath="..\test\renderer_color_test.cpp">
 			</File>
 		</Filter>
 	</Files>

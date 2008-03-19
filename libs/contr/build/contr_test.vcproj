@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="math_test"
-	ProjectGUID="{1E34EB1A-791D-4474-AE0B-9F79A732590F}"
+	Name="contr_test"
+	ProjectGUID="{E724061A-BB6C-4D05-AAE8-F95D3CCDD0F7}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -34,12 +34,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib math.lib"
-				OutputFile="$(OutDir)/math_test.exe"
+				OutputFile="$(OutDir)/contr_test.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/math_test.pdb"
+				ProgramDatabaseFile="$(OutDir)/contr_test.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -84,10 +82,8 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib math.lib"
-				OutputFile="$(OutDir)/math_test.exe"
+				OutputFile="$(OutDir)/contr_test.exe"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(OutDir)"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -123,13 +119,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\test\math_test_functions.cpp">
-			</File>
-			<File
-				RelativePath="..\test\math_test_vec2.cpp">
-			</File>
-			<File
-				RelativePath="..\test\math_test_vec3.cpp">
+				RelativePath="..\test\contr_array_test.cpp">
 			</File>
 		</Filter>
 	</Files>
