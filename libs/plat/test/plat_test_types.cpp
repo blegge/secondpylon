@@ -1,5 +1,5 @@
-#include <unittest++/src/UnitTest++.h>
 #include <secondpylon/plat/plat_types.h>
+#include <unittest++/src/UnitTest++.h>
 
 TEST(VerifySize)
 {
