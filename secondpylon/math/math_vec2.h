@@ -3,7 +3,7 @@
 
 #include <secondpylon/plat/plat_types.h>
 #include <secondpylon/plat/plat_compiler.h>
-#include <secondpylon/math/math_functions.h>
+#include <secondpylon/math/math_utils.h>
 
 namespace secondpylon {
 namespace math {
@@ -135,7 +135,7 @@ SPPLAT_INLINE vec2<TStorage> vec2<TStorage>::Interpolate(const vec2<TStorage>& p
 template <typename TStorage>
 plat::float32 vec2<TStorage>::Length() const
 {
-    return Functions::Sqrt(x*x+y*y);
+    return Utils::Sqrt(x*x+y*y);
 }
 
 template <typename TStorage>

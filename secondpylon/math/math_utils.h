@@ -1,5 +1,5 @@
-#ifndef SPMATH_FUNCTIONS_H
-#define SPMATH_FUNCTIONS_H
+#ifndef SPMATH_UTILS_H
+#define SPMATH_UTILS_H
 
 #include <secondpylon/plat/plat_compiler.h>
 #include <secondpylon/plat/plat_types.h>
@@ -9,7 +9,7 @@
 namespace secondpylon {
 namespace math {
 
-struct Functions
+struct Utils
 {
     static plat::float32 PI() { return 3.1415926535897931F; }
 
@@ -22,4 +22,4 @@ struct Functions
 }
 }
 
-#endif // SPMATH_FUNCTIONS_H
+#endif // SPMATH_UTILS_H

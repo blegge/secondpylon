@@ -104,7 +104,7 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\math_functions.cpp">
+				RelativePath="..\src\math_utils.cpp">
 			</File>
 			<File
 				RelativePath="..\src\math_vec2.cpp">
@@ -118,7 +118,7 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\..\secondpylon\math\math_functions.h">
+				RelativePath="..\..\..\secondpylon\math\math_utils.h">
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\math\math_vec2.h">

@@ -73,14 +73,14 @@ SUITE(vec2)
     {
         CHECK_EQUAL(2.0F, math::vec2f(0, 2).Length());
         CHECK_EQUAL(3.0F, math::vec2f(3, 0).Length());
-        CHECK_EQUAL(math::Functions::Sqrt(5.0F), math::vec2f(-2, 1).Length());
+        CHECK_EQUAL(math::Utils::Sqrt(5.0F), math::vec2f(-2, 1).Length());
     }
 
     TEST(Normal)
     {
         CHECK_EQUAL(math::vec2f(1.0, 0.0F), math::vec2f(3.0F, 0.0F).Normal());
 
-        plat::float32 length = 1.0F / math::Functions::Sqrt(2);
+        plat::float32 length = 1.0F / math::Utils::Sqrt(2);
         CHECK_EQUAL(math::vec2f(length, length), math::vec2f(1.0F, 1.0F).Normal());
 
         CHECK_EQUAL(1.0F, math::vec2f(100.0F, -10000.0F).Normal().Length());
