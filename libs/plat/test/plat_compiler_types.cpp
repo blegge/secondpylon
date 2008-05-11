@@ -45,4 +45,14 @@ SUITE(Compiler)
             CHECK_EQUAL(value, outputList[i]);
         }
     }
+
+    TEST(StrictCast)
+    {
+        char* source = "test";
+        intptr_t dest = StrictCast<intptr_t>(source);
+        char* roundtrip = StrictCast<char*>(dest);
+        
+        // Verify that source and roundtrip point at the same address.
+        CHECK_EQUAL(source, roundtrip);
+    }
 }

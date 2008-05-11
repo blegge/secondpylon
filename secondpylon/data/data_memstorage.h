@@ -2,6 +2,15 @@
 #define SPDATA_MEMSTORAGE_H
 
 /* This is a bootstrap/reference implementation of a stream memory storage implementation. This very is extremely inefficient for even moderate sized streams as it pushes data into a std::vector byte by byte. A more ideal version would operate operate on page chunks to reduce the cost of individual byte writes. A version like this could largely be inlined.
+
+// @todo Compare performance to a paged based allocation, as this impacts the class API. Paged based access couldn't
+//       return a pointer to the start of the buffer as it may span multiple non-contiguous pages.
+
+// @todo Implement fixed size memory buffer storage for optimal throughput. Profile against the dynamic memory case to
+//       determine if it is a useful avenue to explore as it impacts client requirements.
+
+// @todo Add testing to for read/handling for read overflows, including zeroing.
+
 */
 
 #include <secondpylon/plat/plat_types.h>
@@ -29,19 +38,15 @@ namespace data {
         MemStorage();
         MemStorage(const plat::byte* data, plat::uint32 dataSize);
 
-        void SetUsage(EUsage currentUsage);
-        EUsage GetUsage() const;
-
-        // Read functions
-        void Read(plat::byte* data, plat::uint32 size);
-        void Advance(plat::uint32 bytes);
-
-        // Write functions
-        void Write(plat::byte* data, plat::uint32 size);
-
         // Access to the raw underlying memory storage.
         const plat::byte* GetData() const;
         plat::uint32 GetDataSize() const;
+
+        // Stream API functions
+        void SetUsage(EUsage currentUsage);
+        void Write(plat::byte* data, plat::uint32 size);
+        void Read(plat::byte* data, plat::uint32 size);
+        void Advance(plat::uint32 bytes);
 
     private:
         EUsage m_Usage;
@@ -64,11 +69,6 @@ namespace data {
     {
         SPDIAG_ASSERT(currentUsage == kUnused || kUnused == m_Usage);
         m_Usage = currentUsage; 
-    }
-
-    SPPLAT_INLINE MemStorage::EUsage MemStorage::GetUsage() const 
-    { 
-        return m_Usage; 
     }
 
     SPPLAT_INLINE void MemStorage::Advance(plat::uint32 bytes)

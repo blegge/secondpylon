@@ -6,6 +6,8 @@
 
 using namespace secondpylon;
 
+// @todo Endian adapters need testing. Right nowe have only testing required to insure they compile.
+
 SUITE(EndianAdapter)
 {
     TEST(RoundTripStream)
