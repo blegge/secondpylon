@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="plat"
-	ProjectGUID="{B324BA20-B79C-4AF8-BFE3-FB2F8F129669}"
+	Name="data_test"
+	ProjectGUID="{5135B415-7E1D-4C64-A614-04E0E74BB7AE}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -14,15 +14,14 @@
 			Name="Debug|Win32"
 			OutputDirectory="..\..\..\built\vc2003\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\built\vc2003\$(ConfigurationName)\$(ProjectName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\."
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				AdditionalIncludeDirectories="..\..\..\.;  ..\..\..\external"
+				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="TRUE"
-				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
 				UsePrecompiledHeader="0"
@@ -33,8 +32,15 @@
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/plat.lib"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib data.lib"
+				OutputFile="$(OutDir)/data_test.exe"
+				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(OutDir)"
+				GenerateDebugInformation="TRUE"
+				ProgramDatabaseFile="$(OutDir)/data_test.pdb"
+				SubSystem="1"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -49,6 +55,8 @@
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
 			<Tool
 				Name="VCManagedWrapperGeneratorTool"/>
 			<Tool
@@ -58,13 +66,12 @@
 			Name="Release|Win32"
 			OutputDirectory="..\..\..\built\vc2003\$(ConfigurationName)"
 			IntermediateDirectory="..\..\..\built\vc2003\$(ConfigurationName)\$(ProjectName)"
-			ConfigurationType="4"
+			ConfigurationType="1"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\."
-				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				ExceptionHandling="FALSE"
+				AdditionalIncludeDirectories="..\..\..\.;  ..\..\..\external"
+				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="4"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -74,8 +81,16 @@
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/plat.lib"/>
+				Name="VCLinkerTool"
+				AdditionalDependencies="UnitTest++.vsnet2003.lib test.lib data.lib"
+				OutputFile="$(OutDir)/data_test.exe"
+				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(OutDir)"
+				GenerateDebugInformation="TRUE"
+				SubSystem="1"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -90,6 +105,8 @@
 				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"/>
+			<Tool
+				Name="VCWebDeploymentTool"/>
 			<Tool
 				Name="VCManagedWrapperGeneratorTool"/>
 			<Tool
@@ -104,24 +121,10 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\src\plat_compiler.cpp">
+				RelativePath="..\test\data_test_endianadapter.cpp">
 			</File>
 			<File
-				RelativePath="..\src\plat_types.cpp">
-			</File>
-		</Filter>
-		<Filter
-			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
-			<File
-				RelativePath="..\..\..\secondpylon\plat\plat_architecture.h">
-			</File>
-			<File
-				RelativePath="..\..\..\secondpylon\plat\plat_compiler.h">
-			</File>
-			<File
-				RelativePath="..\..\..\secondpylon\plat\plat_types.h">
+				RelativePath="..\test\data_test_stream.cpp">
 			</File>
 		</Filter>
 	</Files>

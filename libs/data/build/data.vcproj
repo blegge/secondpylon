@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="plat"
-	ProjectGUID="{B324BA20-B79C-4AF8-BFE3-FB2F8F129669}"
+	Name="data"
+	ProjectGUID="{7F77C323-F8EB-4F30-8A72-C07BA582FD32}"
 	Keyword="Win32Proj">
 	<Platforms>
 		<Platform
@@ -19,10 +19,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\."
+				AdditionalIncludeDirectories="..\..\..\.; "
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
-				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
 				UsePrecompiledHeader="0"
@@ -34,7 +33,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/plat.lib"/>
+				OutputFile="$(OutDir)/data.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -62,9 +61,8 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\."
+				AdditionalIncludeDirectories="..\..\..\.; "
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
-				ExceptionHandling="FALSE"
 				RuntimeLibrary="4"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -75,7 +73,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLibrarianTool"
-				OutputFile="$(OutDir)/plat.lib"/>
+				OutputFile="$(OutDir)/data.lib"/>
 			<Tool
 				Name="VCMIDLTool"/>
 			<Tool
@@ -104,10 +102,13 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\src\plat_compiler.cpp">
+				RelativePath="..\src\data_instream.cpp">
 			</File>
 			<File
-				RelativePath="..\src\plat_types.cpp">
+				RelativePath="..\src\data_memstorage.cpp">
+			</File>
+			<File
+				RelativePath="..\src\data_outstream.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -115,13 +116,19 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\..\secondpylon\plat\plat_architecture.h">
+				RelativePath="..\..\..\secondpylon\data\data_endianadapter.h">
 			</File>
 			<File
-				RelativePath="..\..\..\secondpylon\plat\plat_compiler.h">
+				RelativePath="..\..\..\secondpylon\data\data_filestorage.h">
 			</File>
 			<File
-				RelativePath="..\..\..\secondpylon\plat\plat_types.h">
+				RelativePath="..\..\..\secondpylon\data\data_instream.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\data\data_memstorage.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\data\data_outstream.h">
 			</File>
 		</Filter>
 	</Files>

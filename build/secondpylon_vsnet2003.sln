@@ -77,6 +77,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderer_test", "..\libs\re
 		{92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994} = {92E7ADB5-4CFA-4CC7-9BF4-6B6868CA2994}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data", "..\libs\data\build\data.vcproj", "{7F77C323-F8EB-4F30-8A72-C07BA582FD32}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data_test", "..\libs\data\build\data_test.vcproj", "{5135B415-7E1D-4C64-A614-04E0E74BB7AE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7E5DD804-EC63-4FA5-BB6D-53DA86806EF5} = {7E5DD804-EC63-4FA5-BB6D-53DA86806EF5}
+		{7F77C323-F8EB-4F30-8A72-C07BA582FD32} = {7F77C323-F8EB-4F30-8A72-C07BA582FD32}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -139,6 +149,14 @@ Global
 		{2673C42B-FD4E-432D-80D8-6C9B2D98838C}.Debug.Build.0 = Debug|Win32
 		{2673C42B-FD4E-432D-80D8-6C9B2D98838C}.Release.ActiveCfg = Release|Win32
 		{2673C42B-FD4E-432D-80D8-6C9B2D98838C}.Release.Build.0 = Release|Win32
+		{7F77C323-F8EB-4F30-8A72-C07BA582FD32}.Debug.ActiveCfg = Debug|Win32
+		{7F77C323-F8EB-4F30-8A72-C07BA582FD32}.Debug.Build.0 = Debug|Win32
+		{7F77C323-F8EB-4F30-8A72-C07BA582FD32}.Release.ActiveCfg = Release|Win32
+		{7F77C323-F8EB-4F30-8A72-C07BA582FD32}.Release.Build.0 = Release|Win32
+		{5135B415-7E1D-4C64-A614-04E0E74BB7AE}.Debug.ActiveCfg = Debug|Win32
+		{5135B415-7E1D-4C64-A614-04E0E74BB7AE}.Debug.Build.0 = Debug|Win32
+		{5135B415-7E1D-4C64-A614-04E0E74BB7AE}.Release.ActiveCfg = Release|Win32
+		{5135B415-7E1D-4C64-A614-04E0E74BB7AE}.Release.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

@@ -1,4 +1,5 @@
 #include <secondpylon/diag/diag_log.h>
+#include <secondpylon/plat/plat_compiler.h>
 #include <unittest++/src/UnitTest++.h>
 
 // @todo Can we find a way to test disabling the logs RSDIAG_ENABLE_LOG?
@@ -9,7 +10,10 @@ namespace
 {
     class StoringLogListener : public diag::ILogListener
     {
+        SPPLAT_UNCOPYABLE(StoringLogListener);
+
         enum { kStorageSize = 80 };
+
     public:
         StoringLogListener()
         {

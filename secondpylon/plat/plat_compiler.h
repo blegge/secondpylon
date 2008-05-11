@@ -27,4 +27,19 @@
 // to be better documented.
 #define SPPLAT_PREFETCH(address)
 
+// This is macro serves two purposes:
+//
+// 1)  Describe a class as uncopyable for documentation purposes.
+// 2)  Suppress 'copy constructor could not be generated' and 'assignment operator could not be generated' errors.
+//
+// The initial implementation was a trait base class. This didn't work cleanly when we had multiple classes in a
+// hierarchy that needed to be uncopyable as this generates errors about deriving multiple times from a class.
+//
+// @todo This is a really belongs in a 'common' library as it shouldn't need to vary compiler to compiler. We haven't  
+// standardized what what the common lib will be yet.
+#define SPPLAT_UNCOPYABLE(ClassName) \
+    private: \
+        ClassName(ClassName&); \
+        ClassName& operator=(ClassName&)
+
 #endif // SPPLAT_COMPILER_H
