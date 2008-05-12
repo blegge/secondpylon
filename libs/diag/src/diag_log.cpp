@@ -1,17 +1,27 @@
 #include <secondpylon/diag/diag_log.h>
-#include <secondpylon/diag/diag_assert.h>
-
 
 namespace secondpylon {
 namespace diag {
 
-void Log::AddListener(ILogListener&) {}
-void Log::RemoveListener(ILogListener&) {}
-void Log::Message(const char* message) 
-{
-    SPDIAG_UNREFERENCED(message);
-}
+    void Log::AddListener(ILogListener& listener)
+    {
+        m_ListenerList.push_back(&listener);
+    }
+
+    void Log::RemoveListener(ILogListener& listener)
+    {
+        m_ListenerList.remove(&listener);
+    }
+
+    void Log::Message(const char* message)
+    {
+        std::list<ILogListener*>::iterator each = m_ListenerList.begin();
+        std::list<ILogListener*>::iterator end = m_ListenerList.end();
+        for (;each != end; ++each)
+        {
+            (*each)->OnMessage(message);
+        }
+    }
 
 }
 }
-
