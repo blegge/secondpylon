@@ -1,6 +1,7 @@
 #ifndef SPDATA_MEMSTORAGE_H
 #define SPDATA_MEMSTORAGE_H
 
+
 /* This is a bootstrap/reference implementation of a stream memory storage implementation. This very is extremely inefficient for even moderate sized streams as it pushes data into a std::vector byte by byte. A more ideal version would operate operate on page chunks to reduce the cost of individual byte writes. A version like this could largely be inlined.
 
 // @todo Compare performance to a paged based allocation, as this impacts the class API. Paged based access couldn't
@@ -8,8 +9,6 @@
 
 // @todo Implement fixed size memory buffer storage for optimal throughput. Profile against the dynamic memory case to
 //       determine if it is a useful avenue to explore as it impacts client requirements.
-
-// @todo Add testing to for read/handling for read overflows, including zeroing.
 
 */
 
@@ -19,6 +18,7 @@
 
 #pragma warning(push)
 #pragma warning(disable:4702)
+#pragma warning(disable:4530) // Disable the 'exceptions used' warning due to the use of a standard container.
 #include <vector>
 #pragma warning(pop)
 
@@ -42,10 +42,21 @@ namespace data {
         const plat::byte* GetData() const;
         plat::uint32 GetDataSize() const;
 
+        //
         // Stream API functions
+        //
         void SetUsage(EUsage currentUsage);
-        void Write(plat::byte* data, plat::uint32 size);
-        void Read(plat::byte* data, plat::uint32 size);
+
+        // Adds bytes of data to the stream. Read can only be called when this object is locked
+        // for writing. 
+        void Write(plat::byte* data, plat::uint32 bytes);
+
+        // Fills the passed in buffer with size bytes from storage. Read can only be called when this object is locked
+        // for reading. Behavior is undefined when reading bytes reads beyond the end of storage.
+        void Read(plat::byte* data, plat::uint32 bytes);
+
+        // Advances the stream forward by bytes. Read can only be called when this object is locked for reading.
+        // Behavior is undefined if advancing by bytes advances beyond the end of storage.
         void Advance(plat::uint32 bytes);
 
     private:
@@ -74,6 +85,7 @@ namespace data {
     SPPLAT_INLINE void MemStorage::Advance(plat::uint32 bytes)
     { 
         SPDIAG_ASSERT(kRead == m_Usage);
+        SPDIAG_ASSERT(m_ReadOffset+bytes < m_Storage.size());
         m_ReadOffset += bytes; 
     }
 

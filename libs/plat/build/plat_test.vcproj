@@ -127,6 +127,9 @@
 				RelativePath="..\test\plat_compiler_types.cpp">
 			</File>
 			<File
+				RelativePath="..\test\plat_test_crt.cpp">
+			</File>
+			<File
 				RelativePath="..\test\plat_test_types.cpp">
 			</File>
 		</Filter>

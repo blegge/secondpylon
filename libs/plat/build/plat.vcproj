@@ -121,6 +121,9 @@
 				RelativePath="..\..\..\secondpylon\plat\plat_compiler.h">
 			</File>
 			<File
+				RelativePath="..\..\..\secondpylon\plat\plat_crt.h">
+			</File>
+			<File
 				RelativePath="..\..\..\secondpylon\plat\plat_types.h">
 			</File>
 		</Filter>

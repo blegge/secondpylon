@@ -28,9 +28,22 @@ void MemStorage::Read(plat::byte* data, plat::uint32 size)
 {
     SPDIAG_ASSERT(kRead == m_Usage);
 
-    for (plat::uint32 i = 0; i < size; ++i)
+    if (m_ReadOffset + size <= m_Storage.size())
     {
-        data[i] = m_Storage[m_ReadOffset++];
+        for (plat::uint32 i = 0; i < size; ++i)
+        {
+            data[i] = m_Storage[m_ReadOffset++];
+        }
+    }
+    else
+    {
+        SPDIAG_ERROR();
+
+        m_ReadOffset = m_Storage.size();
+        for (plat::uint32 i = 0; i < size; ++i)
+        {
+            data[i] = 0;
+        }
     }
 }
 

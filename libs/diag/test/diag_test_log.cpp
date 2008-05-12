@@ -10,7 +10,7 @@ namespace
 {
     class StoringLogListener : public diag::ILogListener
     {
-        SPPLAT_UNCOPYABLE(StoringLogListener);
+        SPUNCOPYABLE(StoringLogListener);
 
         enum { kStorageSize = 80 };
 

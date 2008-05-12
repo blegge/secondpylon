@@ -1,38 +1,30 @@
 #ifndef SPDATA_INSTREAM_H
 #define SPDATA_INSTREAM_H
 
+// Note that InStream does not contain a technique for arbitrary seeking or backward seeking. This is intentional this
+// operation is problematic for some storage types such as compressed data or data on a disc that is not designed for
+// random seeks.
+//
+// @todo Add a method to insure that reads and writes are synced. This may be as simple as an accumulator we optionally
+//       write to the stream in particular configurations that tracks writes by type.
+
+#include <secondpylon/plat/plat_crt.h>
 #include <secondpylon/plat/plat_types.h>
 #include <secondpylon/plat/plat_compiler.h>
+#include <secondpylon/data/data_bytepacker.h>
 
 namespace secondpylon {
 namespace data {
     
-    template <typename TStorage>
-    class DefaultUnpacker
-    {
-    public:
-        template <typename T>
-        static void Read(TStorage& storage, T& data)
-        {
-            storage.Read((plat::byte*)&data, sizeof(T));
-        }
-
-        template <typename T>
-        static void Read(TStorage& storage, const T* data, size_t arrayLen)
-        {
-            storage.Read((plat::byte*)data, arrayLen*sizeof(T));
-        }
-    };
-
     // This class loads data from the provided storage using the specified unpacker. The syntax used to specify the
     // DefaultUnpacker may be a bit unfamiliar - it is a 'template template parameter'. The expanded end user versiou
     // would look like 'InStream<MemStorage, EndianAdapter<MemStorage> >'. Using template template syntax, we can
     // eliminate the redundant MemStorage specification and simplify this to 'InStream<MemStorage, EndianAdapter>'
-    template <typename TStorage, template <typename> class  Unpacker = DefaultUnpacker >
+    template <typename TStorage, template <typename> class Packer = SBytePacker >
     class InStream
     {
-        SPPLAT_UNCOPYABLE(InStream);
-        typedef Unpacker<typename TStorage> TUnpacker;
+        SPUNCOPYABLE(InStream);
+        typedef typename Packer<typename TStorage>::TUnpacker TUnpacker;
 
     public:
         InStream(TStorage& storage);
@@ -82,7 +74,7 @@ namespace data {
         {
             // Skip the string to avoid misaligning our next read
             m_Storage.Advance(sizeof(char)*size);
-            // TODO: issue an error? Policy?
+            // @todo Add error reporting for a buffer that is too small and add a test to verify this.
         }
         else
         {

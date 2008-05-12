@@ -1,5 +1,5 @@
-#ifndef SPDATA_ENDIANADAPTER_H
-#define SPDATA_ENDIANADAPTER_H
+#ifndef SPDATA_BYTESWAPPACKER_H
+#define SPDATA_BYTESWAPPACKER_H
 
 #include <secondpylon/plat/plat_types.h>
 
@@ -9,7 +9,7 @@ namespace data {
 // This class is used as a template policy to stream interfaces. This class swaps the endianness when writing data.
 // This can be useful when attempting to pack data to a native format.
 template <typename TStorage>
-class EndianAdapter
+class ByteSwapPacker
 {
 public:
     static void Write(TStorage& storage, plat::uint8 data) { storage.Write((plat::byte*)&data, sizeof(uint8)); }
@@ -19,7 +19,6 @@ public:
     static void Write(TStorage& storage, plat::uint16 data) { Write16(storage, data); }
     static void Write(TStorage& storage, plat::sint16 data) { Write16(storage, StrictCast<plat::uint16>(data)); }
 
-    
     static void Write(TStorage& storage, plat::uint32 data) { Write32(storage, data); }
     static void Write(TStorage& storage, plat::sint32 data) { Write32(storage, StrictCast<plat::uint32>(data)); }
     static void Write(TStorage& storage, plat::float32 data) { Write32(storage, StrictCast<plat::uint32>(data)); }
@@ -49,7 +48,15 @@ private:
     }
 };
 
+template <typename TStorage>
+struct SByteSwapPacker
+{
+    typedef ByteSwapPacker<TStorage> TPacker;
+
+    // @todo implement a ByteSwapUnpacker.
+};
+
 }
 }
 
-#endif // SPDATA_ENDIANADAPTER_H
+#endif // SPDATA_BYTESWAPPACKER_H

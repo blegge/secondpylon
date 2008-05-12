@@ -1,8 +1,7 @@
 #ifndef SPDIAG_LOG
 #define SPDIAG_LOG
 
-#include <secondpylon/plat/plat_types.h>
-#include <secondpylon/plat/plat_compiler.h>
+#include <secondpylon/plat/plat_crt.h>
 
 #pragma warning(push)
 #pragma warning(disable:4530) // Disable exception warnings
@@ -18,7 +17,7 @@ namespace diag {
 
     class ILogListener
     {
-        SPPLAT_UNCOPYABLE(ILogListener);
+        SPUNCOPYABLE(ILogListener);
 
     public:
         ILogListener() {}

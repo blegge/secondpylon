@@ -22,6 +22,7 @@
 				AdditionalIncludeDirectories="..\..\..\.; "
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="TRUE"
+				ExceptionHandling="FALSE"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
 				UsePrecompiledHeader="0"
@@ -63,6 +64,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="..\..\..\.; "
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
+				ExceptionHandling="FALSE"
 				RuntimeLibrary="4"
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
@@ -116,7 +118,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\..\..\secondpylon\data\data_endianadapter.h">
+				RelativePath="..\..\..\secondpylon\data\data_bytepacker.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\data\data_byteswappacker.h">
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\data\data_filestorage.h">

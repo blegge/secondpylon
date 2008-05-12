@@ -14,6 +14,8 @@ namespace diag {
 
 #define SPDIAG_ASSERT(x) assert(x)
 
+#define SPDIAG_ERROR() assert(0)
+
 // Helper to invoke a crash in the case of a truly unrecoverable situation. A common use is forcing a crash to occur 
 // early. This can be used to create a crash dump at a point with more information. For example, a NaN fed into a 
 // physics system may cause a crash much later. Tracking the source back may be difficult. Asserts work on dev machines,

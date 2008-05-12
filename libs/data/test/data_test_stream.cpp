@@ -3,11 +3,7 @@
 #include <secondpylon/data/data_memstorage.h>
 #include <unittest++/src/UnitTest++.h>
 #include <secondpylon/plat/plat_architecture.h>
-
-// @todo Remove the use of strcpy. This function is a common point of failure for C++ apps due to the lack of internal
-//       buffer overflow handling. Consider implementing a 'common' lib including safe function variations similar to
-//       the *_s functions specified in ISO/IEC TR 24731 
-#include <cstring>
+#include <secondpylon/plat/plat_crt.h>
 
 using namespace secondpylon;
 
@@ -26,7 +22,7 @@ struct SStreamTestCase
         , m_sint32(-1239057)
         , m_sint16(-1234)
     {
-        strcpy(m_szString, "Test");
+        StringCopy(m_szString, "Test", ArraySize(m_szString));
     }
 
     bool operator==(const SStreamTestCase& rhs) const
@@ -66,7 +62,7 @@ struct SStreamTestCase
         stream.Read(m_sint8);
         stream.Read(m_sint32);
         stream.Read(m_sint16);
-        stream.Read(m_szString, sizeof(m_szString)/sizeof(char));
+        stream.Read(m_szString, ArraySize(m_szString));
     }
 
     plat::bool8 m_bool;
@@ -130,7 +126,7 @@ TEST(WriteStreamAtomic)
 
 #endif
 
-    plat::uint32 blockSize = sizeof(block)/sizeof(plat::byte);
+    plat::uint32 blockSize = ArraySize(block);
     CHECK_EQUAL(blockSize, dataSize);
     CHECK(0 == memcmp(block, data, blockSize));
 }

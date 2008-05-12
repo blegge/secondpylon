@@ -124,6 +124,9 @@
 				RelativePath="..\test\data_test_endianadapter.cpp">
 			</File>
 			<File
+				RelativePath="..\test\data_test_memstorage.cpp">
+			</File>
+			<File
 				RelativePath="..\test\data_test_stream.cpp">
 			</File>
 		</Filter>

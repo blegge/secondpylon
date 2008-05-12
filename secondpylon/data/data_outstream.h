@@ -2,34 +2,17 @@
 #define SPDATA_OUTSTREAM_H
 
 #include <secondpylon/plat/plat_types.h>
-#include <secondpylon/plat/plat_compiler.h>
+#include <secondpylon/plat/plat_crt.h>
+#include <secondpylon/data/data_bytepacker.h>
 
 namespace secondpylon {
 namespace data {
 
-    template <typename TStorage>
-    class DefaultPacker
-    {
-    public:
-        template <typename T>
-        static void Write(TStorage& storage, T data)
-        {
-            storage.Write((plat::byte*)&data, sizeof(T));
-        }
-
-        template <typename T>
-        static void Write(TStorage& storage, const T* data, size_t arrayLen)
-        {
-            storage.Write((plat::byte*)data, arrayLen*sizeof(T));
-        }
-    };
-
-
-    template <typename TStorage, template <typename> class  Packer = DefaultPacker >
+    template <typename TStorage, template <typename> class Packer = SBytePacker >
     class OutStream
     {
-        SPPLAT_UNCOPYABLE(OutStream);
-        typedef Packer<typename TStorage> TPacker;
+        SPUNCOPYABLE(OutStream);
+        typedef typename Packer<typename TStorage>::TPacker TPacker;
 
     public:
         OutStream(TStorage& storage);
