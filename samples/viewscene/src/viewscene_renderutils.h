@@ -1,5 +1,5 @@
 #include <windows.h>
-#include <secondpylon/math/math_vec2.h>
+#include <viewscene_common.h>
 
 struct IDirect3D9;
 struct IDirect3DDevice9;
@@ -18,7 +18,7 @@ struct RenderUtils
     struct DeviceParameters
     {
         HWND parent_window;
-        secondpylon::math::vec2i dims;
+        vec2i dims;
         bool vsync;
         UINT adapter;
     };

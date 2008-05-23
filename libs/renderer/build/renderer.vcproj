@@ -104,6 +104,12 @@
 			<File
 				RelativePath="..\src\renderer_color.cpp">
 			</File>
+			<File
+				RelativePath="..\src\renderer_device.cpp">
+			</File>
+			<File
+				RelativePath="..\src\renderer_mesh.cpp">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -111,6 +117,34 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath="..\..\..\secondpylon\renderer\renderer_color.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_device.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_indexbuffer.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_material.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_mesh.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_rendertarget.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_texture.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_vertexbuffer.h">
+			</File>
+		</Filter>
+		<Filter
+			Name="doc"
+			Filter="">
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\Notes.txt">
 			</File>
 		</Filter>
 	</Files>

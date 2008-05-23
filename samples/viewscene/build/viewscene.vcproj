@@ -34,7 +34,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="math.lib renderer.lib"
+				AdditionalDependencies="math.lib renderer.lib d3dx9.lib d3d9.lib"
 				OutputFile="$(OutDir)/viewscene.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(OutDir)"
@@ -84,7 +84,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="math.lib renderer.lib"
+				AdditionalDependencies="math.lib renderer.lib d3dx9.lib d3d9.lib"
 				OutputFile="$(OutDir)/viewscene.exe"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(OutDir)"
@@ -129,6 +129,9 @@
 				RelativePath="..\src\viewscene_applicationutils.h">
 			</File>
 			<File
+				RelativePath="..\src\viewscene_common.h">
+			</File>
+			<File
 				RelativePath="..\src\viewscene_main.cpp">
 			</File>
 			<File
@@ -143,11 +146,6 @@
 			<File
 				RelativePath="..\src\viewscene_windowutils.h">
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 		</Filter>
 	</Files>
 	<Globals>

@@ -159,15 +159,6 @@ plat::bool8 vec2<TStorage>::Equals(const vec2<TStorage>& p, TStorage epsilon)
 		return 0;
 }
 
-//
-// Common vec2 types.
-//
-
-// @todo should these be moved to another location? They seem out of place in this header but we don't have a more
-//       suitable header yet.
-typedef vec2<plat::float32> vec2f;
-typedef vec2<plat::uint32> vec2i;
-
 }
 }
 

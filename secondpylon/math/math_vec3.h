@@ -178,15 +178,6 @@ SPPLAT_INLINE vec3<TStorage> vec3<TStorage>::Interpolate( const vec3<TStorage> &
 	return p1 + t*(p2-p1);
 }
 
-//
-// Common vec3 types.
-//
-
-// @todo should these be moved to another location? They seem out of place in this header but we don't have a more
-//       suitable header yet.
-typedef vec3<plat::float32> vec3f;
-typedef vec3<plat::uint32> vec3i;
-
 }
 }
 

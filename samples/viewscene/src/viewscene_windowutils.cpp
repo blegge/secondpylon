@@ -37,7 +37,7 @@ void WindowUtils::create_window(
                                 WindowUtils::window& window_result
                                 , HINSTANCE instance
                                 , const wchar_t* window_name
-                                , math::vec2i dims)
+                                , vec2i dims)
 {
     SPDIAG_ASSERT(window_result.m_window == 0);
 

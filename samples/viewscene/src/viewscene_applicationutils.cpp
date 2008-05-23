@@ -1,7 +1,7 @@
 #include <viewscene_applicationutils.h>
 #include <windows.h>
 
-extern void render_clear();
+extern void render();
 
 void ApplicationUtils::run_app()
 {
@@ -19,7 +19,7 @@ void ApplicationUtils::run_app()
             TranslateMessage(&msg);
 			DispatchMessage(&msg);
 
-            render_clear();
+            render();
 		}
 	}
 
@@ -33,4 +33,3 @@ void ApplicationUtils::run_app()
         }
     }
 }
-

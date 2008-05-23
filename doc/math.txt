@@ -1,0 +1,2 @@
+The math library contains basic math primitives commonly used in games. This library is designed for simplicity, not maximum performance.
+

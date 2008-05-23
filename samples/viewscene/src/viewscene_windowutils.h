@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include <secondpylon/plat/plat_types.h>
-#include <secondpylon/math/math_vec2.h>
+#include <viewscene_common.h>
 
 struct WindowUtils
 {
@@ -24,7 +24,7 @@ struct WindowUtils
         window& window_result
         , HINSTANCE instance
         , const wchar_t* window_name
-        , secondpylon::math::vec2i dims);
+        , vec2i dims);
     static void destroy_window(window& destroy);
 };
 

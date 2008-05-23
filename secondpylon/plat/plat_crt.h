@@ -76,21 +76,24 @@ namespace secondpylon {
         return kSize;
     }
 
-    // @todo Verify that there is no overlap and add use of restrict
+    // @todo Implement the error handling
     SPPLAT_INLINE void StringCopy(char* SPPLAT_RESTRICT dest, const char* SPPLAT_RESTRICT source, size_t destCapacity)
     {
         // Verify the string fits.
-        size_t stringLength = strlen(source);
-        if (stringLength + 1 > destCapacity)
+        size_t sourceLength = strlen(source);
+        if (sourceLength + 1 > destCapacity)
         {
             dest[0] = '\0';
             //RSDBG_ERROR((""));
             return;
         }
 
+        // Verify the ranges don't overlap by checking the boundaries.
+        //RSDBG_ASSERT(source > dest+destCapacity || source+sourceLength+1 < dest);
+
         // Copy and terminate the string.
-        memcpy(dest, source, stringLength*sizeof(char));
-        dest[stringLength] = '\0';
+        memcpy(dest, source, sourceLength*sizeof(char));
+        dest[sourceLength] = '\0';
     }
 
     SPPLAT_INLINE bool StringEquals(const char* string0, const char* string1)

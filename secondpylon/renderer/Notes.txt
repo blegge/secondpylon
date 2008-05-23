@@ -1,0 +1,41 @@
+Ideal rendering order may change by platform.
+- Consider queuing or just taking an 'average' sort order and working with it.
+- pixel shader > vertex shader > render targets > format changes, etc
+
+For now, support only index list based rendering. Particles could be handled with raw verts, but prefer a unified pipeline for now.
+
+Clear Z and stencil together, as otherwise work has to be done to preserve one or the other.
+
+Consoles use DX 'pure' equiv state change handling. Follow suit on the PC.
+
+Who owns window creation?
+
+What is the device responsible for vs objects?
+
+Open questions:
+- Swap chains to support multiple rendering windows?
+- Resource creation - how external can it be to the system?
+- How can all of this be tested?
+- Can the backbuffer to treated as a special render target owned by the device? eg
+
+	RenderTargetRef frame = Device.GetFrameBuffer();
+	frame.Activate();
+	frame.Deactivate();
+
+	or
+	 
+	RenderTargetRef frame = Device.GetFrameBuffer();
+	Device.Activate(frame);
+	Device.Deactivate(frame);
+
+	or
+	
+	RenderTargetBlock block(Device, Device.GetFrameBuffer());
+	
+- What 'states' does the renderer go through?
+	RenderTarget
+		Scene
+			View
+				DrawPrim
+	Present
+	

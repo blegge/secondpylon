@@ -5,6 +5,7 @@ namespace data {
 
 MemStorage::MemStorage(const plat::byte* data, plat::uint32 dataSize) : 
     m_ReadOffset(0)
+    , m_Usage(kUnused)
 {
     m_Storage.reserve(dataSize);
     for (plat::uint32 i = 0; i < dataSize; ++i)

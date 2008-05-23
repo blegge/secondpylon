@@ -2,8 +2,6 @@
 #include <secondpylon/plat/plat_compiler.h>
 #include <unittest++/src/UnitTest++.h>
 
-// @todo Can we find a way to test disabling the logs RSDIAG_ENABLE_LOG?
-
 using namespace secondpylon;
 
 namespace 
