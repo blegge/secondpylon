@@ -6,7 +6,11 @@
 #include "d3dx9.h"
 #include "d3d9.h"
 
-#define VERIFY(x) SPDIAG_ASSERT((x) == S_OK);
+//#if NDEBUG == 1
+//    #define VERIFY(x) SPDIAG_ASSERT((x) == S_OK);
+//#else
+    #define VERIFY(x) (x);
+//#endif
 
 namespace secondpylon {
 namespace renderer {
@@ -88,12 +92,28 @@ Device::Device(const SDeviceParameters& deviceParams) :
     }
 }
 
+Device::~Device()
+{
+    SPDIAG_ASSERT(!m_bInScene);
+    if (m_pD3D)
+    {
+        m_pD3D->Release();
+        m_pD3D = NULL;
+    }
+
+    if (m_pDevice)
+    {
+        m_pDevice->Release();
+        m_pDevice = NULL;
+    }
+}
+
 Mesh* Device::CreateDynamicMesh(plat::uint32 nVertexSize, plat::uint32 nVertexCount, plat::uint32 nIndexCount)
 {
     IDirect3DVertexBuffer9* pVertexBuffer = NULL;
 	VERIFY(m_pDevice->CreateVertexBuffer(
 		nVertexCount * nVertexSize
-		, D3DUSAGE_DYNAMIC
+		, D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
 		, 0
 		, D3DPOOL_DEFAULT
 		, &pVertexBuffer
@@ -107,7 +127,7 @@ Mesh* Device::CreateDynamicMesh(plat::uint32 nVertexSize, plat::uint32 nVertexCo
     IDirect3DIndexBuffer9* pIndexBuffer = NULL;
 	VERIFY(m_pDevice->CreateIndexBuffer(
 		nIndexCount * nIndexSize
-		, D3DUSAGE_DYNAMIC
+		, D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
 		, D3DFMT_INDEX32
 		, D3DPOOL_DEFAULT
 		, &pIndexBuffer
@@ -135,25 +155,19 @@ Mesh* Device::CreateDynamicMesh(plat::uint32 nVertexSize, plat::uint32 nVertexCo
     }
 }
 
+Material* Device::CreateMaterial()
+{
+    return new Material(*m_pDevice);
+}
+
 void Device::Draw(Mesh& mesh, Material& mat)
 {
-	// @todo We need to determine who should own the vertex declaration. This depends on the number of formats we
-    //       support at runtime.
-	const D3DVERTEXELEMENT9 decl[] = 
-	{
-		{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
-		D3DDECL_END()
-	};
-    IDirect3DVertexDeclaration9* basicVertexDecl = NULL;
-	VERIFY(m_pDevice->CreateVertexDeclaration(&decl[0], &basicVertexDecl));
-
     // @todo This doesn't do any sorting or redundancy filtering. This needs either needs to be added here (with draws
     // batched externally) or we need to add internal checks (which would be less efficient but simpler from an API
     // standpoint.)
  	VERIFY(m_pDevice->SetVertexShader(mat.GetVertexShader()));
 	VERIFY(m_pDevice->SetPixelShader(mat.GetPixelShader()));
-
-    VERIFY(m_pDevice->SetVertexDeclaration(basicVertexDecl));
+    VERIFY(m_pDevice->SetVertexDeclaration(mat.GetVertexDecl()));
 
     VERIFY(m_pDevice->SetStreamSource(0, mesh.GetVertices(), 0, Mesh::kVertexStride));
     VERIFY(m_pDevice->SetIndices(mesh.GetIndices()));
@@ -163,9 +177,6 @@ void Device::Draw(Mesh& mesh, Material& mat)
    	VERIFY(m_pDevice->SetStreamSource(0, NULL, 0, 0));
 	VERIFY(m_pDevice->SetVertexShader(NULL));
 	VERIFY(m_pDevice->SetPixelShader(NULL));
-
-    basicVertexDecl->Release();
-    basicVertexDecl = NULL;
 }
 
 void Device::Clear(const renderer::Color& clearColor)

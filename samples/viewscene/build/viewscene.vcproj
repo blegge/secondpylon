@@ -135,12 +135,6 @@
 				RelativePath="..\src\viewscene_main.cpp">
 			</File>
 			<File
-				RelativePath=".\viewscene_renderutils.cpp">
-			</File>
-			<File
-				RelativePath="..\src\viewscene_renderutils.h">
-			</File>
-			<File
 				RelativePath="..\src\viewscene_windowutils.cpp">
 			</File>
 			<File

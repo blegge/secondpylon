@@ -28,8 +28,10 @@ namespace renderer {
     {
     public:
         Device(const SDeviceParameters& params);
+        ~Device();
 
         Mesh* CreateDynamicMesh(plat::uint32 nVertexSize, plat::uint32 nVertexCount, plat::uint32 nIndexCount);
+        Material* CreateMaterial();
 
         void Draw(Mesh& mesh, Material& mat);
 

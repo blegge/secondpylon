@@ -13,7 +13,6 @@
 #include <secondpylon/renderer/renderer_material.h>
 #include <viewscene_windowutils.h>
 #include <viewscene_applicationutils.h>
-#include <viewscene_renderutils.h>
 
 using namespace secondpylon;
 using namespace secondpylon::plat;
@@ -27,47 +26,11 @@ using namespace secondpylon::plat;
 
 static renderer::Device* g_device = NULL;
 
-// http://docendo.bai.nu/img/kapitel/0735616531.htm
-IDirect3DVertexShader9* LoadVertexShader(IDirect3DDevice9* device, const char* shader)
+#include <cstdio>
+float Random(int min, int max)
 {
-	ID3DXBuffer* pShaderBuffer = NULL;
-	ID3DXBuffer* pErrorBuffer = NULL;
-
-	HRESULT hr = D3DXCompileShader(
-		shader
-		, (UINT)strlen(shader)
-		, NULL	// no defines
-		, NULL	// no includes
-		, "entry"
-		, "vs_1_1"
-		, D3DXSHADER_DEBUG 
-		, &pShaderBuffer
-		, &pErrorBuffer
-		, NULL	// no constant table
-	);
-
-	IDirect3DVertexShader9* pShader = NULL;
-	if (hr != S_OK)
-	{
-//		RSCONTENT_ERROR(
-//			const char* szError = (const char*)pErrorBuffer->GetBufferPointer();
-//			RSPlatform::Services()->Error("Shader Error: Failed to load '%s': %s", "<default>", szError);
-//		);
-	}
-
-	if (S_OK == hr)
-	{
-		hr = device->CreateVertexShader((DWORD*)pShaderBuffer->GetBufferPointer(), &pShader);
-	}
-
-	if (pErrorBuffer)
-		pErrorBuffer->Release();
-	if (pShaderBuffer)
-		pShaderBuffer->Release();
-
-	return pShader;
+    return (float)(min + ((float)max-(float)min)* ((float)rand() / (float)RAND_MAX));
 }
-
 
 void renderpoly()
 {
@@ -84,26 +47,20 @@ void renderpoly()
 
     {
         math::vec3<float>* pVertex = (math::vec3<float>*)pMesh->LockVertices(3, renderer::Mesh::kVertexStride);
-        pVertex[0] = math::vec3<float>(0,0,0);
-        pVertex[1] = math::vec3<float>(0,1,0);
-        pVertex[2] = math::vec3<float>(0,1,1);
+        pVertex[0] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
+        pVertex[1] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
+        pVertex[2] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
         pMesh->UnlockVertices();
     }
 
-    renderer::Material mat;
-    g_device->Draw(*pMesh, mat);
+    renderer::Material* pMat = g_device->CreateMaterial();
+    g_device->Draw(*pMesh, *pMat);
 
-    pMesh->Release();
+    pMesh->Destroy();
     pMesh = NULL;
 
-
-		// Load the shaders
-	//const char vShader[] = 
-	//	"float4 entry(float4 inPos : POSITION) : POSITION	\
-	//	{	\
-	//		return inPos;	\
-	//	}";
-	//IDirect3DVertexShader9* basicVertexShader = LoadVertexShader(g_device->m_pDevice, vShader);
+    pMat->Destroy();
+    pMat = NULL;
 }
 
 void render()
@@ -131,8 +88,6 @@ int WINAPI WinMain( HINSTANCE instance,
     WindowUtils::register_classes(instance);
     WindowUtils::window app_window;
     WindowUtils::create_window(app_window, instance, L"viewscene", vec2i(128, 128));
-
-    RenderUtils::RenderDevice device;
 
     renderer::SDeviceParameters params;
     params.adapter = 0;

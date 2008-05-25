@@ -108,7 +108,13 @@
 				RelativePath="..\src\renderer_device.cpp">
 			</File>
 			<File
+				RelativePath="..\src\renderer_material.cpp">
+			</File>
+			<File
 				RelativePath="..\src\renderer_mesh.cpp">
+			</File>
+			<File
+				RelativePath="..\src\renderer_shader.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -122,9 +128,6 @@
 				RelativePath="..\..\..\secondpylon\renderer\renderer_device.h">
 			</File>
 			<File
-				RelativePath="..\..\..\secondpylon\renderer\renderer_indexbuffer.h">
-			</File>
-			<File
 				RelativePath="..\..\..\secondpylon\renderer\renderer_material.h">
 			</File>
 			<File
@@ -135,9 +138,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\renderer\renderer_texture.h">
-			</File>
-			<File
-				RelativePath="..\..\..\secondpylon\renderer\renderer_vertexbuffer.h">
 			</File>
 		</Filter>
 		<Filter

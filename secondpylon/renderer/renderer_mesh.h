@@ -37,7 +37,7 @@ namespace renderer {
         void UnlockVertices();
         IDirect3DIndexBuffer9* GetIndices() { return m_IndexBuffer; }
 
-        void Release() { delete this; }
+        void Destroy() { delete this; }
 
     private:
     	SPUNCOPYABLE(Mesh);
