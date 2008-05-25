@@ -27,6 +27,7 @@ namespace renderer {
         //       bootstrap setup.
         IDirect3DVertexShader9* m_pVertexShader;
         IDirect3DVertexDeclaration9* m_pVertexDeclaration;
+        IDirect3DPixelShader9* m_pPixelShader;
     };
  
 }
