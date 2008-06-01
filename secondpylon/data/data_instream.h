@@ -12,6 +12,7 @@
 #include <secondpylon/plat/plat_types.h>
 #include <secondpylon/plat/plat_compiler.h>
 #include <secondpylon/data/data_bytepacker.h>
+#include <secondpylon/diag/diag_assert.h>
 
 namespace secondpylon {
 namespace data {
@@ -72,9 +73,10 @@ namespace data {
 
         if (size >= capacity)
         {
-            // Skip the string to avoid misaligning our next read
+            // The buffer is too small. This should probably be considered a fatal error as this would have completely
+            // unpredictable results. Skip the string to avoid misaligning our next read.
             m_Storage.Advance(sizeof(char)*size);
-            // @todo Add error reporting for a buffer that is too small and add a test to verify this.
+            SPDIAG_ERROR();
         }
         else
         {

@@ -19,8 +19,10 @@ void ApplicationUtils::run_app()
             TranslateMessage(&msg);
 			DispatchMessage(&msg);
 
-            render();
 		}
+
+        render();
+        Sleep(1); // Sleep a bit to relinquish the timeslice.
 	}
 
 	// clean up any pending messages posted after WM_QUIT

@@ -108,13 +108,16 @@
 				RelativePath="..\src\renderer_device.cpp">
 			</File>
 			<File
+				RelativePath="..\src\renderer_dynamicmesh.cpp">
+			</File>
+			<File
 				RelativePath="..\src\renderer_material.cpp">
 			</File>
 			<File
-				RelativePath="..\src\renderer_mesh.cpp">
+				RelativePath="..\src\renderer_shader.cpp">
 			</File>
 			<File
-				RelativePath="..\src\renderer_shader.cpp">
+				RelativePath="..\src\renderer_texture.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -128,16 +131,19 @@
 				RelativePath="..\..\..\secondpylon\renderer\renderer_device.h">
 			</File>
 			<File
-				RelativePath="..\..\..\secondpylon\renderer\renderer_material.h">
+				RelativePath="..\..\..\secondpylon\renderer\renderer_dynamicmesh.h">
 			</File>
 			<File
-				RelativePath="..\..\..\secondpylon\renderer\renderer_mesh.h">
+				RelativePath="..\..\..\secondpylon\renderer\renderer_material.h">
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\renderer\renderer_rendertarget.h">
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\renderer\renderer_texture.h">
+			</File>
+			<File
+				RelativePath="..\src\renderer_utils.h">
 			</File>
 		</Filter>
 		<Filter

@@ -21,6 +21,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "viewscene", "..\samples\viewscene\build\viewscene.vcproj", "{8C1F98CE-6362-4F06-ADB0-2F8A46F8D49C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7991F415-4872-4A40-ADCF-DAED26C75FF0} = {7991F415-4872-4A40-ADCF-DAED26C75FF0}
+		{7F77C323-F8EB-4F30-8A72-C07BA582FD32} = {7F77C323-F8EB-4F30-8A72-C07BA582FD32}
 		{784510A0-3FE2-4F82-807E-0FE32BF2B9C5} = {784510A0-3FE2-4F82-807E-0FE32BF2B9C5}
 	EndProjectSection
 EndProject
@@ -79,6 +80,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderer_test", "..\libs\re
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data", "..\libs\data\build\data.vcproj", "{7F77C323-F8EB-4F30-8A72-C07BA582FD32}"
 	ProjectSection(ProjectDependencies) = postProject
+		{8E4D985F-E108-4098-8653-8B5A43B8708E} = {8E4D985F-E108-4098-8653-8B5A43B8708E}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data_test", "..\libs\data\build\data_test.vcproj", "{5135B415-7E1D-4C64-A614-04E0E74BB7AE}"

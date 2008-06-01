@@ -1,16 +1,12 @@
 #include <secondpylon/renderer/renderer_device.h>
-#include <secondpylon/renderer/renderer_mesh.h>
+#include <secondpylon/renderer/renderer_dynamicmesh.h>
 #include <secondpylon/renderer/renderer_material.h>
 #include <secondpylon/renderer/renderer_color.h>
+#include <secondpylon/renderer/renderer_texture.h>
+#include "renderer_utils.h"
 
-#include "d3dx9.h"
-#include "d3d9.h"
-
-//#if NDEBUG == 1
-//    #define VERIFY(x) SPDIAG_ASSERT((x) == S_OK);
-//#else
-    #define VERIFY(x) (x);
-//#endif
+#include <d3dx9.h>
+#include <d3d9.h>
 
 namespace secondpylon {
 namespace renderer {
@@ -86,8 +82,7 @@ Device::Device(const SDeviceParameters& deviceParams) :
         }
         else
         {
-            pD3D->Release();
-            pD3D = NULL;
+            SafeRelease(pD3D);
         }
     }
 }
@@ -95,84 +90,52 @@ Device::Device(const SDeviceParameters& deviceParams) :
 Device::~Device()
 {
     SPDIAG_ASSERT(!m_bInScene);
-    if (m_pD3D)
-    {
-        m_pD3D->Release();
-        m_pD3D = NULL;
-    }
-
-    if (m_pDevice)
-    {
-        m_pDevice->Release();
-        m_pDevice = NULL;
-    }
+    SafeRelease(m_pD3D);
+    SafeRelease(m_pDevice);
 }
 
-Mesh* Device::CreateDynamicMesh(plat::uint32 nVertexSize, plat::uint32 nVertexCount, plat::uint32 nIndexCount)
+DynamicMesh* Device::CreateDynamicMesh(plat::uint32 nVertexCount, plat::uint32 nIndexCount)
 {
-    IDirect3DVertexBuffer9* pVertexBuffer = NULL;
-	VERIFY(m_pDevice->CreateVertexBuffer(
-		nVertexCount * nVertexSize
-		, D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
-		, 0
-		, D3DPOOL_DEFAULT
-		, &pVertexBuffer
-		, NULL));
-
-    // Create the index buffer using 32 bit indices. This simplifies alignment issues on platforms where 16 bit aligns
-    // reads are expensive as they require reading back from non-write combined memory. This does use more memory/GPU
-    // bandwidth but indices aren't expected to be the primary bottleneck here. Consider making this per platform in
-    // the future if needed.
-    plat::uint32 nIndexSize = 4;
-    IDirect3DIndexBuffer9* pIndexBuffer = NULL;
-	VERIFY(m_pDevice->CreateIndexBuffer(
-		nIndexCount * nIndexSize
-		, D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
-		, D3DFMT_INDEX32
-		, D3DPOOL_DEFAULT
-		, &pIndexBuffer
-		, NULL));
-
-    if (pVertexBuffer && pIndexBuffer)
+    // @todo We need to handle the possibility tht the mesh isn't valid (the vb/ib allocations failed. We could check
+    //       the mesh to verify that it is valid before returning it. That would mean adding a slightly ugly 'is valid'
+    //       type function, but without exceptions (which we couldn't throw from the constructor anyway) this wouldn't
+    //       work.
+    DynamicMesh* pMesh = new DynamicMesh(*m_pDevice, nVertexCount, nIndexCount);
+    if (!pMesh->IsValid())
     {
-        return new Mesh(*pVertexBuffer, *pIndexBuffer);
+        delete pMesh;
+        pMesh = NULL;
     }
-    else
-    {
-        if (pIndexBuffer)
-        {
-            pIndexBuffer->Release();
-            pIndexBuffer = NULL;
-        }
-
-        if (pVertexBuffer)
-        {
-            pVertexBuffer->Release();
-            pVertexBuffer = NULL;
-        }
-    
-        return NULL;
-    }
+    return pMesh;
 }
 
-Material* Device::CreateMaterial()
+Material* Device::CreateMaterial(TInMemoryStream& pixelShaderBuffer, TInMemoryStream& vertexShaderBuffer)
 {
-    return new Material(*m_pDevice);
+    return new Material(*m_pDevice, pixelShaderBuffer, vertexShaderBuffer);
 }
 
-void Device::Draw(Mesh& mesh, Material& mat)
+Texture* Device::CreateTexture(const math::vec2<plat::uint32>& size)
+{
+    IDirect3DTexture9* pTexture = NULL;
+    m_pDevice->CreateTexture(size.x, size.y, 0, D3DUSAGE_DYNAMIC, D3DFMT_A8R8G8B8, 
+        D3DPOOL_SYSTEMMEM, &pTexture, NULL);
+    return new Texture(*pTexture, size);
+}
+
+void Device::Draw(const renderer::SSubMeshRenderRequest& request)
 {
     // @todo This doesn't do any sorting or redundancy filtering. This needs either needs to be added here (with draws
     // batched externally) or we need to add internal checks (which would be less efficient but simpler from an API
     // standpoint.)
- 	VERIFY(m_pDevice->SetVertexShader(mat.GetVertexShader()));
-	VERIFY(m_pDevice->SetPixelShader(mat.GetPixelShader()));
-    VERIFY(m_pDevice->SetVertexDeclaration(mat.GetVertexDecl()));
+ 	VERIFY(m_pDevice->SetVertexShader(request.m_pVertexShader));
+	VERIFY(m_pDevice->SetPixelShader(request.m_pPixelShader));
 
-    VERIFY(m_pDevice->SetStreamSource(0, mesh.GetVertices(), 0, Mesh::kVertexStride));
-    VERIFY(m_pDevice->SetIndices(mesh.GetIndices()));
+    VERIFY(m_pDevice->SetVertexDeclaration(request.m_pVertexDeclaration));
+    VERIFY(m_pDevice->SetStreamSource(0, request.m_pVertexBuffer, 0, DynamicMesh::kVertexStride));
+    VERIFY(m_pDevice->SetIndices(request.m_pIndexBuffer));
 
-    VERIFY(m_pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 3, 0, 1));
+    VERIFY(m_pDevice->DrawIndexedPrimitive(
+        D3DPT_TRIANGLELIST, 0, 0, request.m_nVertexCount, 0, request.m_nIndexCount));
 
    	VERIFY(m_pDevice->SetStreamSource(0, NULL, 0, 0));
 	VERIFY(m_pDevice->SetVertexShader(NULL));

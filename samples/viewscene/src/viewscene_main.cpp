@@ -9,20 +9,18 @@
 #include <secondpylon/math/math_vec3.h>
 #include <secondpylon/renderer/renderer_color.h>
 #include <secondpylon/renderer/renderer_device.h>
-#include <secondpylon/renderer/renderer_mesh.h>
+#include <secondpylon/renderer/renderer_dynamicmesh.h>
 #include <secondpylon/renderer/renderer_material.h>
 #include <viewscene_windowutils.h>
 #include <viewscene_applicationutils.h>
+#include <secondpylon/data/data_outstream.h>
+
+#include <d3dx9.h>
+#include <d3d9.h>
 
 using namespace secondpylon;
 using namespace secondpylon::plat;
 
-
-// --
-// http://www.codesampler.com/d3dbook/chapter_04/chapter_04.htm
-
-#include "d3dx9.h"		// Header File For DirectX 3D
-#include "d3d9.h"		// Header File For DirectX 3D
 
 static renderer::Device* g_device = NULL;
 
@@ -35,7 +33,7 @@ float Random(int min, int max)
 void renderpoly()
 {
     // Create a mesh and fill in a few verts
-    renderer::Mesh* pMesh = g_device->CreateDynamicMesh(renderer::Mesh::kVertexStride, 3, 3);
+    renderer::DynamicMesh* pMesh = g_device->CreateDynamicMesh(3, 3);
 
     {
         plat::uint32* pIndices = pMesh->LockIndices(3);
@@ -46,15 +44,58 @@ void renderpoly()
     }
 
     {
-        math::vec3<float>* pVertex = (math::vec3<float>*)pMesh->LockVertices(3, renderer::Mesh::kVertexStride);
+        math::vec3<float>* pVertex = (math::vec3<float>*)pMesh->LockVertices(3, renderer::DynamicMesh::kVertexStride);
         pVertex[0] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
         pVertex[1] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
         pVertex[2] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
         pMesh->UnlockVertices();
     }
 
-    renderer::Material* pMat = g_device->CreateMaterial();
-    g_device->Draw(*pMesh, *pMat);
+    const char vertexShader[] = 
+	    "float4 entry(float4 inPos : POSITION) : POSITION	\
+	    {	\
+		    return inPos;	\
+	    }";
+
+    const char pixelShader[] = "\
+        float4 entry() : COLOR \
+        { \
+            return float4 (1, 0, 0, 1); \
+        }";
+
+    typedef data::OutStream<data::MemStorage, data::SBytePacker> TOutMemoryStream;
+    typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
+
+    data::MemStorage vertexShaderBuffer;
+    {
+        TOutMemoryStream vertexShaderStream(vertexShaderBuffer);
+        vertexShaderStream.Write(vertexShader);
+    }
+
+    data::MemStorage pixelShaderBuffer;
+    {
+        TOutMemoryStream pixelShaderStream(pixelShaderBuffer);
+        pixelShaderStream.Write(pixelShader);
+    }
+
+    TInMemoryStream pixelShaderInStream(pixelShaderBuffer);
+    TInMemoryStream vertexShaderInStream(vertexShaderBuffer);
+    renderer::Material* pMat = g_device->CreateMaterial(pixelShaderInStream, vertexShaderInStream);
+
+    // @todo We need to add references here to avoid the resources getting released before rendering. We also don't
+    //       have a way to handle possibly in-place modifications before rendering occurs. This will be simplest to
+    //       handle at the source end. Consider updating resources to get released prior to write and recreated.
+    renderer::SSubMeshRenderRequest polyRequest;
+    polyRequest.m_pPixelShader = pMat->GetPixelShader();
+    polyRequest.m_pVertexShader = pMat->GetVertexShader();
+    polyRequest.m_pIndexBuffer = pMesh->GetIndices();
+    polyRequest.m_pVertexBuffer = pMesh->GetVertices();
+    polyRequest.m_pVertexDeclaration = pMesh->GetVertexDecl();
+    polyRequest.m_nVertexStride = renderer::DynamicMesh::kVertexStride;
+    polyRequest.m_nVertexCount = pMesh->GetVertexCount();
+    polyRequest.m_nIndexCount = pMesh->GetIndexCount();
+
+    g_device->Draw(polyRequest);
 
     pMesh->Destroy();
     pMesh = NULL;

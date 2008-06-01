@@ -1,6 +1,8 @@
 #include <secondpylon/renderer/renderer_material.h>
-#include "d3d9.h"
-#include "d3dx9shader.h"
+#include <secondpylon/plat/plat_crt.h>
+#include "renderer_utils.h"
+#include <d3d9.h>
+#include <d3dx9shader.h>
 
 // TODO: How do we want to handle pixel shader versions? Using the Effect framework would be one option for the PC.
 // Depends mostly on required scalability. For now, just use the native version. Note that the pixel and vertex shaders need to be in sync.
@@ -41,10 +43,8 @@ static IDirect3DPixelShader9* LoadPixelShader(IDirect3DDevice9& device, const ch
 		hr = device.CreatePixelShader((DWORD*)pShaderBuffer->GetBufferPointer(), &pShader);
 	}
 
-	if (pErrorBuffer)
-		pErrorBuffer->Release();
-	if (pShaderBuffer)
-		pShaderBuffer->Release();
+    secondpylon::renderer::SafeRelease(pErrorBuffer);
+    secondpylon::renderer::SafeRelease(pShaderBuffer);
 
 	return pShader;
 }
@@ -83,66 +83,40 @@ static IDirect3DVertexShader9* LoadVertexShader(IDirect3DDevice9& device, const 
 		hr = device.CreateVertexShader((DWORD*)pShaderBuffer->GetBufferPointer(), &pShader);
 	}
 
-	if (pErrorBuffer)
-		pErrorBuffer->Release();
-	if (pShaderBuffer)
-		pShaderBuffer->Release();
+	secondpylon::renderer::SafeRelease(pErrorBuffer);
+	secondpylon::renderer::SafeRelease(pShaderBuffer);
 
 	return pShader;
-}
-
-IDirect3DVertexDeclaration9* CreateVertexDeclaration(IDirect3DDevice9& device)
-{
-	const D3DVERTEXELEMENT9 decl[] = 
-	{
-		{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
-		D3DDECL_END()
-	};
-
-    IDirect3DVertexDeclaration9* pDecl = NULL;
-    device.CreateVertexDeclaration(decl, &pDecl);
-
-    return pDecl;
 }
 
 namespace secondpylon {
 namespace renderer {
 
-Material::Material(IDirect3DDevice9& device)
+Material::Material(
+                   IDirect3DDevice9& device
+                   , TInMemoryStream& pixelShaderStream
+                   , TInMemoryStream& vertexShaderStream)
 {
-    // Load the a test shaders
-    const char vertexShader[] = 
-	    "float4 entry(float4 inPos : POSITION) : POSITION	\
-	    {	\
-		    return inPos;	\
-	    }";
+    // @todo We don't want to create a shader per material instance. We don't yet know how we want to
+    //       expose this functionality - do we need to expose manual creation externally? Lets put off the decision a
+    //       bit longer.
 
-    const char pixelShader[] = "\
-        float4 entry() : COLOR \
-        { \
-            return float4 (1, 0, 0, 1); \
-        }";
+    // @todo We need a more graceful way of handling the variable data size we could hit here. This will fail
+    //       semi-gracefully - it won't overrun the state - but the pointers we later assume to be valid will be NULL.
+    //       This is just a bootstrapping attempt to push data into the material.
+    char szVertexShaderData[1024];
+    vertexShaderStream.Read(&szVertexShaderData[0], ArraySize(szVertexShaderData));
+    m_pVertexShader = LoadVertexShader(device, szVertexShaderData);
 
-    m_pVertexShader = LoadVertexShader(device, vertexShader);
-    m_pVertexDeclaration = CreateVertexDeclaration(device);
-    m_pPixelShader = LoadPixelShader(device, pixelShader);
+    char szPixelShaderData[1024];
+    pixelShaderStream.Read(&szPixelShaderData[0], ArraySize(szPixelShaderData));
+    m_pPixelShader = LoadPixelShader(device, szPixelShaderData);
 }
 
 Material::~Material()
 {
-    m_pVertexDeclaration->Release();
-    m_pVertexDeclaration = NULL;
-
-    m_pVertexShader->Release();
-    m_pVertexShader = NULL;
-
-    m_pPixelShader->Release();
-    m_pPixelShader = NULL;
-}
-
-IDirect3DVertexDeclaration9* Material::GetVertexDecl() const
-{
-    return m_pVertexDeclaration;
+    SafeRelease(m_pVertexShader);
+    SafeRelease(m_pPixelShader);
 }
 
 IDirect3DVertexShader9* Material::GetVertexShader() const 

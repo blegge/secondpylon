@@ -84,12 +84,12 @@ namespace secondpylon {
         if (sourceLength + 1 > destCapacity)
         {
             dest[0] = '\0';
-            //RSDBG_ERROR((""));
+            //SPDIAG_ERROR((""));
             return;
         }
 
         // Verify the ranges don't overlap by checking the boundaries.
-        //RSDBG_ASSERT(source > dest+destCapacity || source+sourceLength+1 < dest);
+        //SPDIAG_ASSERT(source > dest+destCapacity || source+sourceLength+1 < dest);
 
         // Copy and terminate the string.
         memcpy(dest, source, sourceLength*sizeof(char));

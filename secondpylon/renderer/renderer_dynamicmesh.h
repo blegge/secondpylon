@@ -6,14 +6,15 @@
 
 struct IDirect3DVertexBuffer9;
 struct IDirect3DIndexBuffer9;
+struct IDirect3DVertexDeclaration9;
+struct IDirect3DDevice9;
 
 namespace secondpylon {
 namespace renderer {
 
-    class Mesh
+    class DynamicMesh
     {
     public:
-
         enum 
         {
             // @todo We need a long term way to handle vertex declarations/strides. We need more use cases first to
@@ -21,13 +22,8 @@ namespace renderer {
             kVertexStride = sizeof(float)*3
         };
 
-        Mesh(IDirect3DVertexBuffer9& vertexBuffer, IDirect3DIndexBuffer9& indexBuffer) :
-          m_VertexBuffer(&vertexBuffer)
-          , m_IndexBuffer(&indexBuffer)
-        {
-        }
-
-        ~Mesh();
+        DynamicMesh(IDirect3DDevice9& device, plat::uint32 nVertexCount, plat::uint32 nIndexCount);
+        ~DynamicMesh();
 
         plat::uint32* LockIndices(plat::uint32 nIndices);
         void UnlockIndices();
@@ -37,13 +33,21 @@ namespace renderer {
         void UnlockVertices();
         IDirect3DIndexBuffer9* GetIndices() { return m_IndexBuffer; }
 
+        IDirect3DVertexDeclaration9* GetVertexDecl() const;
+
+        plat::uint32 GetVertexCount() const;
+        plat::uint32 GetIndexCount() const;
+
         void Destroy() { delete this; }
 
     private:
-    	SPUNCOPYABLE(Mesh);
+    	SPUNCOPYABLE(DynamicMesh);
 
         IDirect3DVertexBuffer9* m_VertexBuffer;
         IDirect3DIndexBuffer9* m_IndexBuffer;
+        IDirect3DVertexDeclaration9* m_pVertexDeclaration;
+        plat::uint32 m_nVertexCount;
+        plat::uint32 m_nIndexCount;
     };
 
 }
