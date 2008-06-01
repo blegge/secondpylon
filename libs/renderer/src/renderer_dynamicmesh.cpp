@@ -1,35 +1,48 @@
 #include <secondpylon/renderer/renderer_dynamicmesh.h>
+#include <secondpylon/diag/diag_assert.h>
 #include "renderer_utils.h"
 #include <d3d9.h>
-
-
-static IDirect3DVertexDeclaration9* CreateVertexDeclaration(IDirect3DDevice9& device)
-{
-	const D3DVERTEXELEMENT9 decl[] = 
-	{
-		{ 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
-		D3DDECL_END()
-	};
-
-    IDirect3DVertexDeclaration9* pDecl = NULL;
-    device.CreateVertexDeclaration(decl, &pDecl);
-
-    return pDecl;
-}
 
 namespace secondpylon {
 namespace renderer {
 
-    DynamicMesh::DynamicMesh(IDirect3DDevice9& device, plat::uint32 nVertexCount, plat::uint32 nIndexCount) :
-        m_nVertexCount(nVertexCount)
-        , m_nIndexCount(nIndexCount)
+    DynamicMesh::DynamicMesh() : 
+        m_VertexBuffer(NULL)
+        , m_IndexBuffer(NULL)
+        , m_pVertexDeclaration(NULL)
+        , m_nVertexCount(0)
+        , m_nIndexCount(0)
     {
-            // @todo How do we want to handle the vertex declaration? Do we want a single version for now or a few preset
-            //       variations? This is more of a mesh attribute than a material attribute, though the material depends on it.
-        m_pVertexDeclaration = CreateVertexDeclaration(device);
+    }
 
-	    VERIFY(device.CreateVertexBuffer(
-            nVertexCount * kVertexStride
+    DynamicMesh::~DynamicMesh()
+    {
+        SafeRelease(m_VertexBuffer);
+        SafeRelease(m_IndexBuffer);
+        SafeRelease(m_pVertexDeclaration);
+    }
+
+    // Create is separate from the constructor as it can fail. The alternative is to either have an 'IsValid' function
+    // which complicates the API and would tempt people to call it when not needed or to make the operations that can
+    // fail external - which would distribute the responsibility of this module.
+    bool DynamicMesh::Create(IDirect3DDevice9& device, plat::uint32 nVertexCount, plat::uint32 nIndexCount)
+    {
+        SPDIAG_ASSERT(m_VertexBuffer==NULL && m_IndexBuffer==NULL  && m_pVertexDeclaration==NULL);
+
+        m_nVertexCount = nVertexCount;
+        m_nIndexCount = nIndexCount;
+
+        // @todo How do we want to handle the vertex declaration? Do we want a single version for now or a few preset
+        //       variations? This is more of a mesh attribute than a material attribute, though the material depends on it.
+	    const D3DVERTEXELEMENT9 decl[] = 
+	    {
+		    { 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		    D3DDECL_END()
+	    };
+        device.CreateVertexDeclaration(decl, &m_pVertexDeclaration);
+
+	    SP_DXVERIFY(device.CreateVertexBuffer(
+            nVertexCount * GetVertexStride()
 		    , D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
 		    , 0
 		    , D3DPOOL_DEFAULT
@@ -41,20 +54,15 @@ namespace renderer {
         // memory/GPU bandwidth but indices aren't expected to be the primary bottleneck here. Consider making this per
         // platform in the future if needed.
         plat::uint32 nIndexSize = 4;
-	    VERIFY(device.CreateIndexBuffer(
+	    SP_DXVERIFY(device.CreateIndexBuffer(
 		    nIndexCount * nIndexSize
 		    , D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
 		    , D3DFMT_INDEX32
 		    , D3DPOOL_DEFAULT
 		    , &m_IndexBuffer
 		    , NULL));
-    }
 
-    DynamicMesh::~DynamicMesh()
-    {
-        SafeRelease(m_VertexBuffer);
-        SafeRelease(m_IndexBuffer);
-        SafeRelease(m_pVertexDeclaration);
+        return (m_VertexBuffer && m_IndexBuffer && m_pVertexDeclaration);
     }
 
     plat::uint32* DynamicMesh::LockIndices(plat::uint32 nIndices)
@@ -69,10 +77,10 @@ namespace renderer {
         m_IndexBuffer->Unlock();
     }
 
-    plat::uint32* DynamicMesh::LockVertices(plat::uint32 nVertexCount, plat::uint32 nVertexSize)
+    plat::uint32* DynamicMesh::LockVertices(plat::uint32 nVertexCount)
     {
         void* pData = NULL;
-        plat::uint32 nBytesToLock = nVertexCount * nVertexSize;
+        plat::uint32 nBytesToLock = nVertexCount * GetVertexStride();
         m_VertexBuffer->Lock(0, nBytesToLock, &pData, 0);
         return StrictCast<plat::uint32*>(pData);
     }
@@ -95,6 +103,11 @@ namespace renderer {
     plat::uint32 DynamicMesh::GetIndexCount() const
     {
         return m_nIndexCount;
+    }
+
+    plat::uint32 DynamicMesh::GetVertexStride() const
+    {
+        return sizeof(SVertex);
     }
 
 }

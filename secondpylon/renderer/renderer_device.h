@@ -7,7 +7,6 @@
 #include <secondpylon/data/data_bytepacker.h>
 #include <secondpylon/data/data_instream.h>
 
-#include <windows.h>
 
 struct IDirect3D9;
 struct IDirect3DDevice9;
@@ -24,14 +23,7 @@ namespace renderer {
     class Material;
     class Color;
     class Texture;
-
-    struct SDeviceParameters
-    {
-        HWND parent_window;
-        math::vec2<plat::uint32> dims;
-        bool vsync;
-        UINT adapter;
-    };
+    struct SDeviceParameters;
 
     // An entity with mesh and material generates SSubMeshRenderRequests which describe both objects.
     struct SSubMeshRenderRequest
@@ -69,6 +61,8 @@ namespace renderer {
         Device(const SDeviceParameters& params);
         ~Device();
 
+        // Returns a DynamicMesh with the requested number of vertices and indices. This function may return NULL if
+        // the DynamicMesh cannot be created. The DynamicMesh must be deleted with a call to DynamicMesh::Destroy.
         DynamicMesh* CreateDynamicMesh(plat::uint32 nVertexCount, plat::uint32 nIndexCount);
         Material* CreateMaterial(TInMemoryStream& pixelShader, TInMemoryStream& vertexShader);
         Texture* CreateTexture(const math::vec2<plat::uint32>& size);

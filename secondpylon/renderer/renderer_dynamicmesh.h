@@ -3,6 +3,7 @@
 
 #include <secondpylon/plat/plat_types.h>
 #include <secondpylon/plat/plat_crt.h>
+#include <secondpylon/math/math_vec3.h>
 
 struct IDirect3DVertexBuffer9;
 struct IDirect3DIndexBuffer9;
@@ -15,26 +16,36 @@ namespace renderer {
     class DynamicMesh
     {
     public:
-        enum 
+        // @todo Long term, the Vertex implementation will probably be externalized (template parameter or dynamic
+        //       binding?) so that we can have different mesh formats.
+        struct SVertex
         {
-            // @todo We need a long term way to handle vertex declarations/strides. We need more use cases first to
-            //       understand what interface is practical.
-            kVertexStride = sizeof(float)*3
+            // Vertex implementations provide a 'Write' function to insure writes are ordered. This avoids penalties on
+            // platforms where out of order writes to video memory cause penalties.
+            void Write(const math::vec3<float>& position)
+            {
+                m_Position = position;
+            }
+
+            math::vec3<float> m_Position;
         };
 
-        DynamicMesh(IDirect3DDevice9& device, plat::uint32 nVertexCount, plat::uint32 nIndexCount);
+        DynamicMesh();
         ~DynamicMesh();
+
+        bool Create(IDirect3DDevice9& device, plat::uint32 nVertexCount, plat::uint32 nIndexCount);
 
         plat::uint32* LockIndices(plat::uint32 nIndices);
         void UnlockIndices();
         IDirect3DVertexBuffer9* GetVertices() { return m_VertexBuffer; }
 
-        plat::uint32* LockVertices(plat::uint32 nVertexCount, plat::uint32 nVertexSize);
+        plat::uint32* LockVertices(plat::uint32 nVertexCount);
         void UnlockVertices();
         IDirect3DIndexBuffer9* GetIndices() { return m_IndexBuffer; }
 
         IDirect3DVertexDeclaration9* GetVertexDecl() const;
 
+        plat::uint32 GetVertexStride() const;
         plat::uint32 GetVertexCount() const;
         plat::uint32 GetIndexCount() const;
 

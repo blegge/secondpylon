@@ -3,6 +3,8 @@
 #include <secondpylon/renderer/renderer_material.h>
 #include <secondpylon/renderer/renderer_color.h>
 #include <secondpylon/renderer/renderer_texture.h>
+#include <secondpylon/renderer/renderer_deviceparameters.h>
+
 #include "renderer_utils.h"
 
 #include <d3dx9.h>
@@ -51,7 +53,7 @@ Device::Device(const SDeviceParameters& deviceParams) :
 
         // TODO: Handle graceful fallbacks based on the checks below?
         D3DDEVTYPE device_type = D3DDEVTYPE_HAL;
-        VERIFY(pD3D->CheckDeviceFormat( 
+        SP_DXVERIFY(pD3D->CheckDeviceFormat( 
             deviceParams.adapter
             , device_type
             , internal_params.BackBufferFormat
@@ -66,7 +68,7 @@ Device::Device(const SDeviceParameters& deviceParams) :
 //        pD3D->CheckDeviceType();
 
         IDirect3DDevice9* pD3DDevice = NULL;
-        VERIFY(pD3D->CreateDevice(
+        SP_DXVERIFY(pD3D->CreateDevice(
             deviceParams.adapter
             , device_type
             , deviceParams.parent_window
@@ -96,12 +98,8 @@ Device::~Device()
 
 DynamicMesh* Device::CreateDynamicMesh(plat::uint32 nVertexCount, plat::uint32 nIndexCount)
 {
-    // @todo We need to handle the possibility tht the mesh isn't valid (the vb/ib allocations failed. We could check
-    //       the mesh to verify that it is valid before returning it. That would mean adding a slightly ugly 'is valid'
-    //       type function, but without exceptions (which we couldn't throw from the constructor anyway) this wouldn't
-    //       work.
-    DynamicMesh* pMesh = new DynamicMesh(*m_pDevice, nVertexCount, nIndexCount);
-    if (!pMesh->IsValid())
+    DynamicMesh* pMesh = new DynamicMesh;
+    if (!pMesh->Create(*m_pDevice, nVertexCount, nIndexCount))
     {
         delete pMesh;
         pMesh = NULL;
@@ -127,30 +125,30 @@ void Device::Draw(const renderer::SSubMeshRenderRequest& request)
     // @todo This doesn't do any sorting or redundancy filtering. This needs either needs to be added here (with draws
     // batched externally) or we need to add internal checks (which would be less efficient but simpler from an API
     // standpoint.)
- 	VERIFY(m_pDevice->SetVertexShader(request.m_pVertexShader));
-	VERIFY(m_pDevice->SetPixelShader(request.m_pPixelShader));
+ 	SP_DXVERIFY(m_pDevice->SetVertexShader(request.m_pVertexShader));
+	SP_DXVERIFY(m_pDevice->SetPixelShader(request.m_pPixelShader));
 
-    VERIFY(m_pDevice->SetVertexDeclaration(request.m_pVertexDeclaration));
-    VERIFY(m_pDevice->SetStreamSource(0, request.m_pVertexBuffer, 0, DynamicMesh::kVertexStride));
-    VERIFY(m_pDevice->SetIndices(request.m_pIndexBuffer));
+    SP_DXVERIFY(m_pDevice->SetVertexDeclaration(request.m_pVertexDeclaration));
+    SP_DXVERIFY(m_pDevice->SetStreamSource(0, request.m_pVertexBuffer, 0, request.m_nVertexStride));
+    SP_DXVERIFY(m_pDevice->SetIndices(request.m_pIndexBuffer));
 
-    VERIFY(m_pDevice->DrawIndexedPrimitive(
+    SP_DXVERIFY(m_pDevice->DrawIndexedPrimitive(
         D3DPT_TRIANGLELIST, 0, 0, request.m_nVertexCount, 0, request.m_nIndexCount));
 
-   	VERIFY(m_pDevice->SetStreamSource(0, NULL, 0, 0));
-	VERIFY(m_pDevice->SetVertexShader(NULL));
-	VERIFY(m_pDevice->SetPixelShader(NULL));
+   	SP_DXVERIFY(m_pDevice->SetStreamSource(0, NULL, 0, 0));
+	SP_DXVERIFY(m_pDevice->SetVertexShader(NULL));
+	SP_DXVERIFY(m_pDevice->SetPixelShader(NULL));
 }
 
 void Device::Clear(const renderer::Color& clearColor)
 {
-    VERIFY(m_pDevice->Clear(0, NULL, 
+    SP_DXVERIFY(m_pDevice->Clear(0, NULL, 
         D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, clearColor.GetEncodedColor(), 1.0f, 0));
 }
 
 void Device::Flip()
 {
-    VERIFY(m_pDevice->Present(NULL, NULL, NULL, NULL));
+    SP_DXVERIFY(m_pDevice->Present(NULL, NULL, NULL, NULL));
 }
 
 bool Device::BeginScene()
@@ -163,7 +161,7 @@ bool Device::BeginScene()
 void Device::EndScene()
 {
     SPDIAG_ASSERT(m_bInScene);
-    VERIFY(m_pDevice->EndScene());
+    SP_DXVERIFY(m_pDevice->EndScene());
     m_bInScene = false;
 }
 

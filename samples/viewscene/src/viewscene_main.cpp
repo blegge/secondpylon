@@ -11,6 +11,7 @@
 #include <secondpylon/renderer/renderer_device.h>
 #include <secondpylon/renderer/renderer_dynamicmesh.h>
 #include <secondpylon/renderer/renderer_material.h>
+#include <secondpylon/renderer/renderer_deviceparameters.h>
 #include <viewscene_windowutils.h>
 #include <viewscene_applicationutils.h>
 #include <secondpylon/data/data_outstream.h>
@@ -44,10 +45,11 @@ void renderpoly()
     }
 
     {
-        math::vec3<float>* pVertex = (math::vec3<float>*)pMesh->LockVertices(3, renderer::DynamicMesh::kVertexStride);
-        pVertex[0] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
-        pVertex[1] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
-        pVertex[2] = math::vec3<float>(Random(-1, 1),Random(-1, 1),0);
+        renderer::DynamicMesh::SVertex* pVertex = 
+            (renderer::DynamicMesh::SVertex*)pMesh->LockVertices(3);
+        pVertex[0].Write(math::vec3<float>(Random(-1, 1),Random(-1, 1),0));
+        pVertex[1].Write(math::vec3<float>(Random(-1, 1),Random(-1, 1),0));
+        pVertex[2].Write(math::vec3<float>(Random(-1, 1),Random(-1, 1),0));
         pMesh->UnlockVertices();
     }
 
@@ -91,7 +93,7 @@ void renderpoly()
     polyRequest.m_pIndexBuffer = pMesh->GetIndices();
     polyRequest.m_pVertexBuffer = pMesh->GetVertices();
     polyRequest.m_pVertexDeclaration = pMesh->GetVertexDecl();
-    polyRequest.m_nVertexStride = renderer::DynamicMesh::kVertexStride;
+    polyRequest.m_nVertexStride = pMesh->GetVertexStride();
     polyRequest.m_nVertexCount = pMesh->GetVertexCount();
     polyRequest.m_nIndexCount = pMesh->GetIndexCount();
 

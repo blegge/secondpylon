@@ -108,6 +108,9 @@
 				RelativePath="..\src\renderer_device.cpp">
 			</File>
 			<File
+				RelativePath="..\src\renderer_deviceparameters.cpp">
+			</File>
+			<File
 				RelativePath="..\src\renderer_dynamicmesh.cpp">
 			</File>
 			<File
@@ -129,6 +132,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\renderer\renderer_device.h">
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\renderer\renderer_deviceparameters.h">
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\renderer\renderer_dynamicmesh.h">
