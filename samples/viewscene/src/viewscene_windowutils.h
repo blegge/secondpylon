@@ -3,7 +3,7 @@
 
 #include <windows.h>
 #include <secondpylon/plat/plat_types.h>
-#include <viewscene_common.h>
+#include "viewscene_common.h"
 
 struct WindowUtils
 {

@@ -28,7 +28,7 @@ namespace {
     UnitTest::MemoryOutStream& operator<<(UnitTest::MemoryOutStream& stream, const renderer::Color& c)
     {
         char txt[32];
-        std::sprintf(txt, "Color:%x", c.GetEncodedColor());
+        sprintf_s(txt, "Color:%x", c.GetEncodedColor());
         stream << txt;
         return stream;
     }

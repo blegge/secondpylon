@@ -51,7 +51,7 @@ SUITE(CRT)
 
         char* caseDiff = "tesT";
         CHECK_EQUAL(false, StringEquals(baseCase, caseDiff));
-        CHECK_EQUAL(true, StringEquals(baseCase, caseDiff));
+        CHECK_EQUAL(true, StringIEquals(baseCase, caseDiff));
 
         char* caseDifferent = "tset";
         CHECK_EQUAL(false, StringEquals(baseCase, caseDifferent));

@@ -103,7 +103,7 @@ namespace secondpylon {
 
     SPPLAT_INLINE bool StringIEquals(const char* string0, const char* string1)
     {
-        return (0 == stricmp(string0, string1));
+        return (0 == _stricmp(string0, string1));
     }
 
     // @todo Add a compile time assert to insure the source and dest are of the same size.

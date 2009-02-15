@@ -20,7 +20,7 @@ namespace
 
         virtual void OnMessage(const char* message)
         {
-            strncpy(m_Message, message, kStorageSize);
+            strncpy_s(m_Message, message, kStorageSize);
             m_Message[kStorageSize-1] = '\0';
         }
 

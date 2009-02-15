@@ -12,9 +12,9 @@
 #include <secondpylon/renderer/renderer_dynamicmesh.h>
 #include <secondpylon/renderer/renderer_material.h>
 #include <secondpylon/renderer/renderer_deviceparameters.h>
-#include <viewscene_windowutils.h>
-#include <viewscene_applicationutils.h>
 #include <secondpylon/data/data_outstream.h>
+#include "viewscene_windowutils.h"
+#include "viewscene_applicationutils.h"
 
 #include <d3dx9.h>
 #include <d3d9.h>
