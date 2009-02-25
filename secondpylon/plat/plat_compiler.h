@@ -1,6 +1,11 @@
 #ifndef SPPLAT_COMPILER_H
 #define SPPLAT_COMPILER_H
 
+#include <intrin.h> // required for __debugbreak
+
+namespace secondpylon {
+}
+
 // Strongly request the compiler inline the tagged function. Note there is no way to completely force the compiler to
 // inline or error out. If this is critical, verify the disassembly.
 #define SPPLAT_INLINE __forceinline
@@ -27,5 +32,7 @@
 // to be better documented.
 #define SPPLAT_PREFETCH(address)
 
+// Immediate, unconditional hard break used to help with debugging. This is similar to asm { int 3 } for win32 programmers.
+#define SPPLAT_BREAK() __debugbreak()
 
 #endif // SPPLAT_COMPILER_H

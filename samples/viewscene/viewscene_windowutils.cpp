@@ -22,14 +22,14 @@ void WindowUtils::register_classes(HINSTANCE instance)
 {
     WNDCLASSW wc = { 0, WndProc, 0, 0, instance, LoadIcon(0, IDI_APPLICATION), LoadCursor(NULL, IDC_ARROW), (HBRUSH)GetStockObject(BLACK_BRUSH), 0, g_window_class_name };
     ATOM result = RegisterClassW(&wc);
-    SPDIAG_ASSERT(result != 0, "Failed to register clss");
+    SPDIAG_ASSERT(result != 0);
     SPDIAG_UNREFERENCED(result);
 }
 
 void WindowUtils::unregister_classes(HINSTANCE instance)
 {
     BOOL result = UnregisterClassW(g_window_class_name, instance);
-    SPDIAG_ASSERT(result != 0, "Failed to unregister class.");
+    SPDIAG_ASSERT(result != 0);
     SPDIAG_UNREFERENCED(result);
 }
 
@@ -39,7 +39,7 @@ void WindowUtils::create_window(
                                 , const wchar_t* window_name
                                 , vec2i dims)
 {
-    SPDIAG_ASSERT(window_result.m_window == 0, "Output parameter already has a window specified.");
+    SPDIAG_ASSERT(window_result.m_window == 0);
 
     DWORD window_style = 
         (WS_POPUP 
@@ -62,7 +62,7 @@ void WindowUtils::create_window(
 		NULL,                  // Menu
 		instance,			    // App Instance
 		NULL);                 // Window Creation Data
-    SPDIAG_ASSERT(new_window != 0, "Failed to create a window");
+    SPDIAG_ASSERT(new_window != 0);
 
 	ShowWindow(new_window, SW_SHOWNORMAL);
 

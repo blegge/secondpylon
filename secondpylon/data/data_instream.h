@@ -76,7 +76,7 @@ namespace data {
             // The buffer is too small. This should probably be considered a fatal error as this would have completely
             // unpredictable results. Skip the string to avoid misaligning our next read.
             m_Storage.Advance(sizeof(char)*size);
-            SPDIAG_ERROR();
+            SPDIAG_ERROR("Attempting to read beyond the end of stream");
         }
         else
         {

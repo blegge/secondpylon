@@ -17,6 +17,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest++", "..\external\UnitTest++\UnitTest++.vsnet2008.vcproj", "{0726A7F3-DEBC-42EA-B9EB-5CAF8BE0336D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "diag", "..\libs\diag\build\diag.vsnet2008.vcproj", "{2CC7E710-E92B-4350-BD3D-696354E8F4D8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1A71E946-421B-44E2-AA38-6D7A50247991} = {1A71E946-421B-44E2-AA38-6D7A50247991}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "diag_test", "..\libs\diag\build\diag_test.vsnet2008.vcproj", "{7E0615FC-7EE9-490B-A1AD-C1FE077192D1}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -25,6 +28,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "diag_test", "..\libs\diag\b
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math", "..\libs\math\build\math.vsnet2008.vcproj", "{E4395B87-369F-4C2A-BBE8-7374697F89DF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2CC7E710-E92B-4350-BD3D-696354E8F4D8} = {2CC7E710-E92B-4350-BD3D-696354E8F4D8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math_test", "..\libs\math\build\math_test.vsnet2008.vcproj", "{2A3E89D2-BAAC-4658-8A43-16D91FB5A795}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -33,6 +39,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "math_test", "..\libs\math\b
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data", "..\libs\data\build\data.vsnet2008.vcproj", "{DEEF84FA-D74C-4E5D-BD5C-08A1C3AEFD25}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2CC7E710-E92B-4350-BD3D-696354E8F4D8} = {2CC7E710-E92B-4350-BD3D-696354E8F4D8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data_test", "..\libs\data\build\data_test.vsnet2008.vcproj", "{0B916281-BEF3-490D-B9F6-F8B01A9BA254}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -41,6 +50,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "data_test", "..\libs\data\b
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderer", "..\libs\renderer\build\renderer.vsnet2008.vcproj", "{181175EF-9A4E-4083-89D2-47C7491B5BDB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2CC7E710-E92B-4350-BD3D-696354E8F4D8} = {2CC7E710-E92B-4350-BD3D-696354E8F4D8}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderer_test", "..\libs\renderer\build\renderer_test.vsnet2008.vcproj", "{F94DE282-EC50-471B-97F8-39CA354EC632}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -50,6 +62,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderer_test", "..\libs\re
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample_viewscene", "..\samples\viewscene\build\sample_viewscene.vsnet2008.vcproj", "{E52912D0-F94C-4108-9508-08DF9DF5FA9A}"
 	ProjectSection(ProjectDependencies) = postProject
+		{2CC7E710-E92B-4350-BD3D-696354E8F4D8} = {2CC7E710-E92B-4350-BD3D-696354E8F4D8}
 		{181175EF-9A4E-4083-89D2-47C7491B5BDB} = {181175EF-9A4E-4083-89D2-47C7491B5BDB}
 		{DEEF84FA-D74C-4E5D-BD5C-08A1C3AEFD25} = {DEEF84FA-D74C-4E5D-BD5C-08A1C3AEFD25}
 	EndProjectSection

@@ -16,7 +16,7 @@ MemStorage::MemStorage(const plat::byte* data, plat::uint32 dataSize) :
 
 void MemStorage::Write(plat::byte* data, plat::uint32 size) 
 {
-    SPDIAG_ASSERT(kWrite == m_Usage);
+    SPDIAG_ASSERT(kWrite == m_Usage, "memstorage usage must be write to call Write.");
 
     for (plat::uint32 i = 0; i < size; ++i)
     {
@@ -27,7 +27,7 @@ void MemStorage::Write(plat::byte* data, plat::uint32 size)
 
 void MemStorage::Read(plat::byte* data, plat::uint32 size) 
 {
-    SPDIAG_ASSERT(kRead == m_Usage);
+    SPDIAG_ASSERT(kRead == m_Usage, "memstorage usage must be read to call Read");
 
     if (m_ReadOffset + size <= m_Storage.size())
     {
@@ -38,7 +38,7 @@ void MemStorage::Read(plat::byte* data, plat::uint32 size)
     }
     else
     {
-        SPDIAG_ERROR();
+        SPDIAG_ERROR("Reading beyond the end of storage.");
 
         m_ReadOffset = m_Storage.size();
         for (plat::uint32 i = 0; i < size; ++i)

@@ -174,10 +174,6 @@
 				RelativePath="..\..\..\secondpylon\diag\diag_log.h"
 				>
 			</File>
-			<File
-				RelativePath="..\..\..\secondpylon\diag\error_assert.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

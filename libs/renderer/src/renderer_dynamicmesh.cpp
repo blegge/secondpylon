@@ -27,7 +27,7 @@ namespace renderer {
     // fail external - which would distribute the responsibility of this module.
     bool DynamicMesh::Create(IDirect3DDevice9& device, plat::uint32 nVertexCount, plat::uint32 nIndexCount)
     {
-        SPDIAG_ASSERT(m_VertexBuffer==NULL && m_IndexBuffer==NULL  && m_pVertexDeclaration==NULL);
+        SPDIAG_ASSERT(m_VertexBuffer==NULL && m_IndexBuffer==NULL && m_pVertexDeclaration==NULL, "DynamicMesh components already initialized.");
 
         m_nVertexCount = nVertexCount;
         m_nIndexCount = nIndexCount;

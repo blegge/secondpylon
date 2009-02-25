@@ -78,14 +78,14 @@ namespace data {
 
     SPPLAT_INLINE void MemStorage::SetUsage(EUsage currentUsage)
     {
-        SPDIAG_ASSERT(currentUsage == kUnused || kUnused == m_Usage);
+        SPDIAG_ASSERT(currentUsage == kUnused || kUnused == m_Usage, "Storage going between two invalid states (%d->%d)", m_Usage, currentUsage);
         m_Usage = currentUsage; 
     }
 
     SPPLAT_INLINE void MemStorage::Advance(plat::uint32 bytes)
     { 
-        SPDIAG_ASSERT(kRead == m_Usage);
-        SPDIAG_ASSERT(m_ReadOffset+bytes < m_Storage.size());
+        SPDIAG_ASSERT(kRead == m_Usage, "Reading is only permitted when the memstorage usage is set to reading.");
+        SPDIAG_ASSERT(m_ReadOffset+bytes < m_Storage.size(), "Advancing beyond the end of the storage buffer.");
         m_ReadOffset += bytes; 
     }
 

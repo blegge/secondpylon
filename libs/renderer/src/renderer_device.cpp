@@ -91,7 +91,7 @@ Device::Device(const SDeviceParameters& deviceParams) :
 
 Device::~Device()
 {
-    SPDIAG_ASSERT(!m_bInScene);
+    SPDIAG_ASSERT(!m_bInScene, "Must end a scene before destroying a render device.");
     SafeRelease(m_pD3D);
     SafeRelease(m_pDevice);
 }
@@ -153,14 +153,14 @@ void Device::Flip()
 
 bool Device::BeginScene()
 {
-    SPDIAG_ASSERT(!m_bInScene);
+    SPDIAG_ASSERT(!m_bInScene, "Device must call EndScene to complete the current scene before calling BeginScene again.");
     m_bInScene = (S_OK == m_pDevice->BeginScene());
     return m_bInScene;
 }
 
 void Device::EndScene()
 {
-    SPDIAG_ASSERT(m_bInScene);
+    SPDIAG_ASSERT(m_bInScene, "Device must being a scene before calling EndScene");
     SP_DXVERIFY(m_pDevice->EndScene());
     m_bInScene = false;
 }
