@@ -4,17 +4,23 @@
 
 namespace 
 {
-	secondpylon::diag::AssertSystem::EAssertAction DefaultHandler(const char* error, const char* message)
+	class DefaultAssertHandler : public secondpylon::diag::IAssertHandler
 	{
-		return secondpylon::diag::AssertSystem::kBreak;
-	}
+	public:
+		secondpylon::diag::AssertSystem::EAssertAction OnAssert(const char* error, const char* message)
+		{
+			return secondpylon::diag::AssertSystem::kBreak;
+		}
+	};
+
 }
 
 
 namespace secondpylon {
 namespace diag {
 
-AssertSystem::pfnAssertHandler AssertSystem::sm_Handler = &DefaultHandler;
+static DefaultAssertHandler s_DefaultHandler;
+secondpylon::diag::IAssertHandler* AssertSystem::sm_pHandler = &s_DefaultHandler;
 
 AssertSystem::EAssertAction AssertSystem::HandleAssert(const char* pszAssert, const char* format, ...)
 {
@@ -24,14 +30,15 @@ AssertSystem::EAssertAction AssertSystem::HandleAssert(const char* pszAssert, co
 	size_t size = _vsnprintf_s(message, ArraySize(message), ArraySize(message), format, args);
 	va_end(args);
 
-	return (*sm_Handler)(pszAssert, message);
+	return sm_pHandler->OnAssert(pszAssert, message);
 }
 
-void AssertSystem::SetAssertHandler(pfnAssertHandler pfnNewHandler)
+secondpylon::diag::IAssertHandler* AssertSystem::SetAssertHandler(secondpylon::diag::IAssertHandler* pNewHandler)
 {
-	sm_Handler = pfnNewHandler;
+	IAssertHandler* pPreviousHandler = sm_pHandler;
+	sm_pHandler = pNewHandler;
+	return pPreviousHandler;
 }
-
 
 }
 }

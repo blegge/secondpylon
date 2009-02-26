@@ -157,13 +157,13 @@ SUITE(vec2)
     {
         SPTEST_CHECKASSERTS_BEGIN()
         {
-            vec2f::Interpolate(vec2f(0,0), vec2f(1,1), -0.0F);
+            vec2f::Interpolate(vec2f(0,0), vec2f(1,1), 0.0F-1E-6F);
         }
         SPTEST_CHECKASSERTS_END()
 
         SPTEST_CHECKASSERTS_BEGIN()
         {
-            vec2f::Interpolate(vec2f(0,0), vec2f(1,1), 1.0F+1E-6f);
+            vec2f::Interpolate(vec2f(0,0), vec2f(1,1), 1.0F+1E-6F);
         }
         SPTEST_CHECKASSERTS_END()
     }

@@ -3,6 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\libs\test\build\test.vsnet2008.vcproj", "{37A3A1A3-EABC-449D-9C7F-B762496FF73F}"
 	ProjectSection(ProjectDependencies) = postProject
+		{2CC7E710-E92B-4350-BD3D-696354E8F4D8} = {2CC7E710-E92B-4350-BD3D-696354E8F4D8}
 		{0726A7F3-DEBC-42EA-B9EB-5CAF8BE0336D} = {0726A7F3-DEBC-42EA-B9EB-5CAF8BE0336D}
 	EndProjectSection
 EndProject

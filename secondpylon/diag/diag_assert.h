@@ -7,18 +7,26 @@
 namespace secondpylon {
 namespace diag {
 
+	class IAssertHandler;
+
 	class AssertSystem
 	{
 	public:
 		enum EAssertAction { kContinue, kBreak };
 
-		typedef EAssertAction (*pfnAssertHandler)(const char* error, const char* message);
-
 		static EAssertAction HandleAssert(const char* pszAssert, const char* format, ...);
-		static void SetAssertHandler(pfnAssertHandler pfnNewHandler);
+		static IAssertHandler* SetAssertHandler(IAssertHandler* pfnNewHandler);
 
 	private:
-		static pfnAssertHandler sm_Handler;
+		static IAssertHandler* sm_pHandler;
+	};
+
+	class IAssertHandler
+	{
+	public:
+		virtual ~IAssertHandler() {}
+
+		virtual AssertSystem::EAssertAction OnAssert(const char* error, const char* message) = 0;
 	};
 
 }

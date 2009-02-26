@@ -85,6 +85,7 @@ SPPLAT_INLINE vec2<TStorage >& vec2<TStorage>::operator*=(TStorage f)
 template <typename TStorage>
 SPPLAT_INLINE vec2<TStorage >& vec2<TStorage>::operator/=(TStorage f)
 {
+	SPDIAG_ASSERT(f != TStorage(0), "Cannot divide a vector by 0");
 	x /= f;
 	y /= f;
 	return *this; 
@@ -129,6 +130,7 @@ SPPLAT_INLINE TStorage vec2<TStorage>::DotProduct(const vec2& a, const vec2& b)
 template <typename TStorage>
 SPPLAT_INLINE vec2<TStorage> vec2<TStorage>::Interpolate(const vec2<TStorage>& p1, const vec2<TStorage>& p2, TStorage t)
 {
+	SPDIAG_ASSERT(t >= TStorage(0) && t <= TStorage(1), "Interpolation value is out of range");
 	return p1 + t*(p2-p1);
 }
 

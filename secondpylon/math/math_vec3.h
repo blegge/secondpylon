@@ -3,6 +3,7 @@
 
 #include <secondpylon/plat/plat_types.h>
 #include <secondpylon/plat/plat_compiler.h>
+#include <secondpylon/diag/diag_assert.h>
 
 namespace secondpylon {
 namespace math {
@@ -175,6 +176,7 @@ SPPLAT_INLINE vec3<TStorage> vec3<TStorage>::CrossProduct(const vec3<TStorage>& 
 template <typename TStorage>
 SPPLAT_INLINE vec3<TStorage> vec3<TStorage>::Interpolate( const vec3<TStorage> &p1, const vec3<TStorage> &p2, plat::float32 t )
 {
+	SPDIAG_ASSERT(t >= TStorage(0) && t <= TStorage(1), "Interpolation value is out of range");
 	return p1 + t*(p2-p1);
 }
 

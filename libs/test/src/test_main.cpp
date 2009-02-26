@@ -7,7 +7,7 @@
 
 int main(int, char*)
 {
-    int failures = UnitTest::RunAllTests();
+	int failures = UnitTest::RunAllTests();
 
 	// Return an error to enable command line error detection (for example, 
 	// using %errorlevel% in DOS)

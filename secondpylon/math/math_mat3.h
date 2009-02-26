@@ -94,12 +94,17 @@ bool mat3<TStorage>::operator!=(const mat3<TStorage> rhs) const
 template <typename TStorage>
 void mat3<TStorage>::Transpose(math::mat3<TStorage>& dest, const math::mat3<TStorage>& source)
 {
+    dest.m[k00] = source.m[k00];
     dest.m[k01] = source.m[k10];
     dest.m[k02] = source.m[k20];
-    dest.m[k10] = source.m[k01];
+
+	dest.m[k10] = source.m[k01];
+    dest.m[k11] = source.m[k11];
     dest.m[k12] = source.m[k21];
-    dest.m[k20] = source.m[k02];
+
+	dest.m[k20] = source.m[k02];
     dest.m[k21] = source.m[k12];
+    dest.m[k22] = source.m[k22];
 }
 
 
