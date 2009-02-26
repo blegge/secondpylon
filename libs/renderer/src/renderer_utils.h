@@ -6,10 +6,10 @@ namespace renderer {
 
     // The SP_DXVERIFY macro wraps DirectX calls which can fail. This is similar to an assert only it doesn't compile
     // out when asserts are disabled.
-    #if NDEBUG == 1
-        #define SP_DXVERIFY(x) SPDIAG_ASSERT((x) == S_OK);
+    #if defined(_DEBUG)
+        #define SP_DXVERIFY(x) SPDIAG_ASSERT((x) == S_OK, "DirectX call returned an unexpected result.")
     #else
-        #define SP_DXVERIFY(x) (x);
+        #define SP_DXVERIFY(x) (x)
     #endif
 
     // DirectX helper function to handle conditionally releasing DX resources and nullifying the referencing pointer.
