@@ -153,11 +153,15 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\src\plat_architecture.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\src\plat_compiler.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\test\plat_compiler_types.cpp"
+				RelativePath="..\src\plat_crt.cpp"
 				>
 			</File>
 			<File

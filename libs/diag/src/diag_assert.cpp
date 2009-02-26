@@ -1,4 +1,6 @@
 #include <secondpylon/diag/diag_assert.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 namespace 
 {

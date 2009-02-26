@@ -3,8 +3,6 @@
 
 #include <secondpylon/plat/plat_compiler.h>
 #include <secondpylon/plat/plat_crt.h>
-#include <stdio.h>
-#include <stdarg.h>
 
 namespace secondpylon {
 namespace diag {
