@@ -15,7 +15,7 @@ namespace renderer {
     public:
         Color();
 
-        plat::uint32 GetEncodedColor() const { return m_EncodedColor; }
+        plat::uint32 GetEncodedColor() const { return EncodedColor_; }
 
         void Encode(plat::uint8 r, plat::uint8 g, plat::uint8 b, plat::uint8 a);
 
@@ -26,12 +26,12 @@ namespace renderer {
             , plat::uint8* a) const;
 
         bool operator==(const Color& rhs) const
-        { return m_EncodedColor == rhs.m_EncodedColor; }
+        { return EncodedColor_ == rhs.EncodedColor_; }
 
         bool operator!=(const Color& rhs) const  { return *this != rhs; }
 
     private:
-        plat::uint32 m_EncodedColor;
+        plat::uint32 EncodedColor_;
     };
 
 }  // namespace renderer

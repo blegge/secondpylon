@@ -35,10 +35,10 @@ TEST(DegreeToRadian) {
 }
 
 TEST(RadianToDegree) {
-    float ninety_degrees_from_pi =
+    float ninety_degrees_fropi_ =
         math::Utils::RadianToDegree((2.0F*math::Utils::PI()) / 4.0F);
 
-    CHECK_EQUAL(90.0F, ninety_degrees_from_pi);
+    CHECK_EQUAL(90.0F, ninety_degrees_fropi_);
 }
 
 }  // namespace secondpylon

@@ -23,7 +23,7 @@ namespace diag {
         static IAssertHandler* SetAssertHandler(IAssertHandler* pfnNewHandler);
 
     private:
-        static IAssertHandler* sm_pHandler;
+        static IAssertHandler* spHandler_;
     };
 
     class IAssertHandler {

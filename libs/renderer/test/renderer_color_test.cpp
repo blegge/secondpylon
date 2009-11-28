@@ -22,19 +22,19 @@ namespace test {
 
 struct ColorFixture {
     ColorFixture() :
-        m_red(0)
-        , m_green(64)
-        , m_blue(128)
-        , m_alpha(255) {
-        m_color.Encode(m_red, m_green, m_blue, m_alpha);
+        red_(0)
+        , green_(64)
+        , blue_(128)
+        , alpha_(255) {
+        color_.Encode(red_, green_, blue_, alpha_);
     }
 
-    plat::uint8 m_red;
-    plat::uint8 m_green;
-    plat::uint8 m_blue;
-    plat::uint8 m_alpha;
+    plat::uint8 red_;
+    plat::uint8 green_;
+    plat::uint8 blue_;
+    plat::uint8 alpha_;
 
-    renderer::Color m_color;
+    renderer::Color color_;
 };
 
 TEST_FIXTURE(ColorFixture, Initialization) {
@@ -47,11 +47,11 @@ TEST_FIXTURE(ColorFixture, Initialization) {
 
 TEST_FIXTURE(ColorFixture, Decode) {
     plat::uint8 red, blue, green, alpha;
-    m_color.Decode(&red, &green, &blue, &alpha);
-    CHECK_EQUAL(m_red, red);
-    CHECK_EQUAL(m_green, green);
-    CHECK_EQUAL(m_blue, blue);
-    CHECK_EQUAL(m_alpha, alpha);
+    color_.Decode(&red, &green, &blue, &alpha);
+    CHECK_EQUAL(red_, red);
+    CHECK_EQUAL(green_, green);
+    CHECK_EQUAL(blue_, blue);
+    CHECK_EQUAL(alpha_, alpha);
 }
 
 }  // namespace secondpylon

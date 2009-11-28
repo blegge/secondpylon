@@ -17,9 +17,9 @@ namespace secondpylon {
 namespace renderer {
 
 Device::Device(const SDeviceParameters& deviceParams)
-    : m_pD3D(NULL)
-    , m_pDevice(NULL)
-    , m_bInScene(false) {
+    : pD3D_(NULL)
+    , pDevice_(NULL)
+    , bInScene_(false) {
     // Create D3D and the rendering device.
     IDirect3D9* pD3D = Direct3DCreate9(D3D_SDK_VERSION);
     if (pD3D) {
@@ -75,8 +75,8 @@ Device::Device(const SDeviceParameters& deviceParams)
         if (pD3DDevice) {
             // Assign the output parameters once we've cleared all potential
             // failure points.
-            m_pD3D = pD3D;
-            m_pDevice = pD3DDevice;
+            pD3D_ = pD3D;
+            pDevice_ = pD3DDevice;
         } else {
             SafeRelease(pD3D);
         }
@@ -84,17 +84,17 @@ Device::Device(const SDeviceParameters& deviceParams)
 }
 
 Device::~Device() {
-    SPDIAG_ASSERT(!m_bInScene,
+    SPDIAG_ASSERT(!bInScene_,
         "Must end a scene before destroying a render device.");
 
-    SafeRelease(m_pD3D);
-    SafeRelease(m_pDevice);
+    SafeRelease(pD3D_);
+    SafeRelease(pDevice_);
 }
 
 DynamicMesh* Device::CreateDynamicMesh(plat::uint32 nVertexCount
                                        , plat::uint32 nIndexCount) {
     DynamicMesh* pMesh = new DynamicMesh;
-    if (!pMesh->Create(m_pDevice, nVertexCount, nIndexCount)) {
+    if (!pMesh->Create(pDevice_, nVertexCount, nIndexCount)) {
         delete pMesh;
         pMesh = NULL;
     }
@@ -103,12 +103,12 @@ DynamicMesh* Device::CreateDynamicMesh(plat::uint32 nVertexCount
 
 Material* Device::CreateMaterial(TInMemoryStream* pixelShaderBuffer
                                  , TInMemoryStream* vertexShaderBuffer) {
-    return new Material(m_pDevice, pixelShaderBuffer, vertexShaderBuffer);
+    return new Material(pDevice_, pixelShaderBuffer, vertexShaderBuffer);
 }
 
 Texture* Device::CreateTexture(const math::vec2<plat::uint32>& size) {
     IDirect3DTexture9* pTexture = NULL;
-    m_pDevice->CreateTexture(size.x, size.y, 0, D3DUSAGE_DYNAMIC,
+    pDevice_->CreateTexture(size.x, size.y, 0, D3DUSAGE_DYNAMIC,
         D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &pTexture, NULL);
     return new Texture(pTexture, size);
 }
@@ -118,49 +118,49 @@ void Device::Draw(const renderer::SSubMeshRenderRequest& request) {
     // either needs to be added here (with draws batched externally) or we need
     // to add internal checks (which would be less efficient but simpler from
     // an API standpoint).
-    SP_DXVERIFY(m_pDevice->SetVertexShader(request.m_pVertexShader));
-    SP_DXVERIFY(m_pDevice->SetPixelShader(request.m_pPixelShader));
+    SP_DXVERIFY(pDevice_->SetVertexShader(request.pVertexShader_));
+    SP_DXVERIFY(pDevice_->SetPixelShader(request.pPixelShader_));
 
-    SP_DXVERIFY(m_pDevice->SetVertexDeclaration(request.m_pVertexDeclaration));
+    SP_DXVERIFY(pDevice_->SetVertexDeclaration(request.pVertexDeclaration_));
     SP_DXVERIFY(
-        m_pDevice->SetStreamSource(0, request.m_pVertexBuffer,
-            0, request.m_nVertexStride));
-    SP_DXVERIFY(m_pDevice->SetIndices(request.m_pIndexBuffer));
+        pDevice_->SetStreamSource(0, request.pVertexBuffer_,
+            0, request.nVertexStride_));
+    SP_DXVERIFY(pDevice_->SetIndices(request.pIndexBuffer_));
 
     SP_DXVERIFY(
-        m_pDevice->DrawIndexedPrimitive(
-            D3DPT_TRIANGLELIST, 0, 0, request.m_nVertexCount,
-            0, request.m_nIndexCount));
+        pDevice_->DrawIndexedPrimitive(
+            D3DPT_TRIANGLELIST, 0, 0, request.nVertexCount_,
+            0, request.nIndexCount_));
 
-    SP_DXVERIFY(m_pDevice->SetStreamSource(0, NULL, 0, 0));
-    SP_DXVERIFY(m_pDevice->SetVertexShader(NULL));
-    SP_DXVERIFY(m_pDevice->SetPixelShader(NULL));
+    SP_DXVERIFY(pDevice_->SetStreamSource(0, NULL, 0, 0));
+    SP_DXVERIFY(pDevice_->SetVertexShader(NULL));
+    SP_DXVERIFY(pDevice_->SetPixelShader(NULL));
 }
 
 void Device::Clear(const renderer::Color& clearColor) {
     SP_DXVERIFY(
-        m_pDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER
+        pDevice_->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER
                         , clearColor.GetEncodedColor(), 1.0f, 0));
 }
 
 void Device::Flip() {
-    SP_DXVERIFY(m_pDevice->Present(NULL, NULL, NULL, NULL));
+    SP_DXVERIFY(pDevice_->Present(NULL, NULL, NULL, NULL));
 }
 
 bool Device::BeginScene() {
     SPDIAG_ASSERT(
-        !m_bInScene
+        !bInScene_
         , "Device must call EndScene to complete the current scene before"
         " calling BeginScene again.");
-    m_bInScene = (S_OK == m_pDevice->BeginScene());
-    return m_bInScene;
+    bInScene_ = (S_OK == pDevice_->BeginScene());
+    return bInScene_;
 }
 
 void Device::EndScene() {
-    SPDIAG_ASSERT(m_bInScene
+    SPDIAG_ASSERT(bInScene_
         , "Device must being a scene before calling EndScene");
-    SP_DXVERIFY(m_pDevice->EndScene());
-    m_bInScene = false;
+    SP_DXVERIFY(pDevice_->EndScene());
+    bInScene_ = false;
 }
 
 }  // namespace renderer

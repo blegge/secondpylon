@@ -24,9 +24,9 @@ public:
 private:
     SPUNCOPYABLE(Texture);
 
-    IDirect3DTexture9* m_pTexture;
-    math::vec2<plat::uint32> m_Size;
-    plat::uint32* m_pLocked;
+    IDirect3DTexture9* pTexture_;
+    math::vec2<plat::uint32> Size_;
+    plat::uint32* pLocked_;
 };
 
 }  // namespace renderer

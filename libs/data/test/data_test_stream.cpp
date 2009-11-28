@@ -14,62 +14,62 @@ namespace test {
 
 struct SStreamTestCase {
     SStreamTestCase() :
-        m_bool(true)
-        , m_uint8(0xfd)
-        , m_uint32(0x1234)
-        , m_uint16(0xab)
-        , m_float32(0.6764556980453310f)
-        , m_sint8(-94)
-        , m_sint32(-1239057)
-        , m_sint16(-1234) {
-        StringCopy(m_szString, "Test", ArraySize(m_szString));
+        bool_(true)
+        , uint8_(0xfd)
+        , uint32_(0x1234)
+        , uint16_(0xab)
+        , float32_(0.6764556980453310f)
+        , sint8_(-94)
+        , sint32_(-1239057)
+        , sint16_(-1234) {
+        StringCopy(szString_, "Test", ArraySize(szString_));
     }
 
     bool operator==(const SStreamTestCase& rhs) const {
         return (
-            m_bool == rhs.m_bool
-            && m_uint8 == rhs.m_uint8
-            && m_uint32 == rhs.m_uint32
-            && m_uint16 == rhs.m_uint16
-            && m_float32 == rhs.m_float32
-            && m_sint8 == rhs.m_sint8
-            && m_sint32 == rhs.m_sint32
-            && m_sint16 == rhs.m_sint16);
+            bool_ == rhs.bool_
+            && uint8_ == rhs.uint8_
+            && uint32_ == rhs.uint32_
+            && uint16_ == rhs.uint16_
+            && float32_ == rhs.float32_
+            && sint8_ == rhs.sint8_
+            && sint32_ == rhs.sint32_
+            && sint16_ == rhs.sint16_);
     }
 
     void Write(data::OutStream<data::MemStorage>* pStream) {
-        pStream->Write(m_bool);
-        pStream->Write(m_uint8);
-        pStream->Write(m_uint32);
-        pStream->Write(m_uint16);
-        pStream->Write(m_float32);
-        pStream->Write(m_sint8);
-        pStream->Write(m_sint32);
-        pStream->Write(m_sint16);
-        pStream->Write(m_szString);
+        pStream->Write(bool_);
+        pStream->Write(uint8_);
+        pStream->Write(uint32_);
+        pStream->Write(uint16_);
+        pStream->Write(float32_);
+        pStream->Write(sint8_);
+        pStream->Write(sint32_);
+        pStream->Write(sint16_);
+        pStream->Write(szString_);
     }
 
     void Read(data::InStream<data::MemStorage>* pStream) {
-        pStream->Read(&m_bool);
-        pStream->Read(&m_uint8);
-        pStream->Read(&m_uint32);
-        pStream->Read(&m_uint16);
-        pStream->Read(&m_float32);
-        pStream->Read(&m_sint8);
-        pStream->Read(&m_sint32);
-        pStream->Read(&m_sint16);
-        pStream->Read(m_szString, ArraySize(m_szString));
+        pStream->Read(&bool_);
+        pStream->Read(&uint8_);
+        pStream->Read(&uint32_);
+        pStream->Read(&uint16_);
+        pStream->Read(&float32_);
+        pStream->Read(&sint8_);
+        pStream->Read(&sint32_);
+        pStream->Read(&sint16_);
+        pStream->Read(szString_, ArraySize(szString_));
     }
 
-    plat::bool8 m_bool;
-    plat::uint8 m_uint8;
-    plat::uint32 m_uint32;
-    plat::uint16 m_uint16;
-    plat::float32 m_float32;
-    plat::sint8 m_sint8;
-    plat::sint32 m_sint32;
-    plat::sint16 m_sint16;
-    char m_szString[48];
+    plat::bool8 bool_;
+    plat::uint8 uint8_;
+    plat::uint32 uint32_;
+    plat::uint16 uint16_;
+    plat::float32 float32_;
+    plat::sint8 sint8_;
+    plat::sint32 sint32_;
+    plat::sint16 sint16_;
+    char szString_[48];
 };
 
 TEST(TestSStreamTestCaseEquality) {

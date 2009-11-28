@@ -41,21 +41,21 @@ namespace data {
         explicit InStream(TStorage* storage);
         ~InStream();
 
-        void Read(plat::uint8* i) { TUnpacker::Read(&m_Storage, i); }
-        void Read(plat::uint16* i) { TUnpacker::Read(&m_Storage, i); }
-        void Read(plat::uint32* i) { TUnpacker::Read(&m_Storage, i); }
+        void Read(plat::uint8* i) { TUnpacker::Read(&Storage_, i); }
+        void Read(plat::uint16* i) { TUnpacker::Read(&Storage_, i); }
+        void Read(plat::uint32* i) { TUnpacker::Read(&Storage_, i); }
 
-        void Read(plat::sint8* i) { TUnpacker::Read(&m_Storage, i); }
-        void Read(plat::sint16* i) { TUnpacker::Read(&m_Storage, i); }
-        void Read(plat::sint32* i) { TUnpacker::Read(&m_Storage, i); }
+        void Read(plat::sint8* i) { TUnpacker::Read(&Storage_, i); }
+        void Read(plat::sint16* i) { TUnpacker::Read(&Storage_, i); }
+        void Read(plat::sint32* i) { TUnpacker::Read(&Storage_, i); }
 
-        void Read(plat::float32* f) { TUnpacker::Read(&m_Storage, f); }
-        void Read(plat::bool8* b) { TUnpacker::Read(&m_Storage, b); }
+        void Read(plat::float32* f) { TUnpacker::Read(&Storage_, f); }
+        void Read(plat::bool8* b) { TUnpacker::Read(&Storage_, b); }
 
         void Read(char* pszString, plat::uint32 capacity);
 
     private:
-        TStorage& m_Storage;
+        TStorage& Storage_;
     };
 
     //
@@ -64,13 +64,13 @@ namespace data {
 
     template <typename TStorage, template <typename> class Unpacker >
     InStream<TStorage, Unpacker>::InStream(TStorage* storage) :
-        m_Storage(*storage) {
-        m_Storage.SetUsage(TStorage::kRead);
+        Storage_(*storage) {
+        Storage_.SetUsage(TStorage::kRead);
     }
 
     template <typename TStorage, template <typename> class Unpacker >
     InStream<TStorage, Unpacker>::~InStream() {
-        m_Storage.SetUsage(TStorage::kUnused);
+        Storage_.SetUsage(TStorage::kUnused);
     }
 
     template <typename TStorage, template <typename> class Unpacker >
@@ -84,10 +84,10 @@ namespace data {
             // The buffer is too small. This should probably be considered a
             // fatal error as this would have completely unpredictable results.
             // Skip the string to avoid misaligning our next read.
-            m_Storage.Advance(sizeof(pszString[0])*size);
+            Storage_.Advance(sizeof(pszString[0])*size);
             SPDIAG_ERROR("Attempting to read beyond the end of stream");
         } else {
-            TUnpacker::Read(&m_Storage, pszString, size);
+            TUnpacker::Read(&Storage_, pszString, size);
             pszString[size] = '\0';
         }
     }

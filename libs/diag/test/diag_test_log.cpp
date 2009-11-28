@@ -15,18 +15,18 @@ class StoringLogListener : public diag::ILogListener {
 
 public:
     StoringLogListener() {
-        m_Message[0] = '\0';
+        Message_[0] = '\0';
     }
 
     virtual void OnMessage(const char* message) {
-        strncpy_s(m_Message, message, kStorageSize);
-        m_Message[kStorageSize-1] = '\0';
+        strncpy_s(Message_, message, kStorageSize);
+        Message_[kStorageSize-1] = '\0';
     }
 
-    const char* GetMessage() const { return m_Message; }
+    const char* GetMessage() const { return Message_; }
 
 private:
-    char m_Message[kStorageSize];
+    char Message_[kStorageSize];
 };
 
 TEST(LogAddListener) {

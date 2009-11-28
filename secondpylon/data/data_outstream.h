@@ -22,22 +22,22 @@ namespace data {
 
         ~OutStream();
 
-        void Write(plat::uint8 i) { TPacker::Write(&m_Storage, i); }
-        void Write(plat::uint16 i) { TPacker::Write(&m_Storage, i); }
-        void Write(plat::uint32 i) { TPacker::Write(&m_Storage, i); }
+        void Write(plat::uint8 i) { TPacker::Write(&Storage_, i); }
+        void Write(plat::uint16 i) { TPacker::Write(&Storage_, i); }
+        void Write(plat::uint32 i) { TPacker::Write(&Storage_, i); }
 
-        void Write(plat::sint8 i) { TPacker::Write(&m_Storage, i); }
-        void Write(plat::sint16 i) { TPacker::Write(&m_Storage, i); }
-        void Write(plat::sint32 i) { TPacker::Write(&m_Storage, i); }
+        void Write(plat::sint8 i) { TPacker::Write(&Storage_, i); }
+        void Write(plat::sint16 i) { TPacker::Write(&Storage_, i); }
+        void Write(plat::sint32 i) { TPacker::Write(&Storage_, i); }
 
-        void Write(plat::float32 f) { TPacker::Write(&m_Storage, f); }
+        void Write(plat::float32 f) { TPacker::Write(&Storage_, f); }
 
-        void Write(plat::bool8 b) { TPacker::Write(&m_Storage, b); }
+        void Write(plat::bool8 b) { TPacker::Write(&Storage_, b); }
 
         void Write(const char* pszString);
 
     private:
-        TStorage& m_Storage;
+        TStorage& Storage_;
     };
 
     //
@@ -46,20 +46,20 @@ namespace data {
 
     template <typename TStorage, template <typename> class  Packer>
     OutStream<TStorage, Packer>::OutStream(TStorage* storage)
-        : m_Storage(*storage)  {
-        m_Storage.SetUsage(TStorage::kWrite);
+        : Storage_(*storage)  {
+        Storage_.SetUsage(TStorage::kWrite);
     }
 
     template <typename TStorage, template <typename> class  Packer>
     OutStream<TStorage, Packer>::~OutStream() {
-        m_Storage.SetUsage(TStorage::kUnused);
+        Storage_.SetUsage(TStorage::kUnused);
     }
 
     template <typename TStorage, template <typename> class  Packer>
     void OutStream<TStorage, Packer>::Write(const char* pszString) {
         plat::uint32 len = strlen(pszString);
         Write(len);
-        TPacker::Write(&m_Storage, pszString, len);
+        TPacker::Write(&Storage_, pszString, len);
     }
 
 }  // namespace data

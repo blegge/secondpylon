@@ -11,20 +11,20 @@ namespace test {
 
 class AssertCheck : public secondpylon::diag::IAssertHandler {
 public:
-    AssertCheck(UnitTest::TestResults* testResults_,
+    AssertCheck(UnitTest::TestResults* testResults,
         const UnitTest::TestDetails& details)
-        : m_TestResults(testResults_)
-        , m_Details(details)
-        , m_AssertCount(0)
-        , m_pPreviousHandler(NULL) {
-        m_pPreviousHandler =
+        : TestResults_(testResults)
+        , Details_(details)
+        , AssertCount_(0)
+        , pPreviousHandler_(NULL) {
+        pPreviousHandler_ =
             secondpylon::diag::AssertSystem::SetAssertHandler(this);
     }
 
     ~AssertCheck() {
-        secondpylon::diag::AssertSystem::SetAssertHandler(m_pPreviousHandler);
-        if (m_AssertCount == 0) {
-            m_TestResults->OnTestFailure(m_Details, "Failed to report error");
+        secondpylon::diag::AssertSystem::SetAssertHandler(pPreviousHandler_);
+        if (AssertCount_ == 0) {
+            TestResults_->OnTestFailure(Details_, "Failed to report error");
         }
     }
 
@@ -32,20 +32,20 @@ public:
         const char* error, const char* message) {
         SPDIAG_UNREFERENCED(error);
         SPDIAG_UNREFERENCED(message);
-        ++m_AssertCount;
+        ++AssertCount_;
         return secondpylon::diag::AssertSystem::kContinue;
     }
 
 private:
     SPUNCOPYABLE(AssertCheck);
 
-    secondpylon::diag::IAssertHandler* m_pPreviousHandler;
+    secondpylon::diag::IAssertHandler* pPreviousHandler_;
 
-    UnitTest::TestResults* m_TestResults;
+    UnitTest::TestResults* TestResults_;
 
-    const UnitTest::TestDetails& m_Details;
+    const UnitTest::TestDetails& Details_;
 
-    int m_AssertCount;
+    int AssertCount_;
 };
 
 }  // namespace secondpylon

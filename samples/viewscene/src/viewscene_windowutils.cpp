@@ -39,7 +39,7 @@ void WindowUtils::create_window(WindowUtils::window* window_result
                                 , HINSTANCE instance
                                 , const wchar_t* window_name
                                 , vec2i dims) {
-    SPDIAG_ASSERT(window_result->m_window == 0
+    SPDIAG_ASSERT(window_result->window_ == 0
         , "Output parameter already has a window specified.");
 
     DWORD window_style =
@@ -68,12 +68,12 @@ void WindowUtils::create_window(WindowUtils::window* window_result
     ShowWindow(new_window, SW_SHOWNORMAL);
 
     // Store the results now that everything completed successfully.
-    window_result->m_window = new_window;
+    window_result->window_ = new_window;
 }
 
 void WindowUtils::destroy_window(WindowUtils::window* target) {
-    DestroyWindow(target->m_window);
-    target->m_window = 0;
+    DestroyWindow(target->window_);
+    target->window_ = 0;
 }
 
 }  // namespace viewscene

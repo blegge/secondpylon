@@ -37,8 +37,8 @@ private:
 
     // @todo This needs to be a shared reference to the shader or an identifier
     // of some sort. This is a temp bootstrap setup.
-    IDirect3DVertexShader9* m_pVertexShader;
-    IDirect3DPixelShader9* m_pPixelShader;
+    IDirect3DVertexShader9* pVertexShader_;
+    IDirect3DPixelShader9* pPixelShader_;
 };
 
 }  // namespace renderer

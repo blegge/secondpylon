@@ -6,16 +6,16 @@ namespace secondpylon {
 namespace diag {
 
     void Log::AddListener(ILogListener* listener) {
-        m_ListenerList.push_back(listener);
+        ListenerList_.push_back(listener);
     }
 
     void Log::RemoveListener(ILogListener* listener) {
-        m_ListenerList.remove(listener);
+        ListenerList_.remove(listener);
     }
 
     void Log::Message(const char* message) {
-        std::list<ILogListener*>::iterator each = m_ListenerList.begin();
-        std::list<ILogListener*>::iterator end = m_ListenerList.end();
+        std::list<ILogListener*>::iterator each = ListenerList_.begin();
+        std::list<ILogListener*>::iterator end = ListenerList_.end();
         for (;each != end; ++each) {
             (*each)->OnMessage(message);
         }

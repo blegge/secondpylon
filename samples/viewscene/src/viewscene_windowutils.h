@@ -13,10 +13,10 @@ namespace viewscene {
 struct WindowUtils {
     struct window {
         window() :
-            m_window(0) {
+            window_(0) {
         }
 
-        HWND m_window;
+        HWND window_;
     };
 
     static void register_classes(HINSTANCE instance);

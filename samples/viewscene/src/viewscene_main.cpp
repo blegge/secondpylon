@@ -94,14 +94,14 @@ void renderpoly() {
     // handle at the source end. Consider updating resources to get released
     // prior to write and recreated.
     renderer::SSubMeshRenderRequest polyRequest;
-    polyRequest.m_pPixelShader = pMat->GetPixelShader();
-    polyRequest.m_pVertexShader = pMat->GetVertexShader();
-    polyRequest.m_pIndexBuffer = pMesh->GetIndices();
-    polyRequest.m_pVertexBuffer = pMesh->GetVertices();
-    polyRequest.m_pVertexDeclaration = pMesh->GetVertexDecl();
-    polyRequest.m_nVertexStride = pMesh->GetVertexStride();
-    polyRequest.m_nVertexCount = pMesh->GetVertexCount();
-    polyRequest.m_nIndexCount = pMesh->GetIndexCount();
+    polyRequest.pPixelShader_ = pMat->GetPixelShader();
+    polyRequest.pVertexShader_ = pMat->GetVertexShader();
+    polyRequest.pIndexBuffer_ = pMesh->GetIndices();
+    polyRequest.pVertexBuffer_ = pMesh->GetVertices();
+    polyRequest.pVertexDeclaration_ = pMesh->GetVertexDecl();
+    polyRequest.nVertexStride_ = pMesh->GetVertexStride();
+    polyRequest.nVertexCount_ = pMesh->GetVertexCount();
+    polyRequest.nIndexCount_ = pMesh->GetIndexCount();
 
     g_device->Draw(polyRequest);
 
@@ -141,7 +141,7 @@ int WINAPI WinMain(HINSTANCE instance,
     secondpylon::renderer::SDeviceParameters params;
     params.adapter = 0;
     params.dims = vec2i(128, 128);
-    params.parent_window = app_window.m_window;
+    params.parent_window = app_window.window_;
     params.vsync = false;
 
     {

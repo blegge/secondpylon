@@ -13,8 +13,8 @@ struct RenderUtils {
         RenderDevice();
         ~RenderDevice();
 
-        IDirect3D9* m_pD3D;
-        IDirect3DDevice9* m_pDevice;
+        IDirect3D9* pD3D_;
+        IDirect3DDevice9* pDevice_;
     };
 
     struct DeviceParameters {

@@ -23,7 +23,7 @@ namespace secondpylon {
 namespace diag {
 
 static DefaultAssertHandler s_DefaultHandler;
-secondpylon::diag::IAssertHandler* AssertSystem::sm_pHandler =
+secondpylon::diag::IAssertHandler* AssertSystem::spHandler_ =
     &s_DefaultHandler;
 
 AssertSystem::EAssertAction AssertSystem::HandleAssert(
@@ -35,13 +35,13 @@ AssertSystem::EAssertAction AssertSystem::HandleAssert(
     _vsnprintf_s(message, ArraySize(message), ArraySize(message), format, args);
     va_end(args);
 
-    return sm_pHandler->OnAssert(pszAssert, message);
+    return spHandler_->OnAssert(pszAssert, message);
 }
 
 secondpylon::diag::IAssertHandler* AssertSystem::SetAssertHandler(
     secondpylon::diag::IAssertHandler* pNewHandler) {
-    IAssertHandler* pPreviousHandler = sm_pHandler;
-    sm_pHandler = pNewHandler;
+    IAssertHandler* pPreviousHandler = spHandler_;
+    spHandler_ = pNewHandler;
     return pPreviousHandler;
 }
 

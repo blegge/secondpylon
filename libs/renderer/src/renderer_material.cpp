@@ -112,26 +112,26 @@ Material::Material(IDirect3DDevice9* device
     vertexShaderStream->Read(
         &szVertexShaderData[0]
         , ArraySize(szVertexShaderData));
-    m_pVertexShader = LoadVertexShader(device, szVertexShaderData);
+    pVertexShader_ = LoadVertexShader(device, szVertexShaderData);
 
     char szPixelShaderData[1024];
     pixelShaderStream->Read(
         &szPixelShaderData[0]
         , ArraySize(szPixelShaderData));
-    m_pPixelShader = LoadPixelShader(device, szPixelShaderData);
+    pPixelShader_ = LoadPixelShader(device, szPixelShaderData);
 }
 
 Material::~Material() {
-    SafeRelease(m_pVertexShader);
-    SafeRelease(m_pPixelShader);
+    SafeRelease(pVertexShader_);
+    SafeRelease(pPixelShader_);
 }
 
 IDirect3DVertexShader9* Material::GetVertexShader() const {
-    return m_pVertexShader;
+    return pVertexShader_;
 }
 
 IDirect3DPixelShader9* Material::GetPixelShader() const {
-    return m_pPixelShader;
+    return pPixelShader_;
 }
 
 void Material::Destroy() {

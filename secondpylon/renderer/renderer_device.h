@@ -31,27 +31,27 @@ struct SDeviceParameters;
 // describe both objects.
 struct SSubMeshRenderRequest {
     SSubMeshRenderRequest() :
-        m_pVertexShader(NULL)
-        , m_pPixelShader(NULL)
-        , m_pIndexBuffer(NULL)
-        , m_pVertexBuffer(NULL)
-        , m_pVertexDeclaration(NULL)
-        , m_nVertexStride(0)
-        , m_nVertexCount(0)
-        , m_nIndexCount(0) {
+        pVertexShader_(NULL)
+        , pPixelShader_(NULL)
+        , pIndexBuffer_(NULL)
+        , pVertexBuffer_(NULL)
+        , pVertexDeclaration_(NULL)
+        , nVertexStride_(0)
+        , nVertexCount_(0)
+        , nIndexCount_(0) {
     }
 
     // Material state
-    IDirect3DVertexShader9* m_pVertexShader;
-    IDirect3DPixelShader9* m_pPixelShader;
+    IDirect3DVertexShader9* pVertexShader_;
+    IDirect3DPixelShader9* pPixelShader_;
 
     // Mesh state
-    IDirect3DIndexBuffer9* m_pIndexBuffer;
-    IDirect3DVertexBuffer9* m_pVertexBuffer;
-    IDirect3DVertexDeclaration9* m_pVertexDeclaration;
-    plat::uint32 m_nVertexStride;
-    plat::uint32 m_nVertexCount;
-    plat::uint32 m_nIndexCount;
+    IDirect3DIndexBuffer9* pIndexBuffer_;
+    IDirect3DVertexBuffer9* pVertexBuffer_;
+    IDirect3DVertexDeclaration9* pVertexDeclaration_;
+    plat::uint32 nVertexStride_;
+    plat::uint32 nVertexCount_;
+    plat::uint32 nIndexCount_;
 };
 
 class Device {
@@ -85,11 +85,11 @@ public:
 private:
     SPUNCOPYABLE(Device);
 
-    IDirect3D9* m_pD3D;
-    IDirect3DDevice9* m_pDevice;
+    IDirect3D9* pD3D_;
+    IDirect3DDevice9* pDevice_;
 
     // Debug value tracking if we are in a BeginScene/EndScene block.
-    bool m_bInScene;
+    bool bInScene_;
 };
 
 }  // namespace renderer
