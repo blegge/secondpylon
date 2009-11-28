@@ -23,10 +23,10 @@ void Color::Encode(plat::uint8 r, plat::uint8 g, plat::uint8 b
 
 void Color::Decode(plat::uint8* r, plat::uint8* g,
                    plat::uint8* b , plat::uint8* a) const {
-    *a = (plat::uint8)(m_EncodedColor >> 24) & 0xff;
-    *r = (plat::uint8)(m_EncodedColor >> 16) & 0xff;
-    *g = (plat::uint8)(m_EncodedColor >> 8) & 0xff;
-    *b = (plat::uint8)(m_EncodedColor >> 0) & 0xff;
+    *a = static_cast<plat::uint8>((m_EncodedColor >> 24) & 0xff);
+    *r = static_cast<plat::uint8>((m_EncodedColor >> 16) & 0xff);
+    *g = static_cast<plat::uint8>((m_EncodedColor >> 8) & 0xff);
+    *b = static_cast<plat::uint8>((m_EncodedColor >> 0) & 0xff);
 }
 
 }  // namespace renderer
