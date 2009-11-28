@@ -66,7 +66,7 @@ namespace secondpylon {
     static void StringCopy(
         char* SPPLAT_RESTRICT dest
         , const char* SPPLAT_RESTRICT source
-        , size_t destCapacity);
+        , size_t dest_length);
 
     static bool StringEquals();
     static bool StringIEquals();
@@ -99,17 +99,17 @@ namespace secondpylon {
     SPPLAT_INLINE void StringCopy(
         char* SPPLAT_RESTRICT dest
         , const char* SPPLAT_RESTRICT source
-        , size_t destCapacity) {
+        , size_t dest_length) {
         // Verify the string fits.
         size_t sourceLength = strlen(source);
-        if (sourceLength + 1 > destCapacity) {
+        if (sourceLength + 1 > dest_length) {
             dest[0] = '\0';
             // SPDIAG_ERROR((""));
             return;
         }
 
         // Verify the ranges don't overlap by checking the boundaries.
-        // SPDIAG_ASSERT(source > dest+destCapacity
+        // SPDIAG_ASSERT(source > dest+dest_length
         //    || source+sourceLength+1 < dest);
 
         // Copy and terminate the string.

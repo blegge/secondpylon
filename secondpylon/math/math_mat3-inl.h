@@ -33,7 +33,7 @@ void mat3<TStorage>::Identity(mat3<TStorage>* dest) {
 }
 
 template <typename TStorage>
-bool mat3<TStorage>::operator==(const mat3<TStorage> rhs) const {
+bool mat3<TStorage>::operator==(const mat3<TStorage>& rhs) const {
     plat::uint8 equal = 1;
     for (plat::uint32 i = 0; i < kComponents; ++i) {
         equal &= (m[i] == rhs.m[i]);
@@ -42,7 +42,7 @@ bool mat3<TStorage>::operator==(const mat3<TStorage> rhs) const {
 }
 
 template <typename TStorage>
-bool mat3<TStorage>::operator!=(const mat3<TStorage> rhs) const {
+bool mat3<TStorage>::operator!=(const mat3<TStorage>& rhs) const {
     return !(*this == rhs);
 }
 

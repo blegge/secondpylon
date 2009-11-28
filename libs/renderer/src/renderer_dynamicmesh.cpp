@@ -9,17 +9,17 @@ namespace secondpylon {
 namespace renderer {
 
 DynamicMesh::DynamicMesh()
-    : VertexBuffer_(NULL)
-    , IndexBuffer_(NULL)
-    , pVertexDeclaration_(NULL)
-    , nVertexCount_(0)
-    , nIndexCount_(0) {
+    : vertex_buffer_(NULL)
+    , index_buffer_(NULL)
+    , vertex_declaration_(NULL)
+    , vertex_count_(0)
+    , index_count_(0) {
 }
 
 DynamicMesh::~DynamicMesh() {
-    SafeRelease(VertexBuffer_);
-    SafeRelease(IndexBuffer_);
-    SafeRelease(pVertexDeclaration_);
+    SafeRelease(vertex_buffer_);
+    SafeRelease(index_buffer_);
+    SafeRelease(vertex_declaration_);
 }
 
 // Create is separate from the constructor as it can fail. The alternative is
@@ -27,16 +27,16 @@ DynamicMesh::~DynamicMesh() {
 // tempt people to call it when not needed or to make the operations that can
 // fail external - which would distribute the responsibility of this module.
 bool DynamicMesh::Create(IDirect3DDevice9* device
-                         , plat::uint32 nVertexCount
-                         , plat::uint32 nIndexCount) {
+                         , plat::uint32 vertex_count
+                         , plat::uint32 index_count) {
     SPDIAG_ASSERT(
-        VertexBuffer_ == NULL
-        && IndexBuffer_ == NULL
-        && pVertexDeclaration_ == NULL
+        vertex_buffer_ == NULL
+        && index_buffer_ == NULL
+        && vertex_declaration_ == NULL
         , "DynamicMesh components already initialized.");
 
-    nVertexCount_ = nVertexCount;
-    nIndexCount_ = nIndexCount;
+    vertex_count_ = vertex_count;
+    index_count_ = index_count;
 
     // @todo How do we want to handle the vertex declaration? Do we want a
     // single version for now or a few preset variations? This is more of a
@@ -46,14 +46,14 @@ bool DynamicMesh::Create(IDirect3DDevice9* device
         { 0, 0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
         D3DDECL_END()
     };
-    device->CreateVertexDeclaration(decl, &pVertexDeclaration_);
+    device->CreateVertexDeclaration(decl, &vertex_declaration_);
 
     SP_DXVERIFY(device->CreateVertexBuffer(
-        nVertexCount * GetVertexStride()
+        vertex_count * GetVertexStride()
         , D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
         , 0
         , D3DPOOL_DEFAULT
-        , &VertexBuffer_
+        , &vertex_buffer_
         , NULL));
 
     // Create the index buffer using 32 bit indices. This simplifies alignment
@@ -64,47 +64,47 @@ bool DynamicMesh::Create(IDirect3DDevice9* device
     // needed.
     plat::uint32 nIndexSize = 4;
     SP_DXVERIFY(device->CreateIndexBuffer(
-        nIndexCount * nIndexSize
+        index_count * nIndexSize
         , D3DUSAGE_DYNAMIC|D3DUSAGE_WRITEONLY
         , D3DFMT_INDEX32
         , D3DPOOL_DEFAULT
-        , &IndexBuffer_
+        , &index_buffer_
         , NULL));
 
-    return (VertexBuffer_ && IndexBuffer_ && pVertexDeclaration_);
+    return (vertex_buffer_ && index_buffer_ && vertex_declaration_);
 }
 
 plat::uint32* DynamicMesh::LockIndices(plat::uint32 nIndices) {
-    void* pData = NULL;
-    IndexBuffer_->Lock(0, sizeof(plat::uint32)*nIndices, &pData, 0);
-    return StrictCast<plat::uint32*>(pData);
+    void* data = NULL;
+    index_buffer_->Lock(0, sizeof(plat::uint32)*nIndices, &data, 0);
+    return StrictCast<plat::uint32*>(data);
 }
 
 void DynamicMesh::UnlockIndices() {
-    IndexBuffer_->Unlock();
+    index_buffer_->Unlock();
 }
 
-plat::uint32* DynamicMesh::LockVertices(plat::uint32 nVertexCount) {
-    void* pData = NULL;
-    plat::uint32 nBytesToLock = nVertexCount * GetVertexStride();
-    VertexBuffer_->Lock(0, nBytesToLock, &pData, 0);
-    return StrictCast<plat::uint32*>(pData);
+plat::uint32* DynamicMesh::LockVertices(plat::uint32 vertex_count) {
+    void* data = NULL;
+    plat::uint32 bytes_to_lock = vertex_count * GetVertexStride();
+    vertex_buffer_->Lock(0, bytes_to_lock, &data, 0);
+    return StrictCast<plat::uint32*>(data);
 }
 
 void DynamicMesh::UnlockVertices() {
-    VertexBuffer_->Unlock();
+    vertex_buffer_->Unlock();
 }
 
 IDirect3DVertexDeclaration9* DynamicMesh::GetVertexDecl() const {
-    return pVertexDeclaration_;
+    return vertex_declaration_;
 }
 
 plat::uint32 DynamicMesh::GetVertexCount() const {
-    return nVertexCount_;
+    return vertex_count_;
 }
 
 plat::uint32 DynamicMesh::GetIndexCount() const {
-    return nIndexCount_;
+    return index_count_;
 }
 
 plat::uint32 DynamicMesh::GetVertexStride() const {

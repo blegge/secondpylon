@@ -22,8 +22,8 @@ public:
 
     Material(
         IDirect3DDevice9* device,
-        TInMemoryStream* pixelShaderBuffer
-        , TInMemoryStream* vertexShaderBuffer);
+        TInMemoryStream* pixel_shader_buffer
+        , TInMemoryStream* vertex_shader_buffer);
 
     ~Material();
 
@@ -37,8 +37,8 @@ private:
 
     // @todo This needs to be a shared reference to the shader or an identifier
     // of some sort. This is a temp bootstrap setup.
-    IDirect3DVertexShader9* pVertexShader_;
-    IDirect3DPixelShader9* pPixelShader_;
+    IDirect3DVertexShader9* vertex_shader_;
+    IDirect3DPixelShader9* pixel_shader_;
 };
 
 }  // namespace renderer

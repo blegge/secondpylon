@@ -70,9 +70,9 @@ namespace data {
         void Advance(plat::uint32 bytes);
 
     private:
-        EUsage Usage_;
-        plat::uint32 ReadOffset_;
-        std::vector<plat::byte> Storage_;
+        EUsage usage_;
+        plat::uint32 read_offset_;
+        std::vector<plat::byte> storage_;
     };
 
 }  // namespace data

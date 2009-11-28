@@ -41,8 +41,8 @@ public:
 
     // Performs an exact equalty test on all components in the matrix. This
     // should only be used in special cases.
-    bool operator==(const mat3<TStorage> rhs) const;
-    bool operator!=(const mat3<TStorage> rhs) const;
+    bool operator==(const mat3<TStorage>& rhs) const;
+    bool operator!=(const mat3<TStorage>& rhs) const;
 
     TStorage operator[](EElements element) const { return m[element]; }
 

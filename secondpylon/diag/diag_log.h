@@ -31,7 +31,7 @@ namespace diag {
         void Message(const char* message);
 
     private:
-        std::list<ILogListener*> ListenerList_;
+        std::list<ILogListener*> listener_list_;
     };
 
     // Logging is enabled by default if there is the user does not explicitly

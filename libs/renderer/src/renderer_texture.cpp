@@ -10,38 +10,37 @@ namespace renderer {
 
 Texture::Texture(IDirect3DTexture9* texture
                  , const math::vec2<plat::uint32>& size)
-                 : pTexture_(texture)
-                 , Size_(size)
-                 , pLocked_(NULL) {
+                 : texture_(texture)
+                 , size_(size)
+                 , locked_(NULL) {
 }
 
 Texture::~Texture() {
-    SafeRelease(pTexture_);
+    SafeRelease(texture_);
 }
 
 plat::uint32* Texture::Lock() {
-    SPDIAG_ASSERT(NULL == pLocked_, "Only unlocked texture may be locked.");
+    SPDIAG_ASSERT(NULL == locked_, "Only unlocked texture may be locked.");
     D3DLOCKED_RECT rect;
-    pTexture_->LockRect(0, &rect, NULL, D3DLOCK_DISCARD);
+    texture_->LockRect(0, &rect, NULL, D3DLOCK_DISCARD);
 
     // This assumes the texture block is 4 byte aligned.
     SPDIAG_ASSERT((uintptr_t)rect.pBits % sizeof(plat::uint32) == 0
         , "Texture block must be 4 byte aligned (%d)"
         , (uintptr_t)rect.pBits % sizeof(plat::uint32));
 
-    pLocked_ = StrictCast<plat::uint32*>(rect.pBits);
-    return pLocked_;
+    locked_ = StrictCast<plat::uint32*>(rect.pBits);
+    return locked_;
 }
 
-void Texture::Unlock(plat::uint32*& pLockPointer) {
-    SPDIAG_ASSERT(NULL != pLocked_, "Texture must be locked to call Unlock");
+void Texture::Unlock(plat::uint32* lock_pointer) {
+    SPDIAG_ASSERT(NULL != locked_, "Texture must be locked to call Unlock");
 
-    SPDIAG_ASSERT(pLockPointer == pLocked_
+    SPDIAG_ASSERT(lock_pointer == locked_
         , "Passing an invalid pointer to pLockPointer");
 
-    pTexture_->UnlockRect(0);
-    pLocked_ = NULL;
-    pLockPointer = NULL;
+    texture_->UnlockRect(0);
+    locked_ = NULL;
 }
 
 }  // namespace renderer

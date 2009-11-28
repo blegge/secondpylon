@@ -12,30 +12,30 @@
 // vertex shaders need to be in sync.
 
 static IDirect3DPixelShader9* LoadPixelShader(IDirect3DDevice9* device
-                                              , const char* shader) {
-    ID3DXBuffer* pShaderBuffer = NULL;
-    ID3DXBuffer* pErrorBuffer = NULL;
+                                              , const char* shader_data) {
+    ID3DXBuffer* shader_buffer = NULL;
+    ID3DXBuffer* error_buffer = NULL;
 
-    const char* psProfilename = D3DXGetPixelShaderProfile(device);
+    const char* profile_name = D3DXGetPixelShaderProfile(device);
 
     HRESULT hr = D3DXCompileShader(
-        shader
-        , (UINT)strlen(shader)
+        shader_data
+        , (UINT)strlen(shader_data)
         , NULL    // no defines
         , NULL    // no includes
         , "entry"
-        , psProfilename
+        , profile_name
         , D3DXSHADER_DEBUG
-        , &pShaderBuffer
-        , &pErrorBuffer
+        , &shader_buffer
+        , &error_buffer
         , NULL);    // no constant table
 
-    IDirect3DPixelShader9* pShader = NULL;
+    IDirect3DPixelShader9* shader = NULL;
     if (hr != S_OK) {
-        const char* pszError  = (const char*)pErrorBuffer->GetBufferPointer();
+        const char* pszError  = (const char*)error_buffer->GetBufferPointer();
         (pszError);
 //  RSCONTENT_ERROR(
-//  const char* szError = (const char*)pErrorBuffer->GetBufferPointer();
+//  const char* szError = (const char*)error_buffer->GetBufferPointer();
 // RSPlatform::Services()->Error(
 // "Shader Error: Failed to load '%s': %s", "<default>", szError);
 // );
@@ -43,40 +43,40 @@ static IDirect3DPixelShader9* LoadPixelShader(IDirect3DDevice9* device
 
     if (S_OK == hr) {
         hr = device->CreatePixelShader(
-            reinterpret_cast<DWORD*>(pShaderBuffer->GetBufferPointer())
-            , &pShader);
+            reinterpret_cast<DWORD*>(shader_buffer->GetBufferPointer())
+            , &shader);
     }
 
-    secondpylon::renderer::SafeRelease(pErrorBuffer);
-    secondpylon::renderer::SafeRelease(pShaderBuffer);
+    secondpylon::renderer::SafeRelease(error_buffer);
+    secondpylon::renderer::SafeRelease(shader_buffer);
 
-    return pShader;
+    return shader;
 }
 
 static IDirect3DVertexShader9* LoadVertexShader(
     IDirect3DDevice9* device
-    , const char* shader) {
-    ID3DXBuffer* pShaderBuffer = NULL;
-    ID3DXBuffer* pErrorBuffer = NULL;
+    , const char* shader_data) {
+    ID3DXBuffer* shader_buffer = NULL;
+    ID3DXBuffer* error_buffer = NULL;
 
-    const char* psProfilename = D3DXGetVertexShaderProfile(device);
+    const char* profile_name = D3DXGetVertexShaderProfile(device);
 
     HRESULT hr = D3DXCompileShader(
-        shader
-        , (UINT)strlen(shader)
+        shader_data
+        , (UINT)strlen(shader_data)
         , NULL    // no defines
         , NULL    // no includes
         , "entry"
-        , psProfilename
+        , profile_name
         , D3DXSHADER_DEBUG
-        , &pShaderBuffer
-        , &pErrorBuffer
+        , &shader_buffer
+        , &error_buffer
         , NULL);    // no constant table
 
-    IDirect3DVertexShader9* pShader = NULL;
+    IDirect3DVertexShader9* shader = NULL;
     if (hr != S_OK) {
 // RSCONTENT_ERROR(
-// const char* szError = (const char*)pErrorBuffer->GetBufferPointer();
+// const char* szError = (const char*)error_buffer->GetBufferPointer();
 // RSPlatform::Services()->Error(
 // "Shader Error: Failed to load '%s': %s", "<default>", szError);
 //  );
@@ -84,22 +84,22 @@ static IDirect3DVertexShader9* LoadVertexShader(
 
     if (S_OK == hr) {
         hr = device->CreateVertexShader(
-            reinterpret_cast<DWORD*>(pShaderBuffer->GetBufferPointer())
-            , &pShader);
+            reinterpret_cast<DWORD*>(shader_buffer->GetBufferPointer())
+            , &shader);
     }
 
-    secondpylon::renderer::SafeRelease(pErrorBuffer);
-    secondpylon::renderer::SafeRelease(pShaderBuffer);
+    secondpylon::renderer::SafeRelease(error_buffer);
+    secondpylon::renderer::SafeRelease(shader_buffer);
 
-    return pShader;
+    return shader;
 }
 
 namespace secondpylon {
 namespace renderer {
 
 Material::Material(IDirect3DDevice9* device
-                   , TInMemoryStream* pixelShaderStream
-                   , TInMemoryStream* vertexShaderStream) {
+                   , TInMemoryStream* pixel_shader_stream
+                   , TInMemoryStream* vertex_shader_stream) {
     // @todo We don't want to create a shader per material instance. We don't
     // yet know how we want to expose this functionality - do we need to expose
     // manual creation externally? Lets put off the decision a bit longer.
@@ -108,30 +108,30 @@ Material::Material(IDirect3DDevice9* device
     // could hit here. This will fail semi-gracefully - it won't overrun the
     // state - but the pointers we later assume to be valid will be NULL. This
     // is just a bootstrapping attempt to push data into the material.
-    char szVertexShaderData[1024];
-    vertexShaderStream->Read(
-        &szVertexShaderData[0]
-        , ArraySize(szVertexShaderData));
-    pVertexShader_ = LoadVertexShader(device, szVertexShaderData);
+    char vertex_shader_data[1024];
+    vertex_shader_stream->Read(
+        &vertex_shader_data[0]
+        , ArraySize(vertex_shader_data));
+    vertex_shader_ = LoadVertexShader(device, vertex_shader_data);
 
-    char szPixelShaderData[1024];
-    pixelShaderStream->Read(
-        &szPixelShaderData[0]
-        , ArraySize(szPixelShaderData));
-    pPixelShader_ = LoadPixelShader(device, szPixelShaderData);
+    char pixel_shader_data[1024];
+    pixel_shader_stream->Read(
+        &pixel_shader_data[0]
+        , ArraySize(pixel_shader_data));
+    pixel_shader_ = LoadPixelShader(device, pixel_shader_data);
 }
 
 Material::~Material() {
-    SafeRelease(pVertexShader_);
-    SafeRelease(pPixelShader_);
+    SafeRelease(vertex_shader_);
+    SafeRelease(pixel_shader_);
 }
 
 IDirect3DVertexShader9* Material::GetVertexShader() const {
-    return pVertexShader_;
+    return vertex_shader_;
 }
 
 IDirect3DPixelShader9* Material::GetPixelShader() const {
-    return pPixelShader_;
+    return pixel_shader_;
 }
 
 void Material::Destroy() {

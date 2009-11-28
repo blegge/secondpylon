@@ -34,23 +34,23 @@ float Random(float min, float max) {
 
 void renderpoly() {
     // Create a mesh and fill in a few verts
-    renderer::DynamicMesh* pMesh = g_device->CreateDynamicMesh(3, 3);
+    renderer::DynamicMesh* mesh = g_device->CreateDynamicMesh(3, 3);
 
     {
-        plat::uint32* pIndices = pMesh->LockIndices(3);
-        pIndices[0] = 0;
-        pIndices[1] = 1;
-        pIndices[2] = 2;
-        pMesh->UnlockIndices();
+        plat::uint32* indices = mesh->LockIndices(3);
+        indices[0] = 0;
+        indices[1] = 1;
+        indices[2] = 2;
+        mesh->UnlockIndices();
     }
 
     {
-        renderer::DynamicMesh::SVertex* pVertex =
-            (renderer::DynamicMesh::SVertex*)pMesh->LockVertices(3);
-        pVertex[0].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
-        pVertex[1].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
-        pVertex[2].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
-        pMesh->UnlockVertices();
+        renderer::DynamicMesh::SVertex* vertices =
+            (renderer::DynamicMesh::SVertex*)mesh->LockVertices(3);
+        vertices[0].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
+        vertices[1].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
+        vertices[2].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
+        mesh->UnlockVertices();
     }
 
     const char vertexShader[] =
@@ -71,45 +71,45 @@ void renderpoly() {
     typedef data::InStream<data::MemStorage, data::SBytePacker>
         TInMemoryStream;
 
-    data::MemStorage vertexShaderBuffer;
+    data::MemStorage vertex_shader_buffer;
     {
-        TOutMemoryStream vertexShaderStream(&vertexShaderBuffer);
-        vertexShaderStream.Write(vertexShader);
+        TOutMemoryStream vertex_shader_stream(&vertex_shader_buffer);
+        vertex_shader_stream.Write(vertexShader);
     }
 
-    data::MemStorage pixelShaderBuffer;
+    data::MemStorage pixel_shader_buffer;
     {
-        TOutMemoryStream pixelShaderStream(&pixelShaderBuffer);
-        pixelShaderStream.Write(pixelShader);
+        TOutMemoryStream pixel_shader_stream(&pixel_shader_buffer);
+        pixel_shader_stream.Write(pixelShader);
     }
 
-    TInMemoryStream pixelShaderInStream(&pixelShaderBuffer);
-    TInMemoryStream vertexShaderInStream(&vertexShaderBuffer);
-    renderer::Material* pMat = g_device->CreateMaterial(
-        &pixelShaderInStream, &vertexShaderInStream);
+    TInMemoryStream pixel_shader_in_stream(&pixel_shader_buffer);
+    TInMemoryStream vertex_shader_in_stream(&vertex_shader_buffer);
+    renderer::Material* material = g_device->CreateMaterial(
+        &pixel_shader_in_stream, &vertex_shader_in_stream);
 
     // @todo We need to add references here to avoid the resources getting
     // released before rendering. We also don't have a way to handle possibly
     // in-place modifications before rendering occurs. This will be simplest to
     // handle at the source end. Consider updating resources to get released
     // prior to write and recreated.
-    renderer::SSubMeshRenderRequest polyRequest;
-    polyRequest.pPixelShader_ = pMat->GetPixelShader();
-    polyRequest.pVertexShader_ = pMat->GetVertexShader();
-    polyRequest.pIndexBuffer_ = pMesh->GetIndices();
-    polyRequest.pVertexBuffer_ = pMesh->GetVertices();
-    polyRequest.pVertexDeclaration_ = pMesh->GetVertexDecl();
-    polyRequest.nVertexStride_ = pMesh->GetVertexStride();
-    polyRequest.nVertexCount_ = pMesh->GetVertexCount();
-    polyRequest.nIndexCount_ = pMesh->GetIndexCount();
+    renderer::SSubMeshRenderRequest poly_request;
+    poly_request.pixel_shader_ = material->GetPixelShader();
+    poly_request.vertex_shader_ = material->GetVertexShader();
+    poly_request.index_buffer_ = mesh->GetIndices();
+    poly_request.vertex_buffer_ = mesh->GetVertices();
+    poly_request.vertex_declaration_ = mesh->GetVertexDecl();
+    poly_request.vertex_stride_ = mesh->GetVertexStride();
+    poly_request.vertex_count_ = mesh->GetVertexCount();
+    poly_request.index_count_ = mesh->GetIndexCount();
 
-    g_device->Draw(polyRequest);
+    g_device->Draw(poly_request);
 
-    pMesh->Destroy();
-    pMesh = NULL;
+    mesh->Destroy();
+    mesh = NULL;
 
-    pMat->Destroy();
-    pMat = NULL;
+    material->Destroy();
+    material = NULL;
 }
 
 void render() {

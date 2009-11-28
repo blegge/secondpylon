@@ -19,14 +19,17 @@ public:
 
     // Dynamic texture updating
     plat::uint32* Lock();
-    void Unlock(plat::uint32*&);
+
+    // Pointer to the previously data retreived from this Texture with a call 
+    // to Lock. Once Unlocked, this pointer is invalid.
+    void Unlock(plat::uint32* lock_pointer);
 
 private:
     SPUNCOPYABLE(Texture);
 
-    IDirect3DTexture9* pTexture_;
-    math::vec2<plat::uint32> Size_;
-    plat::uint32* pLocked_;
+    IDirect3DTexture9* texture_;
+    math::vec2<plat::uint32> size_;
+    plat::uint32* locked_;
 };
 
 }  // namespace renderer

@@ -6,37 +6,37 @@ namespace secondpylon {
 namespace data {
 
 MemStorage::MemStorage(const plat::byte* data, plat::uint32 dataSize)
-    : ReadOffset_(0)
-    , Usage_(kUnused) {
-    Storage_.reserve(dataSize);
-    for (plat::uint32 i = 0; i < dataSize; ++i) {
-        Storage_.push_back(data[i]);
+    : read_offset_(0)
+    , usage_(kUnused) {
+    storage_.reserve(dataSize);
+    for (plat::uint32 element = 0; element < dataSize; ++element) {
+        storage_.push_back(data[element]);
     }
 }
 
 void MemStorage::Write(plat::byte* data, plat::uint32 size) {
-    SPDIAG_ASSERT(kWrite == Usage_,
+    SPDIAG_ASSERT(kWrite == usage_,
         "memstorage usage must be write to call Write.");
 
-    for (plat::uint32 i = 0; i < size; ++i) {
-        Storage_.push_back(data[i]);
+    for (plat::uint32 element = 0; element < size; ++element) {
+        storage_.push_back(data[element]);
     }
 }
 
 void MemStorage::Read(plat::byte* data, plat::uint32 size) {
-    SPDIAG_ASSERT(kRead == Usage_,
+    SPDIAG_ASSERT(kRead == usage_,
         "memstorage usage must be read to call Read");
 
-    if (ReadOffset_ + size <= Storage_.size()) {
-        for (plat::uint32 i = 0; i < size; ++i) {
-            data[i] = Storage_[ReadOffset_++];
+    if (read_offset_ + size <= storage_.size()) {
+        for (plat::uint32 element = 0; element < size; ++element) {
+            data[element] = storage_[read_offset_++];
         }
     } else {
         SPDIAG_ERROR("Reading beyond the end of storage.");
 
-        ReadOffset_ = Storage_.size();
-        for (plat::uint32 i = 0; i < size; ++i) {
-            data[i] = 0;
+        read_offset_ = storage_.size();
+        for (plat::uint32 element = 0; element < size; ++element) {
+            data[element] = 0;
         }
     }
 }

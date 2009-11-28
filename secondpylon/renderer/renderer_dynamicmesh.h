@@ -25,10 +25,10 @@ public:
         // are ordered. This avoids penalties on platforms where out of order
         // writes to video memory cause penalties.
         void Write(const math::vec3<float>& position) {
-            Position_ = position;
+            position_ = position;
         }
 
-        math::vec3<float> Position_;
+        math::vec3<float> position_;
     };
 
     DynamicMesh();
@@ -36,16 +36,16 @@ public:
 
     bool Create(
         IDirect3DDevice9* device
-        , plat::uint32 nVertexCount
-        , plat::uint32 nIndexCount);
+        , plat::uint32 vertex_count
+        , plat::uint32 index_count);
 
     plat::uint32* LockIndices(plat::uint32 nIndices);
     void UnlockIndices();
-    IDirect3DVertexBuffer9* GetVertices() { return VertexBuffer_; }
+    IDirect3DVertexBuffer9* GetVertices() { return vertex_buffer_; }
 
-    plat::uint32* LockVertices(plat::uint32 nVertexCount);
+    plat::uint32* LockVertices(plat::uint32 vertex_count);
     void UnlockVertices();
-    IDirect3DIndexBuffer9* GetIndices() { return IndexBuffer_; }
+    IDirect3DIndexBuffer9* GetIndices() { return index_buffer_; }
 
     IDirect3DVertexDeclaration9* GetVertexDecl() const;
 
@@ -58,11 +58,11 @@ public:
 private:
     SPUNCOPYABLE(DynamicMesh);
 
-    IDirect3DVertexBuffer9* VertexBuffer_;
-    IDirect3DIndexBuffer9* IndexBuffer_;
-    IDirect3DVertexDeclaration9* pVertexDeclaration_;
-    plat::uint32 nVertexCount_;
-    plat::uint32 nIndexCount_;
+    IDirect3DVertexBuffer9* vertex_buffer_;
+    IDirect3DIndexBuffer9* index_buffer_;
+    IDirect3DVertexDeclaration9* vertex_declaration_;
+    plat::uint32 vertex_count_;
+    plat::uint32 index_count_;
 };
 
 }  // namespace renderer

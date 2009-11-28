@@ -10,7 +10,7 @@ namespace renderer {
 // an assert only it doesn't compile out when asserts are disabled.
 #if defined(_DEBUG)
     #define SP_DXVERIFY(x) \
-        SPDIAG_ASSERT((x) == S__DXVERIFY(x) SPDIAG_ASSERT((x) == S_OK, \
+        SPDIAG_ASSERT((x) == S_OK, \
         "DirectX call returned an unexpected result.")
 #else
     #define SP_DXVERIFY(x) (x)
@@ -18,12 +18,12 @@ namespace renderer {
 
 // DirectX helper function to handle conditionally releasing DX resources and
 // nullifying the referencing pointer. This avoids the very common
-// if (pResource) pResource->Release(); pResource = NULL; pattern.
+// if (resource) resource->Release(); resource = NULL; pattern.
 template <typename T>
-void SafeRelease(T*& pResource) {
-    if (pResource) {
-        pResource->Release();
-        pResource = NULL;
+void SafeRelease(T*& resource) {
+    if (resource) {
+        resource->Release();
+        resource = NULL;
     }
 }
 

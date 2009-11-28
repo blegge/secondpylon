@@ -17,12 +17,12 @@ namespace secondpylon {
 namespace renderer {
 
 Device::Device(const SDeviceParameters& deviceParams)
-    : pD3D_(NULL)
-    , pDevice_(NULL)
-    , bInScene_(false) {
+    : d3d_(NULL)
+    , device_(NULL)
+    , in_scene_(false) {
     // Create D3D and the rendering device.
-    IDirect3D9* pD3D = Direct3DCreate9(D3D_SDK_VERSION);
-    if (pD3D) {
+    IDirect3D9* d3d = Direct3DCreate9(D3D_SDK_VERSION);
+    if (d3d) {
         D3DPRESENT_PARAMETERS internal_params;
         internal_params.Windowed = TRUE;
         internal_params.SwapEffect = D3DSWAPEFFECT_DISCARD;
@@ -51,7 +51,7 @@ Device::Device(const SDeviceParameters& deviceParams)
 
         // TODO(brianlegge) Handle graceful fallbacks based on the checks below?
         D3DDEVTYPE device_type = D3DDEVTYPE_HAL;
-        SP_DXVERIFY(pD3D->CheckDeviceFormat(
+        SP_DXVERIFY(d3d->CheckDeviceFormat(
             deviceParams.adapter
             , device_type
             , internal_params.BackBufferFormat
@@ -64,7 +64,7 @@ Device::Device(const SDeviceParameters& deviceParams)
         // CheckDeviceMultiSampleType,  CheckDeviceType
 
         IDirect3DDevice9* pD3DDevice = NULL;
-        SP_DXVERIFY(pD3D->CreateDevice(
+        SP_DXVERIFY(d3d->CreateDevice(
             deviceParams.adapter
             , device_type
             , deviceParams.parent_window
@@ -75,42 +75,42 @@ Device::Device(const SDeviceParameters& deviceParams)
         if (pD3DDevice) {
             // Assign the output parameters once we've cleared all potential
             // failure points.
-            pD3D_ = pD3D;
-            pDevice_ = pD3DDevice;
+            d3d_ = d3d;
+            device_ = pD3DDevice;
         } else {
-            SafeRelease(pD3D);
+            SafeRelease(d3d);
         }
     }
 }
 
 Device::~Device() {
-    SPDIAG_ASSERT(!bInScene_,
+    SPDIAG_ASSERT(!in_scene_,
         "Must end a scene before destroying a render device.");
 
-    SafeRelease(pD3D_);
-    SafeRelease(pDevice_);
+    SafeRelease(d3d_);
+    SafeRelease(device_);
 }
 
-DynamicMesh* Device::CreateDynamicMesh(plat::uint32 nVertexCount
-                                       , plat::uint32 nIndexCount) {
-    DynamicMesh* pMesh = new DynamicMesh;
-    if (!pMesh->Create(pDevice_, nVertexCount, nIndexCount)) {
-        delete pMesh;
-        pMesh = NULL;
+DynamicMesh* Device::CreateDynamicMesh(plat::uint32 vertex_count
+                                       , plat::uint32 index_count) {
+    DynamicMesh* mesh = new DynamicMesh;
+    if (!mesh->Create(device_, vertex_count, index_count)) {
+        delete mesh;
+        mesh = NULL;
     }
-    return pMesh;
+    return mesh;
 }
 
-Material* Device::CreateMaterial(TInMemoryStream* pixelShaderBuffer
-                                 , TInMemoryStream* vertexShaderBuffer) {
-    return new Material(pDevice_, pixelShaderBuffer, vertexShaderBuffer);
+Material* Device::CreateMaterial(TInMemoryStream* pixel_shader_buffer
+                                 , TInMemoryStream* vertex_shader_buffer) {
+    return new Material(device_, pixel_shader_buffer, vertex_shader_buffer);
 }
 
 Texture* Device::CreateTexture(const math::vec2<plat::uint32>& size) {
-    IDirect3DTexture9* pTexture = NULL;
-    pDevice_->CreateTexture(size.x, size.y, 0, D3DUSAGE_DYNAMIC,
-        D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &pTexture, NULL);
-    return new Texture(pTexture, size);
+    IDirect3DTexture9* texture = NULL;
+    device_->CreateTexture(size.x, size.y, 0, D3DUSAGE_DYNAMIC,
+        D3DFMT_A8R8G8B8, D3DPOOL_SYSTEMMEM, &texture, NULL);
+    return new Texture(texture, size);
 }
 
 void Device::Draw(const renderer::SSubMeshRenderRequest& request) {
@@ -118,49 +118,49 @@ void Device::Draw(const renderer::SSubMeshRenderRequest& request) {
     // either needs to be added here (with draws batched externally) or we need
     // to add internal checks (which would be less efficient but simpler from
     // an API standpoint).
-    SP_DXVERIFY(pDevice_->SetVertexShader(request.pVertexShader_));
-    SP_DXVERIFY(pDevice_->SetPixelShader(request.pPixelShader_));
+    SP_DXVERIFY(device_->SetVertexShader(request.vertex_shader_));
+    SP_DXVERIFY(device_->SetPixelShader(request.pixel_shader_));
 
-    SP_DXVERIFY(pDevice_->SetVertexDeclaration(request.pVertexDeclaration_));
+    SP_DXVERIFY(device_->SetVertexDeclaration(request.vertex_declaration_));
     SP_DXVERIFY(
-        pDevice_->SetStreamSource(0, request.pVertexBuffer_,
-            0, request.nVertexStride_));
-    SP_DXVERIFY(pDevice_->SetIndices(request.pIndexBuffer_));
+        device_->SetStreamSource(0, request.vertex_buffer_,
+            0, request.vertex_stride_));
+    SP_DXVERIFY(device_->SetIndices(request.index_buffer_));
 
     SP_DXVERIFY(
-        pDevice_->DrawIndexedPrimitive(
-            D3DPT_TRIANGLELIST, 0, 0, request.nVertexCount_,
-            0, request.nIndexCount_));
+        device_->DrawIndexedPrimitive(
+            D3DPT_TRIANGLELIST, 0, 0, request.vertex_count_,
+            0, request.index_count_));
 
-    SP_DXVERIFY(pDevice_->SetStreamSource(0, NULL, 0, 0));
-    SP_DXVERIFY(pDevice_->SetVertexShader(NULL));
-    SP_DXVERIFY(pDevice_->SetPixelShader(NULL));
+    SP_DXVERIFY(device_->SetStreamSource(0, NULL, 0, 0));
+    SP_DXVERIFY(device_->SetVertexShader(NULL));
+    SP_DXVERIFY(device_->SetPixelShader(NULL));
 }
 
 void Device::Clear(const renderer::Color& clearColor) {
     SP_DXVERIFY(
-        pDevice_->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER
+        device_->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER
                         , clearColor.GetEncodedColor(), 1.0f, 0));
 }
 
 void Device::Flip() {
-    SP_DXVERIFY(pDevice_->Present(NULL, NULL, NULL, NULL));
+    SP_DXVERIFY(device_->Present(NULL, NULL, NULL, NULL));
 }
 
 bool Device::BeginScene() {
     SPDIAG_ASSERT(
-        !bInScene_
+        !in_scene_
         , "Device must call EndScene to complete the current scene before"
         " calling BeginScene again.");
-    bInScene_ = (S_OK == pDevice_->BeginScene());
-    return bInScene_;
+    in_scene_ = (S_OK == device_->BeginScene());
+    return in_scene_;
 }
 
 void Device::EndScene() {
-    SPDIAG_ASSERT(bInScene_
+    SPDIAG_ASSERT(in_scene_
         , "Device must being a scene before calling EndScene");
-    SP_DXVERIFY(pDevice_->EndScene());
-    bInScene_ = false;
+    SP_DXVERIFY(device_->EndScene());
+    in_scene_ = false;
 }
 
 }  // namespace renderer

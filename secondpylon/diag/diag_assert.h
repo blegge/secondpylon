@@ -16,14 +16,14 @@ namespace diag {
         enum EAssertAction { kContinue, kBreak };
 
         static EAssertAction HandleAssert(
-            const char* pszAssert,
+            const char* condition,
             const char* format,
             ...);
 
         static IAssertHandler* SetAssertHandler(IAssertHandler* pfnNewHandler);
 
     private:
-        static IAssertHandler* spHandler_;
+        static IAssertHandler* s_handler_;
     };
 
     class IAssertHandler {

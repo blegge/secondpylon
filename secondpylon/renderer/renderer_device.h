@@ -31,27 +31,27 @@ struct SDeviceParameters;
 // describe both objects.
 struct SSubMeshRenderRequest {
     SSubMeshRenderRequest() :
-        pVertexShader_(NULL)
-        , pPixelShader_(NULL)
-        , pIndexBuffer_(NULL)
-        , pVertexBuffer_(NULL)
-        , pVertexDeclaration_(NULL)
-        , nVertexStride_(0)
-        , nVertexCount_(0)
-        , nIndexCount_(0) {
+        vertex_shader_(NULL)
+        , pixel_shader_(NULL)
+        , index_buffer_(NULL)
+        , vertex_buffer_(NULL)
+        , vertex_declaration_(NULL)
+        , vertex_stride_(0)
+        , vertex_count_(0)
+        , index_count_(0) {
     }
 
     // Material state
-    IDirect3DVertexShader9* pVertexShader_;
-    IDirect3DPixelShader9* pPixelShader_;
+    IDirect3DVertexShader9* vertex_shader_;
+    IDirect3DPixelShader9* pixel_shader_;
 
     // Mesh state
-    IDirect3DIndexBuffer9* pIndexBuffer_;
-    IDirect3DVertexBuffer9* pVertexBuffer_;
-    IDirect3DVertexDeclaration9* pVertexDeclaration_;
-    plat::uint32 nVertexStride_;
-    plat::uint32 nVertexCount_;
-    plat::uint32 nIndexCount_;
+    IDirect3DIndexBuffer9* index_buffer_;
+    IDirect3DVertexBuffer9* vertex_buffer_;
+    IDirect3DVertexDeclaration9* vertex_declaration_;
+    plat::uint32 vertex_stride_;
+    plat::uint32 vertex_count_;
+    plat::uint32 index_count_;
 };
 
 class Device {
@@ -66,8 +66,8 @@ public:
     // created. The DynamicMesh must be deleted with a call to
     // DynamicMesh::Destroy.
     DynamicMesh* CreateDynamicMesh(
-        plat::uint32 nVertexCount
-        , plat::uint32 nIndexCount);
+        plat::uint32 vertex_count
+        , plat::uint32 index_count);
 
     Material* CreateMaterial(
         TInMemoryStream* pixelShader
@@ -85,11 +85,11 @@ public:
 private:
     SPUNCOPYABLE(Device);
 
-    IDirect3D9* pD3D_;
-    IDirect3DDevice9* pDevice_;
+    IDirect3D9* d3d_;
+    IDirect3DDevice9* device_;
 
     // Debug value tracking if we are in a BeginScene/EndScene block.
-    bool bInScene_;
+    bool in_scene_;
 };
 
 }  // namespace renderer

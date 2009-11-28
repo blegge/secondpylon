@@ -23,13 +23,13 @@ TEST(VerifySize) {
 }
 
 TEST(VerifyBool) {
-    plat::bool8 bTrue = true;
-    CHECK_EQUAL(true, bTrue);
+    plat::bool8 true_value = true;
+    CHECK_EQUAL(true, true_value);
 
-    plat::bool8 bFalse = false;
-    CHECK_EQUAL(false, bFalse);
+    plat::bool8 false_value = false;
+    CHECK_EQUAL(false, false_value);
 
-    CHECK_EQUAL(true, bTrue != bFalse);
+    CHECK_EQUAL(true, true_value != false_value);
 }
 
 TEST(VerifySign) {

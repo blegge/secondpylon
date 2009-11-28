@@ -29,52 +29,52 @@ struct SSwapUtil {
 template <typename TStorage>
 class ByteSwapPacker {
 public:
-    static void Write(TStorage* pStorage, plat::uint8 data) {
-        pStorage->Write(StrictCast<plat::byte*>(&data), sizeof(uint8));
+    static void Write(TStorage* storage, plat::uint8 data) {
+        storage->Write(StrictCast<plat::byte*>(&data), sizeof(uint8));
     }
 
-    static void Write(TStorage* pStorage, plat::sint8 data) {
-        pStorage->Write(StrictCast<plat::byte*>(&data), sizeof(sint8));
+    static void Write(TStorage* storage, plat::sint8 data) {
+        storage->Write(StrictCast<plat::byte*>(&data), sizeof(sint8));
     }
 
-    static void Write(TStorage* pStorage, plat::bool8 data) {
-        pStorage->Write(StrictCast<plat::byte*>(&data), sizeof(bool8));
+    static void Write(TStorage* storage, plat::bool8 data) {
+        storage->Write(StrictCast<plat::byte*>(&data), sizeof(bool8));
     }
 
-    static void Write(TStorage* pStorage, plat::uint16 data) {
-        Write16(pStorage, data);
+    static void Write(TStorage* storage, plat::uint16 data) {
+        Write16(storage, data);
     }
 
-    static void Write(TStorage* pStorage, plat::sint16 data) {
-        Write16(pStorage, StrictCast<plat::uint16>(data));
+    static void Write(TStorage* storage, plat::sint16 data) {
+        Write16(storage, StrictCast<plat::uint16>(data));
     }
 
-    static void Write(TStorage* pStorage, plat::uint32 data) {
-        Write32(pStorage, data);
+    static void Write(TStorage* storage, plat::uint32 data) {
+        Write32(storage, data);
     }
 
-    static void Write(TStorage* pStorage, plat::sint32 data) {
-        Write32(pStorage, StrictCast<plat::uint32>(data));
+    static void Write(TStorage* storage, plat::sint32 data) {
+        Write32(storage, StrictCast<plat::uint32>(data));
     }
 
-    static void Write(TStorage* pStorage, plat::float32 data) {
-        Write32(pStorage, StrictCast<plat::uint32>(data));
+    static void Write(TStorage* storage, plat::float32 data) {
+        Write32(storage, StrictCast<plat::uint32>(data));
     }
 
     template <typename T>
-    static void Write(TStorage* pStorage, T* data, size_t arrayLen) {
-        pStorage->Write(StrictCast<plat::byte*>(data), arrayLen*sizeof(T));
+    static void Write(TStorage* storage, T* data, size_t array_length) {
+        storage->Write(StrictCast<plat::byte*>(data), array_length*sizeof(data[0]));
     }
 
 private:
-    static void Write16(TStorage* pStorage, plat::uint16 data) {
+    static void Write16(TStorage* storage, plat::uint16 data) {
         plat::uint16 swapped = SSwapUtil::Swap16(data);
-        pStorage->Write(StrictCast<plat::byte*>(&swapped), 2);
+        storage->Write(StrictCast<plat::byte*>(&swapped), 2);
     }
 
-    static void Write32(TStorage* pStorage, plat::uint32 data) {
+    static void Write32(TStorage* storage, plat::uint32 data) {
         plat::uint32 swapped = SSwapUtil::Swap32(data);
-        pStorage->Write(StrictCast<plat::byte*>(&swapped), 4);
+        storage->Write(StrictCast<plat::byte*>(&swapped), 4);
     }
 };
 
@@ -87,56 +87,58 @@ private:
 template <typename TStorage>
 class ByteSwapUnpacker {
 public:
-    static void Read(TStorage* pStorage, plat::uint8* pData) {
-        pStorage->Read(pData, sizeof(uint8));
+    static void Read(TStorage* storage, plat::uint8* data) {
+        storage->Read(data, sizeof(data[0]));
     }
 
-    static void Read(TStorage* pStorage, plat::sint8* pData) {
-        pStorage->Read(pData, sizeof(sint8));
+    static void Read(TStorage* storage, plat::sint8* data) {
+        storage->Read(data, sizeof(data[0]));
     }
 
-    static void Read(TStorage* pStorage, plat::bool8* pData) {
-        pStorage->Read(pData, sizeof(bool8));
+    static void Read(TStorage* storage, plat::bool8* data) {
+        storage->Read(data, sizeof(data[0]));
     }
 
-    static void Read(TStorage* pStorage, plat::uint16* pData) {
-        Read16(pStorage, pData);
+    static void Read(TStorage* storage, plat::uint16* data) {
+        Read16(storage, data);
     }
 
-    static void Read(TStorage* pStorage, plat::sint16* pData) {
-        Read16(pStorage, pData);
+    static void Read(TStorage* storage, plat::sint16* data) {
+        Read16(storage, data);
     }
 
-    static void Read(TStorage* pStorage, plat::uint32* pData) {
-        Read32(pStorage, pData);
+    static void Read(TStorage* storage, plat::uint32* data) {
+        Read32(storage, data);
     }
 
-    static void Read(TStorage* pStorage, plat::sint32* pData) {
-        Read32(pStorage, pData);
+    static void Read(TStorage* storage, plat::sint32* data) {
+        Read32(storage, data);
     }
 
-    static void Read(TStorage* pStorage, plat::float32* pData) {
-        uint32 nTemp;
-        Read32(storage, &nTemp);
-        *pData = StrictCast<float>(nTemp);
+    static void Read(TStorage* storage, plat::float32* data) {
+        // Read the float as an integer to insure we the read itself doesn't
+        // cause any conversions (ie nans, etc)
+        uint32 temp;
+        Read32(storage, &temp);
+        *data = StrictCast<float>(temp);
     }
 
     template <typename T>
-    static void Read(TStorage* pStorage, const T* data, size_t arrayLen) {
-        pStorage->Read(StrictCast<plat::byte*>(data), arrayLen*sizeof(T));
+    static void Read(TStorage* storage, const T* data, size_t array_length) {
+        storage->Read(StrictCast<plat::byte*>(data), array_length*sizeof(data[0]));
     }
 
 private:
-    static void Read16(TStorage* pStorage, plat::uint16* pData) {
+    static void Read16(TStorage* storage, plat::uint16* data) {
         plat::uint16 raw = 0;
-        pStorage->Read(reinterpret_cast<plat::byte*>(&raw), 2);
-        *pData = SSwapUtil::Swap16(raw);
+        storage->Read(reinterpret_cast<plat::byte*>(&raw), 2);
+        *data = SSwapUtil::Swap16(raw);
     }
 
-    static void Read32(TStorage* pStorage, plat::uint32* pData) {
+    static void Read32(TStorage* storage, plat::uint32* data) {
         plat::uint32 raw;
-        pStorage->Read(reinterpret_cast<plat::byte*>(&raw), 4);
-        *pData = SSwapUtil::Swap32(raw);
+        storage->Read(reinterpret_cast<plat::byte*>(&raw), 4);
+        *data = SSwapUtil::Swap32(raw);
     }
 };
 
