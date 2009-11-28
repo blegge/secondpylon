@@ -15,7 +15,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "plat_test", "..\libs\plat\b
 		{37A3A1A3-EABC-449D-9C7F-B762496FF73F} = {37A3A1A3-EABC-449D-9C7F-B762496FF73F}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest++", "..\external\UnitTest++\UnitTest++.vsnet2008.vcproj", "{0726A7F3-DEBC-42EA-B9EB-5CAF8BE0336D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest++", "..\third_party\UnitTest++\UnitTest++.vsnet2008.vcproj", "{0726A7F3-DEBC-42EA-B9EB-5CAF8BE0336D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "diag", "..\libs\diag\build\diag.vsnet2008.vcproj", "{2CC7E710-E92B-4350-BD3D-696354E8F4D8}"
 	ProjectSection(ProjectDependencies) = postProject
