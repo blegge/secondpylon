@@ -14,37 +14,37 @@
 namespace secondpylon {
 namespace diag {
 
-    class ILogListener {
-        SPUNCOPYABLE(ILogListener);
+  class ILogListener {
+    SPUNCOPYABLE(ILogListener);
 
-    public:
-        ILogListener() {}
-        virtual ~ILogListener() = 0 {}
-        virtual void OnMessage(const char* message) = 0;
-    };
+  public:
+    ILogListener() {}
+    virtual ~ILogListener() = 0 {}
+    virtual void OnMessage(const char* message) = 0;
+  };
 
-    class Log {
-    public:
-        void AddListener(ILogListener* listener);
-        void RemoveListener(ILogListener* listener);
+  class Log {
+  public:
+    void AddListener(ILogListener* listener);
+    void RemoveListener(ILogListener* listener);
 
-        void Message(const char* message);
+    void Message(const char* message);
 
-    private:
-        std::list<ILogListener*> listener_list_;
-    };
+  private:
+    std::list<ILogListener*> listener_list_;
+  };
 
-    // Logging is enabled by default if there is the user does not explicitly
-    // configure logging.
-    #ifndef RSDIAG_ENABLE_LOG
-        #define RSDIAG_ENABLE_LOG 1
-    #endif
+  // Logging is enabled by default if there is the user does not explicitly
+  // configure logging.
+  #ifndef RSDIAG_ENABLE_LOG
+    #define RSDIAG_ENABLE_LOG 1
+  #endif
 
-    #if RSDIAG_ENABLE_LOG
-        #define RSDIAG_LOG(log, message) log.Message(message);
-    #else
-        #define RSDIAG_LOG(log, message)
-    #endif
+  #if RSDIAG_ENABLE_LOG
+    #define RSDIAG_LOG(log, message) log.Message(message);
+  #else
+    #define RSDIAG_LOG(log, message)
+  #endif
 
 }  // namespace diag
 }  // namespace secondpylon

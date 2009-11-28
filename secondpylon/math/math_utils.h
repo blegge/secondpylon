@@ -12,12 +12,12 @@ namespace math {
 
 class Utils {
 public:
-    static plat::float32 PI() { return 3.1415926535897931F; }
+  static plat::float32 PI() { return 3.1415926535897931F; }
 
-    static plat::float32 Sqrt(plat::float32 fSource);
-    static plat::float32 Abs(plat::float32 x);
-    static plat::float32 DegreeToRadian(plat::float32 degrees);
-    static plat::float32 RadianToDegree(plat::float32 radians);
+  static plat::float32 Sqrt(plat::float32 fSource);
+  static plat::float32 Abs(plat::float32 x);
+  static plat::float32 DegreeToRadian(plat::float32 degrees);
+  static plat::float32 RadianToDegree(plat::float32 radians);
 };
 
 }  // namespace math

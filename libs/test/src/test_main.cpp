@@ -8,9 +8,9 @@
 // 'you must manually include the file in your project' pattern instead.
 
 int main(int, char*) {
-    int failures = UnitTest::RunAllTests();
+  int failures = UnitTest::RunAllTests();
 
-    // Return an error to enable command line error detection (for example,
-    // using %errorlevel% in DOS)
-    return ((failures == 0) ? EXIT_SUCCESS : EXIT_FAILURE);
+  // Return an error to enable command line error detection (for example,
+  // using %errorlevel% in DOS)
+  return ((failures == 0) ? EXIT_SUCCESS : EXIT_FAILURE);
 }

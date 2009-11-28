@@ -10,14 +10,14 @@ using secondpylon::math::quat;
 
 template <typename TStorage>
 UnitTest::MemoryOutStream& operator<<(UnitTest::MemoryOutStream& stream
-                                      , const quat<TStorage>& q) {
-    stream << "("
-        << q.q[quat<TStorage>::kW]
-        << "," << q.q[quat<TStorage>::kX]
-        << "," << q.q[quat<TStorage>::kY]
-        << "," << q.q[quat<TStorage>::kZ
-        ] << ")";
-    return stream;
+                    , const quat<TStorage>& q) {
+  stream << "("
+    << q.q[quat<TStorage>::kW]
+    << "," << q.q[quat<TStorage>::kX]
+    << "," << q.q[quat<TStorage>::kY]
+    << "," << q.q[quat<TStorage>::kZ
+    ] << ")";
+  return stream;
 }
 }  // namespace
 
@@ -26,17 +26,17 @@ namespace math {
 namespace test {
 
 SUITE(quat) {
-    typedef math::quat<float> quatf;
+  typedef math::quat<float> quatf;
 
-    TEST(ConstructFromComponents) {
-        quatf q(1.0F, 0.0F, 0.0F, 0.0F);
-        CHECK_EQUAL(quatf::GetIdentity(), q);
-    }
+  TEST(ConstructFromComponents) {
+    quatf q(1.0F, 0.0F, 0.0F, 0.0F);
+    CHECK_EQUAL(quatf::GetIdentity(), q);
+  }
 
-    TEST(ConjugateIdentityIsIdentity) {
-        quatf conj = quatf::GetIdentity().Conjugate();
-        CHECK_EQUAL(quatf::GetIdentity(), conj);
-    }
+  TEST(ConjugateIdentityIsIdentity) {
+    quatf conj = quatf::GetIdentity().Conjugate();
+    CHECK_EQUAL(quatf::GetIdentity(), conj);
+  }
 }
 
 }  //  namespace secondpylon

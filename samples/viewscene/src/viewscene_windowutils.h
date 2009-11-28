@@ -11,24 +11,24 @@ namespace secondpylon {
 namespace viewscene {
 
 struct WindowUtils {
-    struct window {
-        window() :
-            window_(0) {
-        }
+  struct window {
+    window() :
+      window_(0) {
+    }
 
-        HWND window_;
-    };
+    HWND window_;
+  };
 
-    static void register_classes(HINSTANCE instance);
-    static void unregister_classes(HINSTANCE instance);
+  static void register_classes(HINSTANCE instance);
+  static void unregister_classes(HINSTANCE instance);
 
-    static void create_window(
-        window* window_result
-        , HINSTANCE instance
-        , const wchar_t* window_name
-        , vec2i dims);
+  static void create_window(
+    window* window_result
+    , HINSTANCE instance
+    , const wchar_t* window_name
+    , vec2i dims);
 
-    static void destroy_window(window* target);
+  static void destroy_window(window* target);
 };
 
 }  // namespace viewscene

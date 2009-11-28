@@ -10,57 +10,57 @@
 namespace secondpylon {
 namespace data {
 
-    template <
-        typename TStorage
-        , template <typename> class Packer = SBytePacker >
-    class OutStream {
-        SPUNCOPYABLE(OutStream);
-        typedef typename Packer<typename TStorage>::TPacker TPacker;
+  template <
+    typename TStorage
+    , template <typename> class Packer = SBytePacker >
+  class OutStream {
+    SPUNCOPYABLE(OutStream);
+    typedef typename Packer<typename TStorage>::TPacker TPacker;
 
-    public:
-        explicit OutStream(TStorage* storage);
+  public:
+    explicit OutStream(TStorage* storage);
 
-        ~OutStream();
+    ~OutStream();
 
-        void Write(plat::uint8 value) { TPacker::Write(&storage_, value); }
-        void Write(plat::uint16 value) { TPacker::Write(&storage_, value); }
-        void Write(plat::uint32 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::uint8 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::uint16 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::uint32 value) { TPacker::Write(&storage_, value); }
 
-        void Write(plat::sint8 value) { TPacker::Write(&storage_, value); }
-        void Write(plat::sint16 value) { TPacker::Write(&storage_, value); }
-        void Write(plat::sint32 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::sint8 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::sint16 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::sint32 value) { TPacker::Write(&storage_, value); }
 
-        void Write(plat::float32 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::float32 value) { TPacker::Write(&storage_, value); }
 
-        void Write(plat::bool8 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::bool8 value) { TPacker::Write(&storage_, value); }
 
-        void Write(const char* pszString);
+    void Write(const char* pszString);
 
-    private:
-        TStorage& storage_;
-    };
+  private:
+    TStorage& storage_;
+  };
 
-    //
-    // Inline functions
-    //
+  //
+  // Inline functions
+  //
 
-    template <typename TStorage, template <typename> class  Packer>
-    OutStream<TStorage, Packer>::OutStream(TStorage* storage)
-        : storage_(*storage)  {
-        storage_.SetUsage(TStorage::kWrite);
-    }
+  template <typename TStorage, template <typename> class  Packer>
+  OutStream<TStorage, Packer>::OutStream(TStorage* storage)
+    : storage_(*storage)  {
+    storage_.SetUsage(TStorage::kWrite);
+  }
 
-    template <typename TStorage, template <typename> class  Packer>
-    OutStream<TStorage, Packer>::~OutStream() {
-        storage_.SetUsage(TStorage::kUnused);
-    }
+  template <typename TStorage, template <typename> class  Packer>
+  OutStream<TStorage, Packer>::~OutStream() {
+    storage_.SetUsage(TStorage::kUnused);
+  }
 
-    template <typename TStorage, template <typename> class  Packer>
-    void OutStream<TStorage, Packer>::Write(const char* pszString) {
-        plat::uint32 len = strlen(pszString);
-        Write(len);
-        TPacker::Write(&storage_, pszString, len);
-    }
+  template <typename TStorage, template <typename> class  Packer>
+  void OutStream<TStorage, Packer>::Write(const char* pszString) {
+    plat::uint32 len = strlen(pszString);
+    Write(len);
+    TPacker::Write(&storage_, pszString, len);
+  }
 
 }  // namespace data
 }  // namespace secondpylon

@@ -7,34 +7,34 @@ namespace secondpylon {
 namespace data {
 
 SPPLAT_INLINE MemStorage::MemStorage()
-    : read_offset_(0)
-    , usage_(kUnused) {
+  : read_offset_(0)
+  , usage_(kUnused) {
 }
 
 SPPLAT_INLINE void MemStorage::SetUsage(EUsage currentUsage) {
-    SPDIAG_ASSERT(currentUsage == kUnused || kUnused == usage_,
-        "Storage going between two invalid states (%d->%d)"
-        , usage_, currentUsage);
-    usage_ = currentUsage;
+  SPDIAG_ASSERT(currentUsage == kUnused || kUnused == usage_,
+    "Storage going between two invalid states (%d->%d)"
+    , usage_, currentUsage);
+  usage_ = currentUsage;
 }
 
 SPPLAT_INLINE void MemStorage::Advance(plat::uint32 bytes) {
   SPDIAG_ASSERT(
-    kRead == usage_,
-    "Reading is only permitted when the memstorage usage is set to reading.");
+  kRead == usage_,
+  "Reading is only permitted when the memstorage usage is set to reading.");
 
   SPDIAG_ASSERT(read_offset_+bytes < storage_.size()
-      , "Advancing beyond the end of the storage buffer.");
+    , "Advancing beyond the end of the storage buffer.");
 
   read_offset_ += bytes;
 }
 
 SPPLAT_INLINE const plat::byte* MemStorage::GetData() const {
-    return &storage_[0];
+  return &storage_[0];
 }
 
 SPPLAT_INLINE plat::uint32 MemStorage::GetDataSize() const {
-    return storage_.size();
+  return storage_.size();
 }
 
 }  // namespace data

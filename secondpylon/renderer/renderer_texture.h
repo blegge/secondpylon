@@ -13,23 +13,23 @@ namespace renderer {
 
 class Texture {
 public:
-    // Takes ownership of the passed in texture object.
-    Texture(IDirect3DTexture9* texture, const math::vec2<plat::uint32>& dims);
-    ~Texture();
+  // Takes ownership of the passed in texture object.
+  Texture(IDirect3DTexture9* texture, const math::vec2<plat::uint32>& dims);
+  ~Texture();
 
-    // Dynamic texture updating
-    plat::uint32* Lock();
+  // Dynamic texture updating
+  plat::uint32* Lock();
 
-    // Pointer to the previously data retreived from this Texture with a call 
-    // to Lock. Once Unlocked, this pointer is invalid.
-    void Unlock(plat::uint32* lock_pointer);
+  // Pointer to the previously data retreived from this Texture with a call 
+  // to Lock. Once Unlocked, this pointer is invalid.
+  void Unlock(plat::uint32* lock_pointer);
 
 private:
-    SPUNCOPYABLE(Texture);
+  SPUNCOPYABLE(Texture);
 
-    IDirect3DTexture9* texture_;
-    math::vec2<plat::uint32> size_;
-    plat::uint32* locked_;
+  IDirect3DTexture9* texture_;
+  math::vec2<plat::uint32> size_;
+  plat::uint32* locked_;
 };
 
 }  // namespace renderer

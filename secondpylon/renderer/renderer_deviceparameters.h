@@ -9,12 +9,12 @@
 namespace secondpylon {
 namespace renderer {
 
-    struct SDeviceParameters {
-        HWND parent_window;
-        math::vec2<plat::uint32> dims;
-        bool vsync;
-        UINT adapter;
-    };
+  struct SDeviceParameters {
+    HWND parent_window;
+    math::vec2<plat::uint32> dims;
+    bool vsync;
+    UINT adapter;
+  };
 
 }  // namespace renderer
 }  // namespace secondpylon

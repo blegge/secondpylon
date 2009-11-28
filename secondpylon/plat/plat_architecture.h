@@ -7,15 +7,15 @@
 #include <boost/detail/endian.hpp>
 #if defined(BOOST_BIG_ENDIAN)
 
-    #define SPPLAT_BIGENDIAN
+  #define SPPLAT_BIGENDIAN
 
 #elif defined(BOOST_LITTLE_ENDIAN)
 
-    #define SPPLAT_LITTLEENDIAN
+  #define SPPLAT_LITTLEENDIAN
 
 #else
 
-    #error Byte ordering is not defined
+  #error Byte ordering is not defined
 
 #endif
 

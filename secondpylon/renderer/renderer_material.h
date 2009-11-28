@@ -18,27 +18,27 @@ namespace renderer {
 // shader info, constants, etc.
 class Material {
 public:
-    typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
+  typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
 
-    Material(
-        IDirect3DDevice9* device,
-        TInMemoryStream* pixel_shader_buffer
-        , TInMemoryStream* vertex_shader_buffer);
+  Material(
+    IDirect3DDevice9* device,
+    TInMemoryStream* pixel_shader_buffer
+    , TInMemoryStream* vertex_shader_buffer);
 
-    ~Material();
+  ~Material();
 
-    IDirect3DVertexShader9* GetVertexShader() const;
-    IDirect3DPixelShader9* GetPixelShader() const;
+  IDirect3DVertexShader9* GetVertexShader() const;
+  IDirect3DPixelShader9* GetPixelShader() const;
 
-    void Destroy();
+  void Destroy();
 
 private:
-    SPUNCOPYABLE(Material);
+  SPUNCOPYABLE(Material);
 
-    // @todo This needs to be a shared reference to the shader or an identifier
-    // of some sort. This is a temp bootstrap setup.
-    IDirect3DVertexShader9* vertex_shader_;
-    IDirect3DPixelShader9* pixel_shader_;
+  // @todo This needs to be a shared reference to the shader or an identifier
+  // of some sort. This is a temp bootstrap setup.
+  IDirect3DVertexShader9* vertex_shader_;
+  IDirect3DPixelShader9* pixel_shader_;
 };
 
 }  // namespace renderer

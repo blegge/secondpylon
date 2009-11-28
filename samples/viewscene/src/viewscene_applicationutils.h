@@ -6,7 +6,7 @@
 typedef void (*RenderCallback)();
 
 struct ApplicationUtils {
-    static void run_app(RenderCallback render_callback);
+  static void run_app(RenderCallback render_callback);
 };
 
 #endif  // SAMPLES_VIEWSCENE_SRC_VIEWSCENE_APPLICATIONUTILS_H_

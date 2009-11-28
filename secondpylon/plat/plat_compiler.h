@@ -26,9 +26,9 @@ namespace secondpylon {
 // Use caution when using this modifier, as it can easily cause bugs if used
 // incorrectly (ie if there is aliasing within the scope)
 #if _MSC_VER >= 1400
-    #define SPPLAT_RESTRICT __restrict  // introduced in msvc 2005
+  #define SPPLAT_RESTRICT __restrict  // introduced in msvc 2005
 #else
-    #define SECONDPYLON_PLAT_PLAT_RESTRICT
+  #define SECONDPYLON_PLAT_PLAT_RESTRICT
 #endif
 
 // Prefetches the cache line at the passed in address. This can be used to

@@ -30,66 +30,66 @@ struct SDeviceParameters;
 // An entity with mesh and material generates SSubMeshRenderRequests which
 // describe both objects.
 struct SSubMeshRenderRequest {
-    SSubMeshRenderRequest() :
-        vertex_shader_(NULL)
-        , pixel_shader_(NULL)
-        , index_buffer_(NULL)
-        , vertex_buffer_(NULL)
-        , vertex_declaration_(NULL)
-        , vertex_stride_(0)
-        , vertex_count_(0)
-        , index_count_(0) {
-    }
+  SSubMeshRenderRequest() :
+    vertex_shader_(NULL)
+    , pixel_shader_(NULL)
+    , index_buffer_(NULL)
+    , vertex_buffer_(NULL)
+    , vertex_declaration_(NULL)
+    , vertex_stride_(0)
+    , vertex_count_(0)
+    , index_count_(0) {
+  }
 
-    // Material state
-    IDirect3DVertexShader9* vertex_shader_;
-    IDirect3DPixelShader9* pixel_shader_;
+  // Material state
+  IDirect3DVertexShader9* vertex_shader_;
+  IDirect3DPixelShader9* pixel_shader_;
 
-    // Mesh state
-    IDirect3DIndexBuffer9* index_buffer_;
-    IDirect3DVertexBuffer9* vertex_buffer_;
-    IDirect3DVertexDeclaration9* vertex_declaration_;
-    plat::uint32 vertex_stride_;
-    plat::uint32 vertex_count_;
-    plat::uint32 index_count_;
+  // Mesh state
+  IDirect3DIndexBuffer9* index_buffer_;
+  IDirect3DVertexBuffer9* vertex_buffer_;
+  IDirect3DVertexDeclaration9* vertex_declaration_;
+  plat::uint32 vertex_stride_;
+  plat::uint32 vertex_count_;
+  plat::uint32 index_count_;
 };
 
 class Device {
 public:
-    typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
+  typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
 
-    explicit Device(const SDeviceParameters& params);
-    ~Device();
+  explicit Device(const SDeviceParameters& params);
+  ~Device();
 
-    // Returns a DynamicMesh with the requested number of vertices and
-    // indices. This function may return NULL if the DynamicMesh cannot be
-    // created. The DynamicMesh must be deleted with a call to
-    // DynamicMesh::Destroy.
-    DynamicMesh* CreateDynamicMesh(
-        plat::uint32 vertex_count
-        , plat::uint32 index_count);
+  // Returns a DynamicMesh with the requested number of vertices and
+  // indices. This function may return NULL if the DynamicMesh cannot be
+  // created. The DynamicMesh must be deleted with a call to
+  // DynamicMesh::Destroy.
+  DynamicMesh* CreateDynamicMesh(
+    plat::uint32 vertex_count
+    , plat::uint32 index_count);
 
-    Material* CreateMaterial(
-        TInMemoryStream* pixelShader
-        , TInMemoryStream* vertexShader);
+  Material* CreateMaterial(
+    TInMemoryStream* pixelShader
+    , TInMemoryStream* vertexShader);
 
-    Texture* CreateTexture(const math::vec2<plat::uint32>& size);
+  Texture* CreateTexture(const math::vec2<plat::uint32>& size);
 
-    void Draw(const SSubMeshRenderRequest& request);
+  void Draw(const SSubMeshRenderRequest& request);
 
-    void Clear(const Color& clearColor);
-    bool BeginScene();
-    void EndScene();
-    void Flip();
+  void Clear(const Color& clearColor);
+  bool BeginScene();
+  void EndScene();
+  void Flip();
 
 private:
-    SPUNCOPYABLE(Device);
+  SPUNCOPYABLE(Device);
 
-    IDirect3D9* d3d_;
-    IDirect3DDevice9* device_;
+  IDirect3D9* d3d_;
+  IDirect3DDevice9* device_;
 
-    // Debug value tracking if we are in a BeginScene/EndScene block.
-    bool in_scene_;
+  // Debug value tracking if we are in a BeginScene/EndScene block.
+  bool in_scene_;
 };
 
 }  // namespace renderer
