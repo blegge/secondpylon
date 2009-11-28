@@ -108,7 +108,7 @@ plat::uint32 DynamicMesh::GetIndexCount() const {
 }
 
 plat::uint32 DynamicMesh::GetVertexStride() const {
-  return sizeof(SVertex);
+  return sizeof(Vertex);
 }
 
 }  // namespace renderer

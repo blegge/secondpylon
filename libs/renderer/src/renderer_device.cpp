@@ -16,7 +16,7 @@
 namespace secondpylon {
 namespace renderer {
 
-Device::Device(const SDeviceParameters& deviceParams)
+Device::Device(const DeviceParameters& deviceParams)
   : d3d_(NULL)
   , device_(NULL)
   , in_scene_(false) {
@@ -113,7 +113,7 @@ Texture* Device::CreateTexture(const math::vec2<plat::uint32>& size) {
   return new Texture(texture, size);
 }
 
-void Device::Draw(const renderer::SSubMeshRenderRequest& request) {
+void Device::Draw(const renderer::SubMeshRenderRequest& request) {
   // @todo This doesn't do any sorting or redundancy filtering. This needs
   // either needs to be added here (with draws batched externally) or we need
   // to add internal checks (which would be less efficient but simpler from

@@ -25,12 +25,12 @@ class DynamicMesh;
 class Material;
 class Color;
 class Texture;
-struct SDeviceParameters;
+struct DeviceParameters;
 
-// An entity with mesh and material generates SSubMeshRenderRequests which
+// An entity with mesh and material generates SubMeshRenderRequests which
 // describe both objects.
-struct SSubMeshRenderRequest {
-  SSubMeshRenderRequest() :
+struct SubMeshRenderRequest {
+  SubMeshRenderRequest() :
     vertex_shader_(NULL)
     , pixel_shader_(NULL)
     , index_buffer_(NULL)
@@ -58,7 +58,7 @@ class Device {
 public:
   typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
 
-  explicit Device(const SDeviceParameters& params);
+  explicit Device(const DeviceParameters& params);
   ~Device();
 
   // Returns a DynamicMesh with the requested number of vertices and
@@ -75,7 +75,7 @@ public:
 
   Texture* CreateTexture(const math::vec2<plat::uint32>& size);
 
-  void Draw(const SSubMeshRenderRequest& request);
+  void Draw(const SubMeshRenderRequest& request);
 
   void Clear(const Color& clearColor);
   bool BeginScene();

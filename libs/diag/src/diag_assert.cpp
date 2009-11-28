@@ -5,7 +5,7 @@
 #include <cstdarg>
 
 namespace  {
-  class DefaultAssertHandler : public secondpylon::diag::IAssertHandler {
+  class DefaultAssertHandler : public secondpylon::diag::AssertHandlerInterface {
   public:
     secondpylon::diag::AssertSystem::EAssertAction OnAssert(
       const char* error
@@ -23,7 +23,7 @@ namespace secondpylon {
 namespace diag {
 
 static DefaultAssertHandler s_DefaultHandler;
-secondpylon::diag::IAssertHandler* AssertSystem::s_handler_ =
+secondpylon::diag::AssertHandlerInterface* AssertSystem::s_handler_ =
   &s_DefaultHandler;
 
 AssertSystem::EAssertAction AssertSystem::HandleAssert(
@@ -38,9 +38,9 @@ AssertSystem::EAssertAction AssertSystem::HandleAssert(
   return s_handler_->OnAssert(condition, message);
 }
 
-secondpylon::diag::IAssertHandler* AssertSystem::SetAssertHandler(
-  secondpylon::diag::IAssertHandler* new_handler) {
-  IAssertHandler* pPreviousHandler = s_handler_;
+secondpylon::diag::AssertHandlerInterface* AssertSystem::SetAssertHandler(
+  secondpylon::diag::AssertHandlerInterface* new_handler) {
+  AssertHandlerInterface* pPreviousHandler = s_handler_;
   s_handler_ = new_handler;
   return pPreviousHandler;
 }

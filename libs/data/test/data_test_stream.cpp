@@ -12,8 +12,8 @@ namespace secondpylon {
 namespace data {
 namespace test {
 
-struct SStreamTestCase {
-  SStreamTestCase() :
+struct StreamTestCase {
+  StreamTestCase() :
     bool_(true)
     , uint8_(0xfd)
     , uint32_(0x1234)
@@ -25,7 +25,7 @@ struct SStreamTestCase {
     StringCopy(szString_, "Test", ArraySize(szString_));
   }
 
-  bool operator==(const SStreamTestCase& rhs) const {
+  bool operator==(const StreamTestCase& rhs) const {
     return (
       bool_ == rhs.bool_
       && uint8_ == rhs.uint8_
@@ -72,8 +72,8 @@ struct SStreamTestCase {
   char szString_[48];
 };
 
-TEST(TestSStreamTestCaseEquality) {
-  CHECK(SStreamTestCase() == SStreamTestCase());
+TEST(TestStreamTestCaseEquality) {
+  CHECK(StreamTestCase() == StreamTestCase());
 }
 
 TEST(WriteStreamAtomic) {
@@ -125,13 +125,13 @@ TEST(WriteStreamAtomic) {
 
 TEST(RoundTripStream) {
   data::MemStorage storage;
-  SStreamTestCase test;
+  StreamTestCase test;
   {
     data::OutStream<data::MemStorage> out(&storage);
     test.Write(&out);
   }
 
-  SStreamTestCase test2;
+  StreamTestCase test2;
   data::InStream<data::MemStorage> in(&storage);
   test2.Read(&in);
 

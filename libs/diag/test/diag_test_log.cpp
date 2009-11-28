@@ -8,7 +8,7 @@ namespace secondpylon {
 namespace diag {
 namespace test {
 
-class StoringLogListener : public diag::ILogListener {
+class StoringLogListener : public diag::LogListenerInterface {
   SPUNCOPYABLE(StoringLogListener);
 
   enum { kStorageSize = 80 };

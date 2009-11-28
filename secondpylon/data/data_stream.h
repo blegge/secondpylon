@@ -10,7 +10,7 @@ namespace data {
 
 class Stream
 {
-  struct SStreamTypeMask
+  struct StreamTypeMask
   {
     enum Enum
     {
@@ -27,11 +27,11 @@ class Stream
 
   struct VerificationPolicy
   {
-    static void Read(InStream& stream, SStreamTypeMask::Enum e)
+    static void Read(InStream& stream, StreamTypeMask::Enum e)
     {
     }
 
-    static void Write(InStream& stream, SStreamTypeMask::Enum e)
+    static void Write(InStream& stream, StreamTypeMask::Enum e)
     {
     }
   };

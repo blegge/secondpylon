@@ -9,7 +9,7 @@
 namespace secondpylon {
 namespace test {
 
-class AssertCheck : public secondpylon::diag::IAssertHandler {
+class AssertCheck : public secondpylon::diag::AssertHandlerInterface {
 public:
   AssertCheck(UnitTest::TestResults* testResults,
     const UnitTest::TestDetails& details)
@@ -39,7 +39,7 @@ public:
 private:
   SPUNCOPYABLE(AssertCheck);
 
-  secondpylon::diag::IAssertHandler* pPreviousHandler_;
+  secondpylon::diag::AssertHandlerInterface* pPreviousHandler_;
 
   UnitTest::TestResults* TestResults_;
 

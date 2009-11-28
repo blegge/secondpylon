@@ -14,24 +14,24 @@
 namespace secondpylon {
 namespace diag {
 
-  class ILogListener {
-    SPUNCOPYABLE(ILogListener);
+  class LogListenerInterface {
+    SPUNCOPYABLE(LogListenerInterface);
 
   public:
-    ILogListener() {}
-    virtual ~ILogListener() = 0 {}
+    LogListenerInterface() {}
+    virtual ~LogListenerInterface() = 0 {}
     virtual void OnMessage(const char* message) = 0;
   };
 
   class Log {
   public:
-    void AddListener(ILogListener* listener);
-    void RemoveListener(ILogListener* listener);
+    void AddListener(LogListenerInterface* listener);
+    void RemoveListener(LogListenerInterface* listener);
 
     void Message(const char* message);
 
   private:
-    std::list<ILogListener*> listener_list_;
+    std::list<LogListenerInterface*> listener_list_;
   };
 
   // Logging is enabled by default if there is the user does not explicitly

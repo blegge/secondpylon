@@ -45,8 +45,8 @@ void renderpoly() {
   }
 
   {
-    renderer::DynamicMesh::SVertex* vertices =
-      (renderer::DynamicMesh::SVertex*)mesh->LockVertices(3);
+    renderer::DynamicMesh::Vertex* vertices =
+      (renderer::DynamicMesh::Vertex*)mesh->LockVertices(3);
     vertices[0].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
     vertices[1].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
     vertices[2].Write(math::vec3<float>(Random(-1, 1), Random(-1, 1), 0));
@@ -93,7 +93,7 @@ void renderpoly() {
   // in-place modifications before rendering occurs. This will be simplest to
   // handle at the source end. Consider updating resources to get released
   // prior to write and recreated.
-  renderer::SSubMeshRenderRequest poly_request;
+  renderer::SubMeshRenderRequest poly_request;
   poly_request.pixel_shader_ = material->GetPixelShader();
   poly_request.vertex_shader_ = material->GetVertexShader();
   poly_request.index_buffer_ = mesh->GetIndices();
@@ -138,7 +138,7 @@ int WINAPI WinMain(HINSTANCE instance,
   secondpylon::viewscene::WindowUtils::create_window(
     &app_window, instance, L"viewscene", vec2i(128, 128));
 
-  secondpylon::renderer::SDeviceParameters params;
+  secondpylon::renderer::DeviceParameters params;
   params.adapter = 0;
   params.dims = vec2i(128, 128);
   params.parent_window = app_window.window_;

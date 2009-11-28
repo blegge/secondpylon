@@ -9,7 +9,7 @@
 namespace secondpylon {
 namespace diag {
 
-  class IAssertHandler;
+  class AssertHandlerInterface;
 
   class AssertSystem {
   public:
@@ -20,15 +20,15 @@ namespace diag {
       const char* format,
       ...);
 
-    static IAssertHandler* SetAssertHandler(IAssertHandler* pfnNewHandler);
+    static AssertHandlerInterface* SetAssertHandler(AssertHandlerInterface* pfnNewHandler);
 
   private:
-    static IAssertHandler* s_handler_;
+    static AssertHandlerInterface* s_handler_;
   };
 
-  class IAssertHandler {
+  class AssertHandlerInterface {
   public:
-    virtual ~IAssertHandler() {}
+    virtual ~AssertHandlerInterface() {}
 
     virtual AssertSystem::EAssertAction OnAssert(
       const char* error,

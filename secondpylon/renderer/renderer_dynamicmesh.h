@@ -20,7 +20,7 @@ public:
   // @todo Long term, the Vertex implementation will probably be
   // externalized (template parameter or dynamic binding?) so that we can
   // have different mesh formats.
-  struct SVertex {
+  struct Vertex {
     // Vertex implementations provide a 'Write' function to insure writes
     // are ordered. This avoids penalties on platforms where out of order
     // writes to video memory cause penalties.

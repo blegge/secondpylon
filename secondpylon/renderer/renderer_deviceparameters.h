@@ -9,7 +9,7 @@
 namespace secondpylon {
 namespace renderer {
 
-  struct SDeviceParameters {
+  struct DeviceParameters {
     HWND parent_window;
     math::vec2<plat::uint32> dims;
     bool vsync;

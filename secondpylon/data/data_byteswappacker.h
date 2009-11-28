@@ -8,7 +8,7 @@
 namespace secondpylon {
 namespace data {
 
-struct SSwapUtil {
+struct SwapUtil {
   static plat::uint16 Swap16(plat::uint16 data) {
     return ((data & 0xff00) >> 8)
       | ((data & 0x00ff) << 8);
@@ -68,12 +68,12 @@ public:
 
 private:
   static void Write16(TStorage* storage, plat::uint16 data) {
-    plat::uint16 swapped = SSwapUtil::Swap16(data);
+    plat::uint16 swapped = SwapUtil::Swap16(data);
     storage->Write(StrictCast<plat::byte*>(&swapped), 2);
   }
 
   static void Write32(TStorage* storage, plat::uint32 data) {
-    plat::uint32 swapped = SSwapUtil::Swap32(data);
+    plat::uint32 swapped = SwapUtil::Swap32(data);
     storage->Write(StrictCast<plat::byte*>(&swapped), 4);
   }
 };
@@ -132,13 +132,13 @@ private:
   static void Read16(TStorage* storage, plat::uint16* data) {
     plat::uint16 raw = 0;
     storage->Read(reinterpret_cast<plat::byte*>(&raw), 2);
-    *data = SSwapUtil::Swap16(raw);
+    *data = SwapUtil::Swap16(raw);
   }
 
   static void Read32(TStorage* storage, plat::uint32* data) {
     plat::uint32 raw;
     storage->Read(reinterpret_cast<plat::byte*>(&raw), 4);
-    *data = SSwapUtil::Swap32(raw);
+    *data = SwapUtil::Swap32(raw);
   }
 };
 
