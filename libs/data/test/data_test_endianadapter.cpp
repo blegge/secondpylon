@@ -16,7 +16,7 @@ SUITE(SByteSwapPacker) {
   TEST(RoundTripStream) {
     data::MemStorage storage;
     {
-      data::OutStream<data::MemStorage, data::SByteSwapPacker >
+      data::OutStream<data::MemStorage, data::ByteSwapPacker >
         out(&storage);
 
       out.Write("test");
@@ -29,7 +29,7 @@ SUITE(SByteSwapPacker) {
     plat::uint32 n32;
 
     {
-      data::InStream<data::MemStorage, data::SByteSwapPacker >
+      data::InStream<data::MemStorage, data::ByteSwapUnpacker >
         in(&storage);
 
       in.Read(buffer, ArraySize(buffer));

@@ -18,7 +18,7 @@ namespace renderer {
 // shader info, constants, etc.
 class Material {
 public:
-  typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
+  typedef data::InStream<data::MemStorage, data::ByteUnpacker> TInMemoryStream;
 
   Material(
     IDirect3DDevice9* device,

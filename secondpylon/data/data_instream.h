@@ -31,11 +31,11 @@ namespace data {
   // 'InStream<MemStorage, EndianAdapter>'
   template <
     typename TStorage
-    , template <typename> class Packer = SBytePacker
+    , template <typename> class Unpacker
   >
   class InStream {
     SPUNCOPYABLE(InStream);
-    typedef typename Packer<typename TStorage>::TUnpacker TUnpacker;
+    typedef typename Unpacker<typename TStorage> TUnpacker;
 
   public:
     explicit InStream(TStorage* storage);

@@ -56,7 +56,7 @@ struct SubMeshRenderRequest {
 
 class Device {
 public:
-  typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
+  typedef data::InStream<data::MemStorage, data::ByteUnpacker> TInMemoryStream;
 
   explicit Device(const DeviceParameters& params);
   ~Device();

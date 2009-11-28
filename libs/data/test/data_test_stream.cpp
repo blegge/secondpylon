@@ -37,7 +37,7 @@ struct StreamTestCase {
       && sint16_ == rhs.sint16_);
   }
 
-  void Write(data::OutStream<data::MemStorage>* pStream) {
+  void Write(data::OutStream<data::MemStorage, data::BytePacker>* pStream) {
     pStream->Write(bool_);
     pStream->Write(uint8_);
     pStream->Write(uint32_);
@@ -49,7 +49,7 @@ struct StreamTestCase {
     pStream->Write(szString_);
   }
 
-  void Read(data::InStream<data::MemStorage>* pStream) {
+  void Read(data::InStream<data::MemStorage, data::ByteUnpacker>* pStream) {
     pStream->Read(&bool_);
     pStream->Read(&uint8_);
     pStream->Read(&uint32_);
@@ -79,7 +79,7 @@ TEST(TestStreamTestCaseEquality) {
 TEST(WriteStreamAtomic) {
   data::MemStorage storage;
   {
-    data::OutStream<data::MemStorage> out(&storage);
+    data::OutStream<data::MemStorage, data::BytePacker> out(&storage);
     out.Write(plat::bool8(true));
     out.Write(plat::uint16(0xa0a1));
     out.Write(plat::bool8(false));
@@ -127,12 +127,12 @@ TEST(RoundTripStream) {
   data::MemStorage storage;
   StreamTestCase test;
   {
-    data::OutStream<data::MemStorage> out(&storage);
+    data::OutStream<data::MemStorage, data::BytePacker> out(&storage);
     test.Write(&out);
   }
 
   StreamTestCase test2;
-  data::InStream<data::MemStorage> in(&storage);
+  data::InStream<data::MemStorage, data::ByteUnpacker> in(&storage);
   test2.Read(&in);
 
   CHECK(test == test2);
@@ -141,7 +141,7 @@ TEST(RoundTripStream) {
 TEST(StringReadCapacity) {
   data::MemStorage storage;
   {
-    data::OutStream<data::MemStorage> out(&storage);
+    data::OutStream<data::MemStorage, data::BytePacker> out(&storage);
     out.Write("test");
     out.Write(static_cast<plat::uint32>(0x0a1a2a3a));
   }
@@ -150,7 +150,7 @@ TEST(StringReadCapacity) {
   plat::uint32 nNextRead = 0;
 
   szTooSmall[0] = '\0';
-  data::InStream<data::MemStorage> in(&storage);
+  data::InStream<data::MemStorage, data::ByteUnpacker> in(&storage);
 
   SPTEST_CHECKASSERTS_BEGIN();
   in.Read(szTooSmall, 4);
@@ -174,7 +174,7 @@ TEST(MismatchedStreamRead)
 {
   data::MemStorage storage;
   {
-    data::OutStream<data::MemStorage> out(storage);
+    data::OutStream<data::MemStorage, data::BytePacker> out(storage);
     out.Write(plat::uint32(0xfdfdfdfd));
     out.Write(plat::uint16(0xabab));
     out.Write(plat::uint16(0xcdcd));
@@ -182,7 +182,7 @@ TEST(MismatchedStreamRead)
 
   plat::uint32 nGoodRead = 0;
   plat::uint32 nBadRead = 0;
-  data::InStream<data::MemStorage> in(storage);
+  data::InStream<data::MemStorage, data::BytePacker> in(storage);
   in.Read(nGoodRead);
 
   SPTEST_CHECKASSERTS_BEGIN();

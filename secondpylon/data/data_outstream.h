@@ -12,10 +12,10 @@ namespace data {
 
   template <
     typename TStorage
-    , template <typename> class Packer = SBytePacker >
+    , template <typename> class Packer >
   class OutStream {
     SPUNCOPYABLE(OutStream);
-    typedef typename Packer<typename TStorage>::TPacker TPacker;
+    typedef typename Packer<typename TStorage> TPacker;
 
   public:
     explicit OutStream(TStorage* storage);
@@ -55,7 +55,7 @@ namespace data {
     storage_.SetUsage(TStorage::kUnused);
   }
 
-  template <typename TStorage, template <typename> class  Packer>
+  template <typename TStorage, template <typename> class Packer>
   void OutStream<TStorage, Packer>::Write(const char* pszString) {
     plat::uint32 len = strlen(pszString);
     Write(len);

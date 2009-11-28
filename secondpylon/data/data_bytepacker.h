@@ -38,12 +38,6 @@ namespace data {
     }
   };
 
-  template <typename TStorage>
-  struct SBytePacker {
-    typedef BytePacker<TStorage> TPacker;
-    typedef ByteUnpacker<TStorage> TUnpacker;
-  };
-
 }  // namespace data
 }  // namespace secondpylon
 

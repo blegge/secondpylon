@@ -142,12 +142,6 @@ private:
   }
 };
 
-template <typename TStorage>
-struct SByteSwapPacker {
-  typedef ByteSwapPacker<TStorage> TPacker;
-  typedef ByteSwapUnpacker<TStorage> TUnpacker;
-};
-
 }  // namespace data
 }  // namespace secondpylon
 

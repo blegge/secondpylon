@@ -65,10 +65,10 @@ void renderpoly() {
       "return float4 (1, 0, 0, 1);"
     "}";
 
-  typedef data::OutStream<data::MemStorage, data::SBytePacker>
+  typedef data::OutStream<data::MemStorage, data::BytePacker>
     TOutMemoryStream;
 
-  typedef data::InStream<data::MemStorage, data::SBytePacker>
+  typedef data::InStream<data::MemStorage, data::ByteUnpacker>
     TInMemoryStream;
 
   data::MemStorage vertex_shader_buffer;
