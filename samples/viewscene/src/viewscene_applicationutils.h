@@ -1,9 +1,12 @@
-#ifndef SPVIEWSCENE_APPLICATIONUTILS
-#define SPVIEWSCENE_APPLICATIONUTILS
+// Copyright 2009 Brian Legge
 
-struct ApplicationUtils
-{
-    static void run_app();
+#ifndef SAMPLES_VIEWSCENE_SRC_VIEWSCENE_APPLICATIONUTILS_H_
+#define SAMPLES_VIEWSCENE_SRC_VIEWSCENE_APPLICATIONUTILS_H_
+
+typedef void (*RenderCallback)();
+
+struct ApplicationUtils {
+    static void run_app(RenderCallback render_callback);
 };
 
-#endif // SPVIEWSCENE_APPLICATIONUTILS
+#endif  // SAMPLES_VIEWSCENE_SRC_VIEWSCENE_APPLICATIONUTILS_H_

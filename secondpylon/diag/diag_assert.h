@@ -1,42 +1,48 @@
-#ifndef SPDIAG_ASSERT_H
-#define SPDIAG_ASSERT_H
+// Copyright 2009 Brian Legge
 
-#include <secondpylon/plat/plat_compiler.h>
-#include <secondpylon/plat/plat_crt.h>
+#ifndef SECONDPYLON_DIAG_DIAG_ASSERT_H_
+#define SECONDPYLON_DIAG_DIAG_ASSERT_H_
+
+#include "secondpylon/plat/plat_compiler.h"
+#include "secondpylon/plat/plat_crt.h"
 
 namespace secondpylon {
 namespace diag {
 
-	class IAssertHandler;
+    class IAssertHandler;
 
-	class AssertSystem
-	{
-	public:
-		enum EAssertAction { kContinue, kBreak };
+    class AssertSystem {
+    public:
+        enum EAssertAction { kContinue, kBreak };
 
-		static EAssertAction HandleAssert(const char* pszAssert, const char* format, ...);
-		static IAssertHandler* SetAssertHandler(IAssertHandler* pfnNewHandler);
+        static EAssertAction HandleAssert(
+            const char* pszAssert,
+            const char* format,
+            ...);
 
-	private:
-		static IAssertHandler* sm_pHandler;
-	};
+        static IAssertHandler* SetAssertHandler(IAssertHandler* pfnNewHandler);
 
-	class IAssertHandler
-	{
-	public:
-		virtual ~IAssertHandler() {}
+    private:
+        static IAssertHandler* sm_pHandler;
+    };
 
-		virtual AssertSystem::EAssertAction OnAssert(const char* error, const char* message) = 0;
-	};
+    class IAssertHandler {
+    public:
+        virtual ~IAssertHandler() {}
 
-}
-}
+        virtual AssertSystem::EAssertAction OnAssert(
+            const char* error,
+            const char* message) = 0;
+    };
 
-// Allow project level disabling of asserts through the SPDIAG_DISABLEASSERTS macro. 
-// If it is defined, asserts will be disabled.
-// TODO: What is the standard way of handling this?
+}  // namespace diag
+}  // namespace secondpylon
+
+// Allow project level disabling of asserts through the SPDIAG_DISABLEASSERTS
+// macro. If it is defined, asserts will be disabled.
+// TODO(brianlegge) What is the standard way of handling this?
 #if !defined(SPDIAG_DISABLEASSERTS) && !defined(SPDIAG_ENABLEASSERTS)
-	#define SPDIAG_ENABLEASSERTS
+    #define SECONDPYLON_DIAG_DIAG_ENABLEASSERTS
 #endif
 
 // Compile time assert, soon to be replaced by C++0x standard assert.
@@ -46,57 +52,78 @@ namespace diag {
 // passed in value. Only a specialization of true will compile successfully -
 // false will result in a compile time failure..
 template <bool b> struct StaticAssertFailed;
-template <> struct StaticAssertFailed<true>{};
-#define SPDIAG_CTASSERT(x) StaticAssertFailed<x>();
+template <> struct StaticAssertFailed<true> {};
+#define SPDIAG_CTASSERT(x) StaticAssertFailed<x>();_H_
 
-// This is an internal macro to insure macros provided by secondpylon (and potentially compiled out in 
-// different configurations) don't introduce flow control changes. The classic example is something like:
+// This is an internal macro to insure macros provided by secondpylon (and
+// potentially compiled out in different configurations) don't introduce flow
+// control changes. The classic example is something like:
 // if (bValue)
-//		ASSERT(expression)
-//  foo = 42;
+//  ASSERT(expression)
+// foo = 42;
 //
-// If ASSERT was compiled out completely, assigning 42 to foo would become conditional on bValue. This 
+// If ASSERT was compiled out completely, assigning 42 to foo would become
+// conditional on bValue. This
 // macro insures that this doesn't happen.
-#define SPDIAG_INTERNAL_MACRO(x) do { x } while (0);
-#define SPDIAG_INTERNAL_MACRO_NULL() do { } while (0);
+#define SPDIAG_INTERNAL_MACRO(x)\
+    do { x } while (0);
 
-// Helper to invoke a crash in the case of a truly unrecoverable situation. A common use is forcing a crash to occur 
-// early. This can be used to create a crash dump at a point with more information. For example, a NaN fed into a 
-// physics system may cause a crash much later. Tracking the source back may be difficult. Asserts work on dev machines,
-// but not if the bug only repros in the wild.
-#define SPDIAG_FATAL(x) *(void*)0 = 0;
+#define SPDIAG_INTERNAL_MACRO_NULL()\
+    do { } while (0);
 
-// Used to prevent 'unreference variable' warnings. Some variables may only be used in specific configurations. 
-// This macro can be used to prevent these variables from generating warnings in other configurations. For example:
+// Helper to invoke a crash in the case of a truly unrecoverable situation. A
+// common use is forcing a crash to occur early. This can be used to create a
+// crash dump at a point with more information. For example, a NaN fed into a
+// physics system may cause a crash much later. Tracking the source back may be
+// difficult. Asserts work on dev machines, but not if the bug only repros in
+// the wild.
+#define SPDIAG_FATAL(x) *reinterpret_cast<void*>(0) = 0;
+
+// Used to prevent 'unreference variable' warnings. Some variables may only be
+// used in specific configurations.  This macro can be used to prevent these
+// variables from generating warnings in other configurations. For example:
 //
 // bool bResult = DoWork();
 // SPDIAG_ASSERT(bResult);
 //
-// in configurations with SPERROR_ASSERT compiled out, bResult would can generate an unreferenced variable warning. 
-// SPDIAG_UNREFERENCED(bResult) can be used to prevent this warning.
+// in configurations with SPERROR_ASSERT compiled out, bResult would can
+// generate an unreferenced variable warning. SPDIAG_UNREFERENCED(bResult) can
+// be used to prevent this warning.
 #define SPDIAG_UNREFERENCED(x) (x)
 
-#ifdef SPDIAG_ENABLEASSERTS
+#ifdef SECONDPYLON_DIAG_DIAG_ENABLEASSERTS
 
-	#define SPDIAG_ASSERT(x, ...) SPDIAG_INTERNAL_MACRO(\
-		if (!(x) && secondpylon::diag::AssertSystem::kBreak == secondpylon::diag::AssertSystem::HandleAssert(#x, __VA_ARGS__))\
-		{\
-			SPPLAT_BREAK();\
-		}\
-	)
+    #define SPDIAG_ASSERT(x, ...) \
+        SPDIAG_INTERNAL_MACRO(\
+        if (!(x) && \
+            secondpylon::diag::AssertSystem::kBreak == \
+            secondpylon::diag::AssertSystem::HandleAssert(#x, __VA_ARGS__))\
+        {\
+            SPPLAT_BREAK();\
+        }\
+    )
 
-	#define SPDIAG_ERROR(...) SPDIAG_INTERNAL_MACRO( \
-		if (secondpylon::diag::AssertSystem::kBreak == secondpylon::diag::AssertSystem::HandleAssert("Error", __VA_ARGS__))\
-		{\
-			SPPLAT_BREAK();\
-		}\
-	)
+    #define SPDIAG_ERROR(...)\
+        SPDIAG_INTERNAL_MACRO( \
+        if (secondpylon::diag::AssertSystem::kBreak ==\
+            secondpylon::diag::AssertSystem::HandleAssert(\
+                "Error"\
+                , __VA_ARGS__))\
+        {\
+            SPPLAT_BREAK();\
+        }\
+    )
 
 #else
 
-	#define SPDIAG_ASSERT(x, format, ...) SPDIAG_INTERNAL_MACRO_NULL()
-	#define SPDIAG_ERROR(format, ...) SPDIAG_INTERNAL_MACRO_NULL()
+    #define SPDIAG_ASSERT(x, format, ...) \
+        SPDIAG_INTERNAL_MACRO_DIAG_ASSERT(x, format, ...) \
+        SPDIAG_INTERNAL_MACRO_NULL()
+
+    #define SPDIAG_ERROR(format, ...) \
+        SPDIAG_INTERNAL_MACRO_DIAG_ERROR(format, ...) \
+        SPDIAG_INTERNAL_MACRO_NULL()
 
 #endif
 
-#endif // SPDIAG_ASSERT_H
+#endif  // SECONDPYLON_DIAG_DIAG_ASSERT_H_

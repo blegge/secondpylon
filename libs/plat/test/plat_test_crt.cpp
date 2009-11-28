@@ -1,9 +1,9 @@
-#include <secondpylon/plat/plat_crt.h>
-#include <unittest++/src/UnitTest++.h>
+#include "secondpylon/plat/plat_crt.h"
+#include "unittest++/src/UnitTest++.h"
 
 using namespace secondpylon;
 
-namespace 
+namespace
 {
     class TestClass {};
 

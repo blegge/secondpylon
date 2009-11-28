@@ -1,15 +1,18 @@
-#ifndef SPPLAT_TYPES_H
-#define SPPLAT_TYPES_H
+// Copyright 2009 Brian Legge
 
-// Assume that char could be either signed or unsigned - don't do integer comparisons against it. This header
-// originally defined a 'uchar' to be explicit, but this caused more compiler headaches than it resolved.
+#ifndef SECONDPYLON_PLAT_PLAT_TYPES_H_
+#define SECONDPYLON_PLAT_PLAT_TYPES_H_
+
+// Assume that char could be either signed or unsigned - don't do integer
+// comparisons against it. This header originally defined a 'uchar' to be
+// explicit, but this caused more compiler headaches than it resolved.
 
 namespace secondpylon {
 namespace plat {
-
-    // Define basic types. These defines may need to vary by platform, as C/C++ type definitions are more general than
-    // we need here. Using these types simplify serialization and general file io. For simplicity, these types shoulse
-    // be used at all times.
+    // Define basic types. These defines may need to vary by platform, as C/C++
+    // type definitions are more general than we need here. Using these types
+    // simplify serialization and general file io. For simplicity, these types
+    // should be used at all times.
 
     typedef unsigned char uint8;
     typedef unsigned short uint16;
@@ -21,10 +24,9 @@ namespace plat {
     typedef float float32;
 
     typedef unsigned char byte;
-    
+
     typedef bool bool8;
-
 }
 }
 
-#endif // SPPLAT_TYPES_H
+#endif  // SECONDPYLON_PLAT_PLAT_TYPES_H_

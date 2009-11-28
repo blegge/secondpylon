@@ -47,9 +47,10 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
 				WarnAsError="true"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4127"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -111,9 +112,10 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
 				WarnAsError="true"
 				DebugInformationFormat="3"
+				DisableSpecificWarnings="4127"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -179,7 +181,15 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath="..\..\..\secondpylon\math\math_mat3-inl.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\secondpylon\math\math_mat3.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\math\math_quat-inl.h"
 				>
 			</File>
 			<File
@@ -187,7 +197,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\secondpylon\math\math_quaternion.h"
+				RelativePath="..\..\..\secondpylon\math\math_utils-inl.h"
 				>
 			</File>
 			<File
@@ -195,19 +205,21 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\secondpylon\math\math_vec2-inl.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\secondpylon\math\math_vec2.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\secondpylon\math\math_vec3-inl.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\secondpylon\math\math_vec3.h"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
 		</Filter>
 	</Files>
 	<Globals>

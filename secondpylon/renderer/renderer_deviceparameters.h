@@ -1,21 +1,22 @@
-#ifndef SPRENDERER_DEVICEPARAMETERS_H
-#define SPRENDERER_DEVICEPARAMETERS_H
+// Copyright 2009 Brian Legge
 
-#include <secondpylon/math/math_vec2.h>
+#ifndef SECONDPYLON_RENDERER_RENDERER_DEVICEPARAMETERS_H_
+#define SECONDPYLON_RENDERER_RENDERER_DEVICEPARAMETERS_H_
+
 #include <windows.h>
+#include "secondpylon/math/math_vec2.h"
 
 namespace secondpylon {
 namespace renderer {
 
-    struct SDeviceParameters
-    {
+    struct SDeviceParameters {
         HWND parent_window;
         math::vec2<plat::uint32> dims;
         bool vsync;
         UINT adapter;
     };
 
-}
-}
+}  // namespace renderer
+}  // namespace secondpylon
 
-#endif // SPRENDERER_DEVICEPARAMETERS_H
+#endif  // SECONDPYLON_RENDERER_RENDERER_DEVICEPARAMETERS_H_

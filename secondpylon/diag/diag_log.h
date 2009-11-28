@@ -1,22 +1,20 @@
-#ifndef SPDIAG_LOG
-#define SPDIAG_LOG
+// Copyright 2009 Brian Legge
 
-#include <secondpylon/plat/plat_crt.h>
+#ifndef SECONDPYLON_DIAG_DIAG_LOG_H_
+#define SECONDPYLON_DIAG_DIAG_LOG_H_
 
 #pragma warning(push)
-#pragma warning(disable:4530) // Disable exception warnings
+#pragma warning(disable:4530)  // Disable exception warnings
 #pragma warning(disable:4702)
 #include <list>
-
-//#pragma warning(disable:4511)
-//#pragma warning(disable:4512)
 #pragma warning(pop)
+
+#include "secondpylon/plat/plat_crt.h"
 
 namespace secondpylon {
 namespace diag {
 
-    class ILogListener
-    {
+    class ILogListener {
         SPUNCOPYABLE(ILogListener);
 
     public:
@@ -25,11 +23,10 @@ namespace diag {
         virtual void OnMessage(const char* message) = 0;
     };
 
-    class Log
-    {
+    class Log {
     public:
-        void AddListener(ILogListener&);
-        void RemoveListener(ILogListener&);
+        void AddListener(ILogListener* listener);
+        void RemoveListener(ILogListener* listener);
 
         void Message(const char* message);
 
@@ -37,7 +34,8 @@ namespace diag {
         std::list<ILogListener*> m_ListenerList;
     };
 
-    // Logging is enabled by default if there is the user does not explicitly configure logging.
+    // Logging is enabled by default if there is the user does not explicitly
+    // configure logging.
     #ifndef RSDIAG_ENABLE_LOG
         #define RSDIAG_ENABLE_LOG 1
     #endif
@@ -48,7 +46,7 @@ namespace diag {
         #define RSDIAG_LOG(log, message)
     #endif
 
-}
-}
+}  // namespace diag
+}  // namespace secondpylon
 
-#endif // SPDIAG_LOG
+#endif  // SECONDPYLON_DIAG_DIAG_LOG_H_

@@ -1,52 +1,50 @@
-#ifndef SPDATA_BYTEPACKER_H
-#define SPDATA_BYTEPACKER_H
+// Copyright 2009 Brian Legge
 
-#include <secondpylon/plat/plat_types.h>
+#ifndef SECONDPYLON_DATA_DATA_BYTEPACKER_H_
+#define SECONDPYLON_DATA_DATA_BYTEPACKER_H_
+
+#include "secondpylon/plat/plat_types.h"
 
 namespace secondpylon {
 namespace data {
 
     template <typename TStorage>
-    class ByteUnpacker
-    {
+    class ByteUnpacker {
     public:
         template <typename T>
-        static void Read(TStorage& storage, T& data)
-        {
-            storage.Read((plat::byte*)&data, sizeof(T));
+        static void Read(TStorage* pStorage, T* pData) {
+            pStorage->Read(reinterpret_cast<plat::byte*>(pData), sizeof(T));
         }
 
         template <typename T>
-        static void Read(TStorage& storage, const T* data, size_t arrayLen)
-        {
-            storage.Read((plat::byte*)data, arrayLen*sizeof(T));
+        static void Read(TStorage* pStorage, T* pData, size_t arrayLen) {
+            pStorage->Read(
+                reinterpret_cast<plat::byte*>(pData)
+                , arrayLen*sizeof(T));
         }
     };
 
     template <typename TStorage>
-    class BytePacker
-    {
+    class BytePacker {
     public:
         template <typename T>
-            static void Write(TStorage& storage, T data)
-        {
-            storage.Write((plat::byte*)&data, sizeof(T));
+            static void Write(TStorage* pStorage, T data) {
+            pStorage->Write(StrictCast<plat::byte*>(&data), sizeof(T));
         }
 
         template <typename T>
-            static void Write(TStorage& storage, const T* data, size_t arrayLen)
-        {
-            storage.Write((plat::byte*)data, arrayLen*sizeof(T));
+        static void Write(TStorage* pStorage, const T* data, size_t arrayLen) {
+            pStorage->Write(StrictCast<plat::byte*>(data), arrayLen*sizeof(T));
         }
     };
 
     template <typename TStorage>
-    struct SBytePacker
-    {
+    struct SBytePacker {
         typedef BytePacker<TStorage> TPacker;
         typedef ByteUnpacker<TStorage> TUnpacker;
     };
-}
-}
 
-#endif // SPDATA_BYTEPACKER_H
+}  // namespace data
+}  // namespace secondpylon
+
+#endif  // SECONDPYLON_DATA_DATA_BYTEPACKER_H_

@@ -68,6 +68,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample_viewscene", "..\samp
 		{DEEF84FA-D74C-4E5D-BD5C-08A1C3AEFD25} = {DEEF84FA-D74C-4E5D-BD5C-08A1C3AEFD25}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mem_test", "..\libs\mem\build\mem_test.vcproj", "{B7B514A0-017E-4C98-9550-029437AF566E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1A71E946-421B-44E2-AA38-6D7A50247991} = {1A71E946-421B-44E2-AA38-6D7A50247991}
+		{37A3A1A3-EABC-449D-9C7F-B762496FF73F} = {37A3A1A3-EABC-449D-9C7F-B762496FF73F}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -126,6 +132,10 @@ Global
 		{E52912D0-F94C-4108-9508-08DF9DF5FA9A}.Debug|Win32.Build.0 = Debug|Win32
 		{E52912D0-F94C-4108-9508-08DF9DF5FA9A}.Release|Win32.ActiveCfg = Release|Win32
 		{E52912D0-F94C-4108-9508-08DF9DF5FA9A}.Release|Win32.Build.0 = Release|Win32
+		{B7B514A0-017E-4C98-9550-029437AF566E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B7B514A0-017E-4C98-9550-029437AF566E}.Debug|Win32.Build.0 = Debug|Win32
+		{B7B514A0-017E-4C98-9550-029437AF566E}.Release|Win32.ActiveCfg = Release|Win32
+		{B7B514A0-017E-4C98-9550-029437AF566E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

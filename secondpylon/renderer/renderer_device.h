@@ -1,11 +1,13 @@
-#ifndef SPRENDERER_DEVICE_H
-#define SPRENDERER_DEVICE_H
+// Copyright 2009 Brian Legge
 
-#include <secondpylon/plat/plat_types.h>
-#include <secondpylon/math/math_vec2.h>
-#include <secondpylon/data/data_memstorage.h>
-#include <secondpylon/data/data_bytepacker.h>
-#include <secondpylon/data/data_instream.h>
+#ifndef SECONDPYLON_RENDERER_RENDERER_DEVICE_H_
+#define SECONDPYLON_RENDERER_RENDERER_DEVICE_H_
+
+#include "secondpylon/plat/plat_types.h"
+#include "secondpylon/math/math_vec2.h"
+#include "secondpylon/data/data_memstorage.h"
+#include "secondpylon/data/data_bytepacker.h"
+#include "secondpylon/data/data_instream.h"
 
 
 struct IDirect3D9;
@@ -19,72 +21,78 @@ struct IDirect3DVertexDeclaration9;
 namespace secondpylon {
 namespace renderer {
 
-    class DynamicMesh;
-    class Material;
-    class Color;
-    class Texture;
-    struct SDeviceParameters;
+class DynamicMesh;
+class Material;
+class Color;
+class Texture;
+struct SDeviceParameters;
 
-    // An entity with mesh and material generates SSubMeshRenderRequests which describe both objects.
-    struct SSubMeshRenderRequest
-    {
-        SSubMeshRenderRequest() : 
-            m_pVertexShader(NULL)
-            , m_pPixelShader(NULL)
-            , m_pIndexBuffer(NULL)
-            , m_pVertexBuffer(NULL)
-            , m_pVertexDeclaration(NULL)
-            , m_nVertexStride(0)
-            , m_nVertexCount(0)
-            , m_nIndexCount(0)
-        {
-        }
+// An entity with mesh and material generates SSubMeshRenderRequests which
+// describe both objects.
+struct SSubMeshRenderRequest {
+    SSubMeshRenderRequest() :
+        m_pVertexShader(NULL)
+        , m_pPixelShader(NULL)
+        , m_pIndexBuffer(NULL)
+        , m_pVertexBuffer(NULL)
+        , m_pVertexDeclaration(NULL)
+        , m_nVertexStride(0)
+        , m_nVertexCount(0)
+        , m_nIndexCount(0) {
+    }
 
-        // Material state
-        IDirect3DVertexShader9* m_pVertexShader;
-        IDirect3DPixelShader9* m_pPixelShader;
+    // Material state
+    IDirect3DVertexShader9* m_pVertexShader;
+    IDirect3DPixelShader9* m_pPixelShader;
 
-        // Mesh state
-        IDirect3DIndexBuffer9* m_pIndexBuffer;
-        IDirect3DVertexBuffer9* m_pVertexBuffer;
-        IDirect3DVertexDeclaration9* m_pVertexDeclaration;
-        plat::uint32 m_nVertexStride;
-        plat::uint32 m_nVertexCount;
-        plat::uint32 m_nIndexCount;
-    };
+    // Mesh state
+    IDirect3DIndexBuffer9* m_pIndexBuffer;
+    IDirect3DVertexBuffer9* m_pVertexBuffer;
+    IDirect3DVertexDeclaration9* m_pVertexDeclaration;
+    plat::uint32 m_nVertexStride;
+    plat::uint32 m_nVertexCount;
+    plat::uint32 m_nIndexCount;
+};
 
-    class Device
-    {
-    public:
-        typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
+class Device {
+public:
+    typedef data::InStream<data::MemStorage, data::SBytePacker> TInMemoryStream;
 
-        Device(const SDeviceParameters& params);
-        ~Device();
+    explicit Device(const SDeviceParameters& params);
+    ~Device();
 
-        // Returns a DynamicMesh with the requested number of vertices and indices. This function may return NULL if
-        // the DynamicMesh cannot be created. The DynamicMesh must be deleted with a call to DynamicMesh::Destroy.
-        DynamicMesh* CreateDynamicMesh(plat::uint32 nVertexCount, plat::uint32 nIndexCount);
-        Material* CreateMaterial(TInMemoryStream& pixelShader, TInMemoryStream& vertexShader);
-        Texture* CreateTexture(const math::vec2<plat::uint32>& size);
+    // Returns a DynamicMesh with the requested number of vertices and
+    // indices. This function may return NULL if the DynamicMesh cannot be
+    // created. The DynamicMesh must be deleted with a call to
+    // DynamicMesh::Destroy.
+    DynamicMesh* CreateDynamicMesh(
+        plat::uint32 nVertexCount
+        , plat::uint32 nIndexCount);
 
-        void Draw(const SSubMeshRenderRequest& request);
+    Material* CreateMaterial(
+        TInMemoryStream* pixelShader
+        , TInMemoryStream* vertexShader);
 
-        void Clear(const Color& clearColor);
-        bool BeginScene();
-        void EndScene();
-        void Flip();
+    Texture* CreateTexture(const math::vec2<plat::uint32>& size);
 
-    private:
-        SPUNCOPYABLE(Device);
+    void Draw(const SSubMeshRenderRequest& request);
 
-        IDirect3D9* m_pD3D;
-        IDirect3DDevice9* m_pDevice;
+    void Clear(const Color& clearColor);
+    bool BeginScene();
+    void EndScene();
+    void Flip();
 
-        // Debug value tracking if we are in a BeginScene/EndScene block.
-        bool m_bInScene;
-    };
+private:
+    SPUNCOPYABLE(Device);
 
-}
-}
+    IDirect3D9* m_pD3D;
+    IDirect3DDevice9* m_pDevice;
 
-#endif // SPRENDERER_DEVICE_H
+    // Debug value tracking if we are in a BeginScene/EndScene block.
+    bool m_bInScene;
+};
+
+}  // namespace renderer
+}  // namespace secondpylon
+
+#endif  // SECONDPYLON_RENDERER_RENDERER_DEVICE_H_

@@ -1,34 +1,35 @@
-#ifndef SPRENDERER_TEXTURE_H
-#define SPRENDERER_TEXTURE_H
+// Copyright 2009 Brian Legge
 
-#include <secondpylon/math/math_vec2.h>
-#include <secondpylon/plat/plat_crt.h>
+#ifndef SECONDPYLON_RENDERER_RENDERER_TEXTURE_H_
+#define SECONDPYLON_RENDERER_RENDERER_TEXTURE_H_
+
+#include "secondpylon/math/math_vec2.h"
+#include "secondpylon/plat/plat_crt.h"
 
 struct IDirect3DTexture9;
 
 namespace secondpylon {
 namespace renderer {
 
-    class Texture
-    {
-    public:
-        // Takes ownership of the passed in texture object.
-        Texture(IDirect3DTexture9& texture, const math::vec2<plat::uint32>& dims);
-        ~Texture();
+class Texture {
+public:
+    // Takes ownership of the passed in texture object.
+    Texture(IDirect3DTexture9* texture, const math::vec2<plat::uint32>& dims);
+    ~Texture();
 
-        // Dynamic texture updating
-        plat::uint32* Lock();
-        void Unlock(plat::uint32*&);
+    // Dynamic texture updating
+    plat::uint32* Lock();
+    void Unlock(plat::uint32*&);
 
-    private:
-        SPUNCOPYABLE(Texture);
+private:
+    SPUNCOPYABLE(Texture);
 
-        IDirect3DTexture9* m_pTexture;
-        math::vec2<plat::uint32> m_Size;
-        plat::uint32* m_pLocked;
-    };
- 
-}
-}
+    IDirect3DTexture9* m_pTexture;
+    math::vec2<plat::uint32> m_Size;
+    plat::uint32* m_pLocked;
+};
 
-#endif // SPRENDERER_TEXTURE_H
+}  // namespace renderer
+}  // namespace secondpylon
+
+#endif  // SECONDPYLON_RENDERER_RENDERER_TEXTURE_H_

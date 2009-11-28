@@ -1,5 +1,5 @@
-#ifndef SPDATA_STREAM_H
-#define SPDATA_STREAM_H
+#ifndef SECONDPYLON_DATA_DATA_STREAM_H_
+#define SECONDPYLON_DATA_DATA_STREAM_H_
 
 /*
 #include "data_instream.h"
@@ -40,10 +40,10 @@ public:
     //
     //
     //
-    static void Read(InStream& stream, plat::uint8& i) 
+    static void Read(InStream& stream, plat::uint8& i)
     {
         VerificationPolicy::Read(stream, kWriteBool8);
-        stream.Read((plat::byte*)&i, sizeof(i)); 
+        stream.Read(StrictCast<plat::byte*>(&i), sizeof(i));
     }
 
 
@@ -57,4 +57,4 @@ public:
 }
 */
 
-#endif // SPDATA_STREAM_H
+#endif   // SECONDPYLON_DATA_DATA_STREAM_H_

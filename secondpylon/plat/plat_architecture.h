@@ -1,5 +1,7 @@
-#ifndef SPPLAT_ARCHITECTURE_H
-#define SPPLAT_ARCHITECTURE_H
+// Copyright 2009 Brian Legge
+
+#ifndef SECONDPYLON_PLAT_PLAT_ARCHITECTURE_H_
+#define SECONDPYLON_PLAT_PLAT_ARCHITECTURE_H_
 
 // Define the byte ordering for this platform.
 #include <boost/detail/endian.hpp>
@@ -17,4 +19,4 @@
 
 #endif
 
-#endif // SPPLAT_ARCHITECTURE_H
+#endif  // SECONDPYLON_PLAT_PLAT_ARCHITECTURE_H_

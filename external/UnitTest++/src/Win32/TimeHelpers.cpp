@@ -9,7 +9,7 @@ Timer::Timer()
     m_threadId = ::GetCurrentThread();
     DWORD_PTR systemMask;
     ::GetProcessAffinityMask(GetCurrentProcess(), &m_processAffinityMask, &systemMask);
-    
+
     ::SetThreadAffinityMask(m_threadId, 1);
 	::QueryPerformanceFrequency(reinterpret_cast< LARGE_INTEGER* >(&m_frequency));
     ::SetThreadAffinityMask(m_threadId, m_processAffinityMask);
