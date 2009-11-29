@@ -68,8 +68,9 @@ namespace secondpylon {
     , const char* SPPLAT_RESTRICT source
     , size_t dest_length);
 
-  static bool StringEquals();
-  static bool StringIEquals();
+  static bool StringEquals(const char* string0, const char* string1);
+
+  static bool StringIEquals(const char* string0, const char* string1);
 
   // This is macro serves two purposes:
   //
@@ -82,9 +83,9 @@ namespace secondpylon {
   // uncopyable as this generates errors about deriving multiple times from a
   // class.
   #define SPUNCOPYABLE(ClassName) \
-  private: \
-    ClassName(ClassName&); \
-    ClassName& operator=(ClassName&)
+    private: \
+      ClassName(ClassName&); \
+      ClassName& operator=(ClassName&)
 
 }  // namespace secondpylon
 
