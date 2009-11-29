@@ -185,6 +185,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\secondpylon\plat\plat_crt-inl.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\secondpylon\plat\plat_crt.h"
 				>
 			</File>
