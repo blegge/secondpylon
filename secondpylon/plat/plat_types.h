@@ -26,7 +26,13 @@ namespace plat {
   typedef unsigned char byte;
 
   typedef bool bool8;
-}
-}
+
+  // Types which may vary in size. Ideally, these types should not be used in
+  // for any persistent storage. Their use is required by the C++ spec however
+  // so they can't be entirely avoided.
+  // ptrdiff_t, size_t, intptr_t
+
+}  // namespace plat
+}  // namespace secondpylon
 
 #endif  // SECONDPYLON_PLAT_PLAT_TYPES_H_
