@@ -85,7 +85,7 @@ TEST(WriteStreamAtomic) {
     out.Write(plat::bool8(false));
     out.Write("ab");
     out.Write(static_cast<plat::uint32>(0xf0f1f2f3));
-    out.Write(static_cast<plat::uint64>(0xd0d1d2d3d4d5d5d7));
+    out.Write(static_cast<plat::uint64>(0xd0d1d2d3d4d5d6d7));
   }
 
   plat::uint64 dataSize = storage.GetDataSize();
