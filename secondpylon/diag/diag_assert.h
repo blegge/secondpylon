@@ -53,7 +53,7 @@ namespace diag {
 // false will result in a compile time failure..
 template <bool b> struct StaticAssertFailed;
 template <> struct StaticAssertFailed<true> {};
-#define SPDIAG_CTASSERT(x) StaticAssertFailed<x>();_H_
+#define SPDIAG_CTASSERT(x) StaticAssertFailed<x>();
 
 // This is an internal macro to insure macros provided by secondpylon (and
 // potentially compiled out in different configurations) don't introduce flow
