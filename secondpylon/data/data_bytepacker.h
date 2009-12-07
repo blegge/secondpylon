@@ -18,9 +18,8 @@ namespace data {
 
     template <typename T>
     static void Read(TStorage* storage, T* data, size_t array_length) {
-      storage->Read(
-        reinterpret_cast<plat::byte*>(data)
-        , array_length*sizeof(T));
+      plat::uint64 byte_count = array_length*sizeof(T);
+      storage->Read(reinterpret_cast<plat::byte*>(data), byte_count);
     }
   };
 
@@ -34,7 +33,8 @@ namespace data {
 
     template <typename T>
     static void Write(TStorage* storage, const T* data, size_t array_length) {
-      storage->Write(StrictCast<plat::byte*>(data), array_length*sizeof(T));
+      plat::uint64 byte_count = array_length*sizeof(T);
+      storage->Write(StrictCast<plat::byte*>(data), byte_count);
     }
   };
 

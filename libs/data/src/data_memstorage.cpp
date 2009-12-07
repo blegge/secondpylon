@@ -5,7 +5,7 @@
 namespace secondpylon {
 namespace data {
 
-MemStorage::MemStorage(const plat::byte* data, plat::uint32 dataSize)
+MemStorage::MemStorage(const plat::byte* data, plat::uint64 dataSize)
   : read_offset_(0)
   , usage_(kUnused) {
   storage_.reserve(dataSize);
@@ -14,7 +14,7 @@ MemStorage::MemStorage(const plat::byte* data, plat::uint32 dataSize)
   }
 }
 
-void MemStorage::Write(plat::byte* data, plat::uint32 size) {
+void MemStorage::Write(plat::byte* data, plat::uint64 size) {
   SPDIAG_ASSERT(kWrite == usage_,
     "memstorage usage must be write to call Write.");
 
@@ -23,7 +23,7 @@ void MemStorage::Write(plat::byte* data, plat::uint32 size) {
   }
 }
 
-void MemStorage::Read(plat::byte* data, plat::uint32 size) {
+void MemStorage::Read(plat::byte* data, plat::uint64 size) {
   SPDIAG_ASSERT(kRead == usage_,
     "memstorage usage must be read to call Read");
 

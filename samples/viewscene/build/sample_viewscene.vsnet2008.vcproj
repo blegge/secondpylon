@@ -49,6 +49,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
 				WarnAsError="true"
+				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4127"
 			/>
@@ -89,6 +90,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Running $(TargetName) unit tests..."
+				CommandLine="$(TargetPath)"
 			/>
 		</Configuration>
 		<Configuration
@@ -125,6 +128,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="4"
 				WarnAsError="true"
+				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4127"
 			/>
@@ -167,6 +171,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Running $(TargetName) unit tests..."
+				CommandLine="$(TargetPath)"
 			/>
 		</Configuration>
 	</Configurations>

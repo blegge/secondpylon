@@ -16,8 +16,8 @@ SPPLAT_NOINLINE bool TrueNoInline() { return true; }
 // the SPPLAT_RESTRICT behavior.
 SPPLAT_NOINLINE void RestrictCopy(plat::uint32* SPPLAT_RESTRICT source
                   , plat::uint32* SPPLAT_RESTRICT destlist
-                  , plat::uint32 count) {
-  for (plat::uint32 i = 0; i < count; ++i) {
+                  , size_t count) {
+  for (size_t i = 0; i < count; ++i) {
     destlist[i] = *source;
   }
 }
@@ -37,6 +37,7 @@ SUITE(Compiler) {
   TEST(RestrictCopy) {
     plat::uint32 value = 3;
     plat::uint32 outputList[5];
+    
     RestrictCopy(&value, &outputList[0], ArraySize(outputList));
     for (plat::uint32 i = 0; i < ArraySize(outputList); ++i) {
       CHECK_EQUAL(value, outputList[i]);

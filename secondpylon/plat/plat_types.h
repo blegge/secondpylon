@@ -3,6 +3,9 @@
 #ifndef SECONDPYLON_PLAT_PLAT_TYPES_H_
 #define SECONDPYLON_PLAT_PLAT_TYPES_H_
 
+// What compiler guards will enable us to use this instead?
+// #include <inttypes.h>
+
 // Assume that char could be either signed or unsigned - don't do integer
 // comparisons against it. This header originally defined a 'uchar' to be
 // explicit, but this caused more compiler headaches than it resolved.
@@ -17,9 +20,11 @@ namespace plat {
   typedef unsigned char uint8;
   typedef unsigned short uint16;
   typedef unsigned int uint32;
+  typedef unsigned long long uint64;
   typedef signed char sint8;
   typedef signed short sint16;
   typedef signed int sint32;
+  typedef signed long long sint64;
 
   typedef float float32;
 

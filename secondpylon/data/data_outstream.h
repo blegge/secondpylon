@@ -25,10 +25,12 @@ namespace data {
     void Write(plat::uint8 value) { TPacker::Write(&storage_, value); }
     void Write(plat::uint16 value) { TPacker::Write(&storage_, value); }
     void Write(plat::uint32 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::uint64 value) { TPacker::Write(&storage_, value); }
 
     void Write(plat::sint8 value) { TPacker::Write(&storage_, value); }
     void Write(plat::sint16 value) { TPacker::Write(&storage_, value); }
     void Write(plat::sint32 value) { TPacker::Write(&storage_, value); }
+    void Write(plat::sint64 value) { TPacker::Write(&storage_, value); }
 
     void Write(plat::float32 value) { TPacker::Write(&storage_, value); }
 
@@ -57,7 +59,7 @@ namespace data {
 
   template <typename TStorage, template <typename> class Packer>
   void OutStream<TStorage, Packer>::Write(const char* pszString) {
-    plat::uint32 len = strlen(pszString);
+    plat::uint64 len = strlen(pszString);
     Write(len);
     TPacker::Write(&storage_, pszString, len);
   }

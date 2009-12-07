@@ -24,7 +24,7 @@ SUITE(SByteSwapPacker) {
       out.Write(static_cast<plat::uint32>(0x0a1a2a3a));
     }
 
-    char buffer[16];
+    char buffer[17];
     plat::uint16 n16;
     plat::uint32 n32;
 

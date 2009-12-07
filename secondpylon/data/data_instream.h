@@ -44,15 +44,17 @@ namespace data {
     void Read(plat::uint8* value) { TUnpacker::Read(&storage_, value); }
     void Read(plat::uint16* value) { TUnpacker::Read(&storage_, value); }
     void Read(plat::uint32* value) { TUnpacker::Read(&storage_, value); }
+    void Read(plat::uint64* value) { TUnpacker::Read(&storage_, value); }
 
     void Read(plat::sint8* value) { TUnpacker::Read(&storage_, value); }
     void Read(plat::sint16* value) { TUnpacker::Read(&storage_, value); }
     void Read(plat::sint32* value) { TUnpacker::Read(&storage_, value); }
+    void Read(plat::sint64* value) { TUnpacker::Read(&storage_, value); }
 
     void Read(plat::float32* value) { TUnpacker::Read(&storage_, value); }
     void Read(plat::bool8* value) { TUnpacker::Read(&storage_, value); }
 
-    void Read(char* pszString, plat::uint32 capacity);
+    void Read(char* pszString, size_t capacity);
 
   private:
     TStorage& storage_;
@@ -76,8 +78,8 @@ namespace data {
   template <typename TStorage, template <typename> class Unpacker >
   void InStream<TStorage, Unpacker>::Read(
     char* pszString
-    , plat::uint32 capacity) {
-    plat::uint32 size = 0;
+    , size_t capacity) {
+    plat::uint64 size = 0;
     Read(&size);
 
     if (size >= capacity) {

@@ -85,9 +85,10 @@ TEST(WriteStreamAtomic) {
     out.Write(plat::bool8(false));
     out.Write("ab");
     out.Write(static_cast<plat::uint32>(0xf0f1f2f3));
+    out.Write(static_cast<plat::uint64>(0xd0d1d2d3d4d5d5d7));
   }
 
-  plat::uint32 dataSize = storage.GetDataSize();
+  plat::uint64 dataSize = storage.GetDataSize();
   const plat::byte* data = storage.GetData();
 
 #if defined(SPPLAT_LITTLEENDIAN)
@@ -96,9 +97,12 @@ TEST(WriteStreamAtomic) {
     0x01  // bool8(true)
     , 0xa1, 0xa0  // plat::uint16(0xa0a1)
     , 0x00  // bool8(false)
-    , 0x2, 0x00, 0x00, 0x00  // size of string
+    , 0x2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00   // size of string
     , 'a', 'b'  // string contents
     , 0xf3, 0xf2, 0xf1, 0xf0   // uint32(0xf0f1f2f3)
+
+    // uint64(0xd0d1d2d3d4d5d5d7)
+    , 0xd7, 0xd6, 0xd5, 0xd4, 0xd3, 0xd2, 0xd1, 0xd0
   };
 
 #elif defined(SPPLAT_BIGENDIAN)
@@ -107,9 +111,10 @@ TEST(WriteStreamAtomic) {
     0x01  // bool8(true)
     , 0xa0, 0xa1,   // plat::uint16(0xa0a1)
     , 0x00  // bool8(false)
-    , 0x00, 0x00, 0x00, 0x2  // size of string
+    , 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2  // size of string
     , 'a', 'b'  // string contents
     , 0xf0, 0xf1, 0xf2, 0xf3,   // uint32(0xf0f1f2f3)
+    , 0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0xd5, 0xd5, 0xd7;
   };
 
 #else
@@ -118,9 +123,9 @@ TEST(WriteStreamAtomic) {
 
 #endif
 
-  plat::uint32 blockSize = ArraySize(block);
-  CHECK_EQUAL(blockSize, dataSize);
-  CHECK(0 == memcmp(block, data, blockSize));
+  size_t block_size = ArraySize(block);
+  CHECK_EQUAL(block_size, dataSize);
+  CHECK(0 == memcmp(block, data, block_size));
 }
 
 TEST(RoundTripStream) {

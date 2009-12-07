@@ -44,11 +44,11 @@ namespace data {
     };
 
     MemStorage();
-    MemStorage(const plat::byte* data, plat::uint32 dataSize);
+    MemStorage(const plat::byte* data, plat::uint64 dataSize);
 
     // Access to the raw underlying memory storage.
     const plat::byte* GetData() const;
-    plat::uint32 GetDataSize() const;
+    size_t GetDataSize() const;
 
     //
     // Stream API functions
@@ -57,21 +57,21 @@ namespace data {
 
     // Adds bytes of data to the stream. Read can only be called when this
     // object is locked for writing.
-    void Write(plat::byte* data, plat::uint32 bytes);
+    void Write(plat::byte* data, plat::uint64 bytes);
 
     // Fills the passed in buffer with size bytes from storage. Read can
     // only be called when this object is locked for reading. Behavior is
     // undefined when reading bytes reads beyond the end of storage.
-    void Read(plat::byte* data, plat::uint32 bytes);
+    void Read(plat::byte* data, plat::uint64 bytes);
 
     // Advances the stream forward by bytes. Read can only be called when
     // this object is locked for reading. Behavior is undefined if
     // advancing by bytes advances beyond the end of storage.
-    void Advance(plat::uint32 bytes);
+    void Advance(plat::uint64 bytes);
 
   private:
     EUsage usage_;
-    plat::uint32 read_offset_;
+    size_t read_offset_;
     std::vector<plat::byte> storage_;
   };
 

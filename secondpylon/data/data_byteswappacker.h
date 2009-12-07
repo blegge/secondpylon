@@ -20,6 +20,18 @@ struct SwapUtil {
       | (data & 0x0000ff00)  << 8
       | (data & 0x000000ff)  << 24;
   }
+
+  static plat::uint64 Swap64(plat::uint64 data) {
+    return (
+      data &    0xff00000000000000) >> 56
+      | (data & 0x00ff000000000000) >> 40
+      | (data & 0x0000ff0000000000) >> 24
+      | (data & 0x000000ff00000000) >> 8
+      | (data & 0x00000000ff000000) << 8
+      | (data & 0x0000000000ff0000) << 24
+      | (data & 0x000000000000ff00) << 40
+      | (data & 0x00000000000000ff) << 56;
+  }
 };
 
 
@@ -53,12 +65,20 @@ public:
     Write32(storage, data);
   }
 
+  static void Write(TStorage* storage, plat::uint64 data) {
+    Write64(storage, data);
+  }
+
   static void Write(TStorage* storage, plat::sint32 data) {
     Write32(storage, StrictCast<plat::uint32>(data));
   }
 
   static void Write(TStorage* storage, plat::float32 data) {
     Write32(storage, StrictCast<plat::uint32>(data));
+  }
+
+  static void Write(TStorage* storage, plat::sint64 data) {
+    Write64(storage, data);
   }
 
   template <typename T>
@@ -75,6 +95,11 @@ private:
   static void Write32(TStorage* storage, plat::uint32 data) {
     plat::uint32 swapped = SwapUtil::Swap32(data);
     storage->Write(StrictCast<plat::byte*>(&swapped), 4);
+  }
+
+  static void Write64(TStorage* storage, plat::uint64 data) {
+    plat::uint64 swapped = SwapUtil::Swap64(data);
+    storage->Write(StrictCast<plat::byte*>(&swapped), 8);
   }
 };
 
@@ -115,6 +140,14 @@ public:
     Read32(storage, data);
   }
 
+  static void Read(TStorage* storage, plat::uint64* data) {
+    Read64(storage, data);
+  }
+
+  static void Read(TStorage* storage, plat::sint64* data) {
+    Read64(storage, data);
+  }
+
   static void Read(TStorage* storage, plat::float32* data) {
     // Read the float as an integer to insure we the read itself doesn't
     // cause any conversions (ie nans, etc)
@@ -139,6 +172,12 @@ private:
     plat::uint32 raw;
     storage->Read(reinterpret_cast<plat::byte*>(&raw), 4);
     *data = SwapUtil::Swap32(raw);
+  }
+
+  static void Read64(TStorage* storage, plat::uint64* data) {
+    plat::uint64 raw;
+    storage->Read(reinterpret_cast<plat::byte*>(&raw), 8);
+    *data = SwapUtil::Swap64(raw);
   }
 };
 

@@ -47,7 +47,9 @@ public:
     MemoryOutStream& operator << (float f);
     MemoryOutStream& operator << (double d);
     MemoryOutStream& operator << (void const* p);
-    MemoryOutStream& operator << (unsigned int s);
+    MemoryOutStream& operator << (signed long long n);
+    MemoryOutStream& operator << (unsigned long long n);
+    MemoryOutStream& operator << (size_t n);
 
     enum { GROW_CHUNK_SIZE = 32 };
     int GetCapacity() const;

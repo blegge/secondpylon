@@ -104,7 +104,19 @@ MemoryOutStream& MemoryOutStream::operator << (void const* p)
     return *this;
 }
 
-MemoryOutStream& MemoryOutStream::operator << (unsigned int const s)
+MemoryOutStream& MemoryOutStream::operator << (size_t const s)
+{
+    FormatToStream(*this, "%u", s);
+    return *this;
+}
+
+MemoryOutStream& MemoryOutStream::operator << (signed long long s)
+{
+    FormatToStream(*this, "%u", s);
+    return *this;
+}
+
+MemoryOutStream& MemoryOutStream::operator << (unsigned long long s)
 {
     FormatToStream(*this, "%u", s);
     return *this;

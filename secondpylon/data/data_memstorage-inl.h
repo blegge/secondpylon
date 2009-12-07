@@ -18,7 +18,7 @@ SPPLAT_INLINE void MemStorage::SetUsage(EUsage currentUsage) {
   usage_ = currentUsage;
 }
 
-SPPLAT_INLINE void MemStorage::Advance(plat::uint32 bytes) {
+SPPLAT_INLINE void MemStorage::Advance(plat::uint64 bytes) {
   SPDIAG_ASSERT(
   kRead == usage_,
   "Reading is only permitted when the memstorage usage is set to reading.");
@@ -33,7 +33,7 @@ SPPLAT_INLINE const plat::byte* MemStorage::GetData() const {
   return &storage_[0];
 }
 
-SPPLAT_INLINE plat::uint32 MemStorage::GetDataSize() const {
+SPPLAT_INLINE size_t MemStorage::GetDataSize() const {
   return storage_.size();
 }
 
