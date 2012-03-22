@@ -82,7 +82,7 @@ public:
   }
 
   template <typename T>
-  static void Write(TStorage* storage, T* data, size_t array_length) {
+  static void Write(TStorage* storage, T* data, plat::uint64 array_length) {
     storage->Write(StrictCast<plat::byte*>(data), array_length*sizeof(data[0]));
   }
 
@@ -157,7 +157,7 @@ public:
   }
 
   template <typename T>
-  static void Read(TStorage* storage, const T* data, size_t array_length) {
+  static void Read(TStorage* storage, const T* data, plat::uint64 array_length) {
     storage->Read(StrictCast<plat::byte*>(data), array_length*sizeof(data[0]));
   }
 

@@ -16,8 +16,7 @@ SUITE(SByteSwapPacker) {
   TEST(RoundTripStream) {
     data::MemStorage storage;
     {
-      data::OutStream<data::MemStorage, data::ByteSwapPacker >
-        out(&storage);
+      data::OutStream<data::MemStorage, data::ByteSwapPacker> out(&storage);
 
       out.Write("test");
       out.Write(plat::uint16(0x1234));

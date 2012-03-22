@@ -71,7 +71,7 @@ namespace data {
 
   private:
     EUsage usage_;
-    size_t read_offset_;
+    plat::uint64 read_offset_;
     std::vector<plat::byte> storage_;
   };
 

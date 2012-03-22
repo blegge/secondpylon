@@ -59,7 +59,7 @@ namespace data {
 
   template <typename TStorage, template <typename> class Packer>
   void OutStream<TStorage, Packer>::Write(const char* pszString) {
-    plat::uint64 len = strlen(pszString);
+    plat::uint64 len = (plat::uint64)strlen(pszString);
     Write(len);
     TPacker::Write(&storage_, pszString, len);
   }
