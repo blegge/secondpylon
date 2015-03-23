@@ -3,5 +3,7 @@
 /third_party/UnitTest++/x64/
 
 *.suo
-*.log
+*.sdf
+*.opensdf
 *.vcxproj.user
+
