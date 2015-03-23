@@ -1,0 +1,7 @@
+/build/x64/
+/built/
+/third_party/UnitTest++/x64/
+
+*.suo
+*.log
+*.vcxproj.user
