@@ -80,6 +80,12 @@ MemoryOutStream& MemoryOutStream::operator << (int const n)
     return *this;
 }
 
+MemoryOutStream& MemoryOutStream::operator << (unsigned int const n)
+{
+	FormatToStream(*this, "%i", n);
+	return *this;
+}
+
 MemoryOutStream& MemoryOutStream::operator << (long const n)
 {
     FormatToStream(*this, "%li", n);
@@ -104,11 +110,11 @@ MemoryOutStream& MemoryOutStream::operator << (void const* p)
     return *this;
 }
 
-MemoryOutStream& MemoryOutStream::operator << (size_t const s)
-{
-    FormatToStream(*this, "%u", s);
-    return *this;
-}
+//MemoryOutStream& MemoryOutStream::operator << (size_t const s)
+//{
+//    FormatToStream(*this, "%u", s);
+//    return *this;
+//}
 
 MemoryOutStream& MemoryOutStream::operator << (signed long long s)
 {

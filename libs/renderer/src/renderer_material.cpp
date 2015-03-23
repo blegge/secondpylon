@@ -2,7 +2,7 @@
 
 #include "secondpylon/renderer/renderer_material.h"
 #include <d3d9.h>
-#include <d3dx9shader.h>
+//#include <d3dx9shader.h>
 #include "secondpylon/plat/plat_crt.h"
 #include "./renderer_utils.h"
 
@@ -16,19 +16,19 @@ static IDirect3DPixelShader9* LoadPixelShader(IDirect3DDevice9* device
   ID3DXBuffer* shader_buffer = NULL;
   ID3DXBuffer* error_buffer = NULL;
 
-  const char* profile_name = D3DXGetPixelShaderProfile(device);
+  //const char* profile_name = D3DXGetPixelShaderProfile(device);
 
-  HRESULT hr = D3DXCompileShader(
-    shader_data
-    , (UINT)strlen(shader_data)
-    , NULL  // no defines
-    , NULL  // no includes
-    , "entry"
-    , profile_name
-    , D3DXSHADER_DEBUG
-    , &shader_buffer
-    , &error_buffer
-    , NULL);  // no constant table
+  //HRESULT hr = D3DXCompileShader(
+  //  shader_data
+  //  , (UINT)strlen(shader_data)
+  //  , NULL  // no defines
+  //  , NULL  // no includes
+  //  , "entry"
+  //  , profile_name
+  //  , D3DXSHADER_DEBUG
+  //  , &shader_buffer
+  //  , &error_buffer
+  //  , NULL);  // no constant table
 
   IDirect3DPixelShader9* shader = NULL;
   if (hr != S_OK) {
@@ -58,23 +58,24 @@ static IDirect3DVertexShader9* LoadVertexShader(
   , const char* shader_data) {
   ID3DXBuffer* shader_buffer = NULL;
   ID3DXBuffer* error_buffer = NULL;
+  HRESULT hr = S_OK;
 
-  const char* profile_name = D3DXGetVertexShaderProfile(device);
+  //const char* profile_name = D3DXGetVertexShaderProfile(device);
 
-  HRESULT hr = D3DXCompileShader(
-    shader_data
-    , (UINT)strlen(shader_data)
-    , NULL  // no defines
-    , NULL  // no includes
-    , "entry"
-    , profile_name
-    , D3DXSHADER_DEBUG
-    , &shader_buffer
-    , &error_buffer
-    , NULL);  // no constant table
+  // hr = D3DXCompileShader(
+  //  shader_data
+  //  , (UINT)strlen(shader_data)
+  //  , NULL  // no defines
+  //  , NULL  // no includes
+  //  , "entry"
+  //  , profile_name
+  //  , D3DXSHADER_DEBUG
+  //  , &shader_buffer
+  //  , &error_buffer
+  //  , NULL);  // no constant table
 
-  IDirect3DVertexShader9* shader = NULL;
-  if (hr != S_OK) {
+  //IDirect3DVertexShader9* shader = NULL;
+  //if (hr != S_OK) {
 // RSCONTENT_ERROR(
 // const char* szError = (const char*)error_buffer->GetBufferPointer();
 // RSPlatform::Services()->Error(

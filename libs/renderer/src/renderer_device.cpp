@@ -2,7 +2,7 @@
 
 #include "secondpylon/renderer/renderer_device.h"
 
-#include <d3dx9.h>
+#include <DXGI.h>
 #include <d3d9.h>
 
 #include "secondpylon/renderer/renderer_dynamicmesh.h"
@@ -20,6 +20,7 @@ Device::Device(const DeviceParameters& deviceParams)
   : d3d_(NULL)
   , device_(NULL)
   , in_scene_(false) {
+
   // Create D3D and the rendering device.
   IDirect3D9* d3d = Direct3DCreate9(D3D_SDK_VERSION);
   if (d3d) {

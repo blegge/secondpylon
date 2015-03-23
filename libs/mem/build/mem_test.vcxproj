@@ -101,6 +101,12 @@
     <ClCompile Include="..\test\mem_test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\third_party\UnitTest++\UnitTest++.vsnet2008.vcxproj">
+      <Project>{0726a7f3-debc-42ea-b9eb-5caf8be0336d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\diag\build\diag.vsnet2008.vcxproj">
+      <Project>{2cc7e710-e92b-4350-bd3d-696354e8f4d8}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\test\build\test.vsnet2008.vcxproj">
       <Project>{37a3a1a3-eabc-449d-9c7f-b762496ff73f}</Project>
     </ProjectReference>

@@ -1,7 +1,7 @@
 #include <secondpylon/contr/contr_array.h>
 #include <secondpylon/test/test_utils.h>
 #include <secondpylon/plat/plat_types.h>
-#include <unittest++/src/UnitTest++.h>
+#include "unittest++/src/UnitTest++.h"
 
 using namespace secondpylon;
 namespace {
@@ -57,6 +57,6 @@ TEST(ArrayReadOutOfBounds)
 */
 
 // Required only when BOOST_ENABLE_ASSERT_HANDLER is defined. This function replaces the default boost assert hander.
-void boost::assertion_failed(char const * /*expr*/, char const * /*function*/, char const * /*file*/, long /*line*/)
-{
-}
+//void boost::assertion_failed(char const * /*expr*/, char const * /*function*/, char const * /*file*/, long /*line*/)
+//{
+//}
